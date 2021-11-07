@@ -1,0 +1,39 @@
+{
+    "recipes": [
+        {
+            "name": "Omlet",
+            "prepTime": 15,
+            "ingredients": ["3 jaja", "1 paradajz"],
+            "steps": ["Izmutiti jaja sitno i brzo", "Dodati sitno", "Sipati u tiganj i prziti"],
+            "isFavorite": true
+        },
+        {
+            "name": "Spagete karbonare",
+            "prepTime": 45,
+            "ingredients": [],
+            "steps": [],
+            "isFavorite": true
+        },
+        {
+            "name": "Pirinac",
+            "prepTime": 25,
+            "ingredients": ["Pirinac", "Pirinac", "Pirinac", "Pirinac", "Pirinac", "Pirinac", "Pirinac", "Pirinac", "Pirinac", "Pirinac"],
+            "steps": ["Dodati pirinac", "Dodati pirinac", "Dodati pirinac", "Dodati pirinac", "Dodati pirinac", "Dodati pirinac", "Dodati pirinac", "Dodati pirinac", "Dodati pirinac", "Dodati pirinac"],
+            "isFavorite": false
+        },
+        {
+            "name": "Mesano povrce",
+            "prepTime": 30,
+            "ingredients": [],
+            "steps": [],
+            "isFavorite": false
+        },
+        {
+            "name": "Sendvic",
+            "prepTime": 5,
+            "ingredients": [],
+            "steps": [],
+            "isFavorite": true
+        },
+    ]
+}

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="textFieldCell" rowHeight="35" id="KGk-i7-Jjw" customClass="AddNewRecipeTableViewCell" customModule="KulinarstvoSlasnoIEfikasno" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NQa-Cv-srN">
+                        <rect key="frame" x="5" y="5" width="271" height="34"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <textInputTraits key="textInputTraits"/>
+                    </textField>
+                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i0q-iO-HOe">
+                        <rect key="frame" x="281" y="5" width="34" height="34"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="i0q-iO-HOe" secondAttribute="height" id="8DD-X5-kSY"/>
+                        </constraints>
+                        <state key="normal" title="Button"/>
+                        <buttonConfiguration key="configuration" style="plain">
+                            <imageReference key="image" image="plus.circle" catalog="system" symbolScale="medium"/>
+                            <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="font">
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
+                            </preferredSymbolConfiguration>
+                        </buttonConfiguration>
+                        <connections>
+                            <action selector="addNewTextFieldButtonClicked:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="YkB-WM-iDE"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="NQa-Cv-srN" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="03u-ou-gAw"/>
+                    <constraint firstAttribute="bottom" secondItem="i0q-iO-HOe" secondAttribute="bottom" constant="5" id="FH2-3C-4YT"/>
+                    <constraint firstAttribute="trailing" secondItem="i0q-iO-HOe" secondAttribute="trailing" constant="5" id="KJg-Zs-yMi"/>
+                    <constraint firstAttribute="bottom" secondItem="NQa-Cv-srN" secondAttribute="bottom" constant="5" id="Mwa-sn-Kmf"/>
+                    <constraint firstItem="i0q-iO-HOe" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="QQY-29-I5r"/>
+                    <constraint firstItem="NQa-Cv-srN" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="5" id="SGc-af-TbB"/>
+                    <constraint firstItem="i0q-iO-HOe" firstAttribute="leading" secondItem="NQa-Cv-srN" secondAttribute="trailing" constant="5" id="WKB-DY-Ifp"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="addNewTextFieldButton" destination="i0q-iO-HOe" id="hS3-Mr-zoL"/>
+                <outlet property="cellTextField" destination="NQa-Cv-srN" id="uCY-gp-4sJ"/>
+            </connections>
+            <point key="canvasLocation" x="139" y="140"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="plus.circle" catalog="system" width="128" height="121"/>
+    </resources>
+</document>

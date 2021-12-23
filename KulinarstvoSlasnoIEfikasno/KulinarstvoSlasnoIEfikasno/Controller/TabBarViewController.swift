@@ -11,7 +11,7 @@ class TabBarViewController: UITabBarController {
     
     var generalNavigationController: UINavigationController = {
         let generalViewController = GeneralViewController(isFavorites: false)
-        generalViewController.navigationItem.title = "Predled"
+        generalViewController.navigationItem.title = "Pregled"
         let navigationController = UINavigationController(rootViewController: generalViewController)
         navigationController.title = "Pregled"
         navigationController.tabBarItem.image = UIImage(systemName: "list.dash")

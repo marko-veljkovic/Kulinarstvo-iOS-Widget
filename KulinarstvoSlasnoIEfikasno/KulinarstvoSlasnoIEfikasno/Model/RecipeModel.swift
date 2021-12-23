@@ -37,14 +37,18 @@ class RecipeModel {
 
     static let testData = [
         Recipe(name: "Omlet", prepTime: 15, ingredients: [
-            "3 jaja", "1 paradajz"
+            "3 jaja", "Lorem ipsum za proveru duzine i sirine sastojaka", "1 paradajz", "200g sunka", "20g sira", "kasicica persun",
+            "3 jaja", "Lorem ipsum za proveru duzine i sirine sastojaka", "1 paradajz", "200g sunka", "20g sira", "kasicica persun",
+            "3 jaja", "Lorem ipsum za proveru duzine i sirine sastojaka", "1 paradajz", "200g sunka", "20g sira", "kasicica persun"
         ], steps: [
-            "Izmutiti jaja sitno i brzo", "Dodati sitno", "Sipati u tiganj i prziti"
+            "Izmutiti jaja sitno i brzo", "Dodati sitno", "Lorem ipsum za proveru duzine i sirine opisa postupka", "Sipati u tiganj i prziti", "Proba", "priprema",
+            "Izmutiti jaja sitno i brzo", "Dodati sitno", "Lorem ipsum za proveru duzine i sirine opisa postupka", "Sipati u tiganj i prziti", "Proba", "priprema", "7 korak po redu",
+            "Izmutiti jaja sitno i brzo", "Dodati sitno", "Lorem ipsum za proveru duzine i sirine opisa postupka", "Sipati u tiganj i prziti", "Proba", "priprema", "7 korak po redu"
         ]),
-        Recipe(name: "Spagete karbonare", prepTime: 45, ingredients: [], steps: []),
+        Recipe(name: "Spagete karbonara", prepTime: 45, ingredients: [], steps: []),
         Recipe(name: "Pirinac", prepTime: 20,
-               ingredients: ["Pirinac", "Pirinac", "Pirinac", "Pirinac", "Pirinac", "Pirinac", "Pirinac", "Pirinac", "Pirinac", "Pirinac"],
-               steps: [ "Dodati pirinac", "Dodati pirinac", "Dodati pirinac", "Dodati pirinac", "Dodati pirinac", "Dodati pirinac", "Dodati pirinac", "Dodati pirinac", "Dodati pirinac", "Dodati pirinac"]),
+               ingredients: ["Pirinac", "Voda", "Zejtin", "So"],
+               steps: [ "Oprati pirinac", "Dodati vodu", "Dodati zejtin", "Dodati so", "Kuvati 20ak minuta"]),
         Recipe(name: "Mesano povrce", prepTime: 25, ingredients: [], steps: []),
         Recipe(name: "Sendvic", prepTime: 5, ingredients: [], steps: [])
     ]

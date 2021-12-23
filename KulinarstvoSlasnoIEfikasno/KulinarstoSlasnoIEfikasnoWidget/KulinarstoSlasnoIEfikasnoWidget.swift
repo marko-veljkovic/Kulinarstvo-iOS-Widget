@@ -4,12 +4,12 @@ import Intents
 
 struct Provider: IntentTimelineProvider {
     func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), configuration: ConfigurationIntent(), recipe: RecipeModel.testData[0])
+        SimpleEntry(date: Date(), configuration: ConfigurationIntent(), recipe: RecipeModel.testData[0], parameterToShow: "Sastojci")
             
     }
 
     func getSnapshot(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (SimpleEntry) -> ()) {
-        let entry = SimpleEntry(date: Date(), configuration: configuration, recipe: RecipeModel.testData[0])
+        let entry = SimpleEntry(date: Date(), configuration: configuration, recipe: RecipeModel.testData[0], parameterToShow: "Sastojci")
         completion(entry)
     }
 
@@ -20,7 +20,7 @@ struct Provider: IntentTimelineProvider {
         let currentDate = Date()
         for hourOffset in 0 ..< 5 {
             let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
-            let entry = SimpleEntry(date: entryDate, configuration: configuration, recipe: recipe(for: configuration))
+            let entry = SimpleEntry(date: entryDate, configuration: configuration, recipe: recipe(for: configuration), parameterToShow: parametereToShow(for: configuration))
             entries.append(entry)
         }
 
@@ -38,18 +38,29 @@ struct Provider: IntentTimelineProvider {
             return RecipeModel.testData[0]
         }
     }
+    
+    func parametereToShow(for configuration: ConfigurationIntent) -> String {
+        switch configuration.ParameterToShow {
+        case .sastojci:
+            return "Sastojci"
+        case .priprema:
+            return "Priprema"
+        default:
+            return "Sastojci"
+        }
+    }
 }
 
 struct SimpleEntry: TimelineEntry {
     let date: Date
     let configuration: ConfigurationIntent
-    
     let recipe: Recipe
+    let parameterToShow: String
 }
 
 struct PlaceholderView : View {
     var body : some View {
-        Kulinarstvo_widgetEntryView(entry: SimpleEntry(date: Date(), configuration: ConfigurationIntent(), recipe: RecipeModel.testData[2]))
+        Kulinarstvo_widgetEntryView(entry: SimpleEntry(date: Date(), configuration: ConfigurationIntent(), recipe: RecipeModel.testData[0], parameterToShow: "Sastojci"))
     }
 }
 
@@ -65,7 +76,13 @@ struct Kulinarstvo_widgetEntryView : View {
             RecipeView(recipe: entry.recipe)
                 .widgetURL(entry.recipe.url)
         case .systemMedium:
-            RecipeMediumView(recipe: entry.recipe, ingredients: entry.recipe.ingredients.count > 7 ? Array(entry.recipe.ingredients.dropLast(entry.recipe.ingredients.count - 7)) : entry.recipe.ingredients, isAllIngredientsPrinted: entry.recipe.ingredients.count <= 7)
+            if entry.parameterToShow == "Sastojci" {
+                RecipeMediumView(recipe: entry.recipe, ingredients: entry.recipe.ingredients.count > 7 ? Array(entry.recipe.ingredients.dropLast(entry.recipe.ingredients.count - 7)) : entry.recipe.ingredients, isAllIngredientsPrinted: entry.recipe.ingredients.count <= 7, listName: "Sastojci")
+            }
+            else {
+                RecipeMediumView(recipe: entry.recipe, ingredients: entry.recipe.steps.count > 7 ? Array(entry.recipe.steps.dropLast(entry.recipe.steps.count - 7)) : entry.recipe.steps, isAllIngredientsPrinted: entry.recipe.steps.count <= 7, listName: "Priprema")
+            }
+            
             
         case .systemLarge:
             RecipeLargeView(
@@ -157,12 +174,13 @@ struct RecipeMediumView: View {
     
     @State var ingredients: [String]
     @State var isAllIngredientsPrinted: Bool
+    @State var listName: String
     
     @ViewBuilder
     var body: some View {
         HStack {
             ImageRecipeView(recipe: recipe)
-            ListItemsView(items: ingredients, areAllItemsPrinted: isAllIngredientsPrinted, listName: "Sastojci")
+            ListItemsView(items: ingredients, areAllItemsPrinted: isAllIngredientsPrinted, listName: listName)
         }
     }
 }
@@ -227,8 +245,8 @@ struct Kulinarstvo_widget: Widget {
 struct Kulinarstvo_widget_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            Kulinarstvo_widgetEntryView(entry: SimpleEntry(date: Date(), configuration: ConfigurationIntent(), recipe: RecipeModel.testData[0]))
-                .previewContext(WidgetPreviewContext(family: .systemLarge))
+            Kulinarstvo_widgetEntryView(entry: SimpleEntry(date: Date(), configuration: ConfigurationIntent(), recipe: RecipeModel.testData[0], parameterToShow: "Sastojci"))
+                .previewContext(WidgetPreviewContext(family: .systemMedium))
             
 //            Kulinarstvo_widgetEntryView(entry: SimpleEntry(date: Date(), configuration: ConfigurationIntent(), recipe: RecipeModel.testData[0]))
 //                .previewContext(WidgetPreviewContext(family: .systemMedium))

@@ -37,6 +37,11 @@
 		559363F3272F3FC10071A10D /* AddNewRecipeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 559363F1272F3FC10071A10D /* AddNewRecipeViewController.xib */; };
 		559363F6272F4A1E0071A10D /* AddNewRecipeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559363F4272F4A1E0071A10D /* AddNewRecipeTableViewCell.swift */; };
 		559363F7272F4A1E0071A10D /* AddNewRecipeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 559363F5272F4A1E0071A10D /* AddNewRecipeTableViewCell.xib */; };
+		559AF15D2777876700DCDC51 /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 559AF15C2777876700DCDC51 /* Intents.framework */; };
+		559AF1602777876700DCDC51 /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559AF15F2777876700DCDC51 /* IntentHandler.swift */; };
+		559AF1642777876700DCDC51 /* IntentHandler.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 559AF15B2777876700DCDC51 /* IntentHandler.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		559AF16827778ABD00DCDC51 /* KulinarstoSlasnoIEfikasnoWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 559363E1272F05DC0071A10D /* KulinarstoSlasnoIEfikasnoWidget.intentdefinition */; };
+		559AF1692777AB0100DCDC51 /* RecipeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559363CE272EF89C0071A10D /* RecipeModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +51,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 559363D7272F05DC0071A10D;
 			remoteInfo = KulinarstoSlasnoIEfikasnoWidgetExtension;
+		};
+		559AF1622777876700DCDC51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5593639C272EBF730071A10D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 559AF15A2777876700DCDC51;
+			remoteInfo = IntentHandler;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -57,6 +69,7 @@
 			dstSubfolderSpec = 13;
 			files = (
 				559363E9272F05DF0071A10D /* KulinarstoSlasnoIEfikasnoWidgetExtension.appex in Embed App Extensions */,
+				559AF1642777876700DCDC51 /* IntentHandler.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -93,6 +106,10 @@
 		559363F1272F3FC10071A10D /* AddNewRecipeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddNewRecipeViewController.xib; sourceTree = "<group>"; };
 		559363F4272F4A1E0071A10D /* AddNewRecipeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewRecipeTableViewCell.swift; sourceTree = "<group>"; };
 		559363F5272F4A1E0071A10D /* AddNewRecipeTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddNewRecipeTableViewCell.xib; sourceTree = "<group>"; };
+		559AF15B2777876700DCDC51 /* IntentHandler.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = IntentHandler.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		559AF15C2777876700DCDC51 /* Intents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intents.framework; path = System/Library/Frameworks/Intents.framework; sourceTree = SDKROOT; };
+		559AF15F2777876700DCDC51 /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
+		559AF1612777876700DCDC51 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +129,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		559AF1582777876700DCDC51 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				559AF15D2777876700DCDC51 /* Intents.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -120,6 +145,7 @@
 			children = (
 				559363A6272EBF740071A10D /* KulinarstvoSlasnoIEfikasno */,
 				559363DE272F05DC0071A10D /* KulinarstoSlasnoIEfikasnoWidget */,
+				559AF15E2777876700DCDC51 /* IntentHandler */,
 				559363D9272F05DC0071A10D /* Frameworks */,
 				559363A5272EBF740071A10D /* Products */,
 			);
@@ -130,6 +156,7 @@
 			children = (
 				559363A4272EBF740071A10D /* KulinarstvoSlasnoIEfikasno.app */,
 				559363D8272F05DC0071A10D /* KulinarstoSlasnoIEfikasnoWidgetExtension.appex */,
+				559AF15B2777876700DCDC51 /* IntentHandler.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -191,6 +218,7 @@
 			children = (
 				559363DA272F05DC0071A10D /* WidgetKit.framework */,
 				559363DC272F05DC0071A10D /* SwiftUI.framework */,
+				559AF15C2777876700DCDC51 /* Intents.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -204,6 +232,15 @@
 				559363E4272F05DF0071A10D /* Info.plist */,
 			);
 			path = KulinarstoSlasnoIEfikasnoWidget;
+			sourceTree = "<group>";
+		};
+		559AF15E2777876700DCDC51 /* IntentHandler */ = {
+			isa = PBXGroup;
+			children = (
+				559AF15F2777876700DCDC51 /* IntentHandler.swift */,
+				559AF1612777876700DCDC51 /* Info.plist */,
+			);
+			path = IntentHandler;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -222,6 +259,7 @@
 			);
 			dependencies = (
 				559363E8272F05DF0071A10D /* PBXTargetDependency */,
+				559AF1632777876700DCDC51 /* PBXTargetDependency */,
 			);
 			name = KulinarstvoSlasnoIEfikasno;
 			productName = KulinarstvoSlasnoIEfikasno;
@@ -245,6 +283,23 @@
 			productReference = 559363D8272F05DC0071A10D /* KulinarstoSlasnoIEfikasnoWidgetExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
+		559AF15A2777876700DCDC51 /* IntentHandler */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 559AF1672777876700DCDC51 /* Build configuration list for PBXNativeTarget "IntentHandler" */;
+			buildPhases = (
+				559AF1572777876700DCDC51 /* Sources */,
+				559AF1582777876700DCDC51 /* Frameworks */,
+				559AF1592777876700DCDC51 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = IntentHandler;
+			productName = IntentHandler;
+			productReference = 559AF15B2777876700DCDC51 /* IntentHandler.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -259,6 +314,9 @@
 						CreatedOnToolsVersion = 13.0;
 					};
 					559363D7272F05DC0071A10D = {
+						CreatedOnToolsVersion = 13.0;
+					};
+					559AF15A2777876700DCDC51 = {
 						CreatedOnToolsVersion = 13.0;
 					};
 				};
@@ -278,6 +336,7 @@
 			targets = (
 				559363A3272EBF740071A10D /* KulinarstvoSlasnoIEfikasno */,
 				559363D7272F05DC0071A10D /* KulinarstoSlasnoIEfikasnoWidgetExtension */,
+				559AF15A2777876700DCDC51 /* IntentHandler */,
 			);
 		};
 /* End PBXProject section */
@@ -307,6 +366,13 @@
 				550C716F2731C0890021D689 /* RecipesData.json in Resources */,
 				559363EF272F07560071A10D /* Assets.xcassets in Resources */,
 				559363E3272F05DF0071A10D /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		559AF1592777876700DCDC51 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -341,6 +407,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		559AF1572777876700DCDC51 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				559AF16827778ABD00DCDC51 /* KulinarstoSlasnoIEfikasnoWidget.intentdefinition in Sources */,
+				559AF1602777876700DCDC51 /* IntentHandler.swift in Sources */,
+				559AF1692777AB0100DCDC51 /* RecipeModel.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -348,6 +424,11 @@
 			isa = PBXTargetDependency;
 			target = 559363D7272F05DC0071A10D /* KulinarstoSlasnoIEfikasnoWidgetExtension */;
 			targetProxy = 559363E7272F05DF0071A10D /* PBXContainerItemProxy */;
+		};
+		559AF1632777876700DCDC51 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 559AF15A2777876700DCDC51 /* IntentHandler */;
+			targetProxy = 559AF1622777876700DCDC51 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -589,6 +670,54 @@
 			};
 			name = Release;
 		};
+		559AF1652777876700DCDC51 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = IntentHandler/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = IntentHandler;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bV.KulinarstvoSlasnoIEfikasno.IntentHandler;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		559AF1662777876700DCDC51 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = IntentHandler/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = IntentHandler;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bV.KulinarstvoSlasnoIEfikasno.IntentHandler;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -615,6 +744,15 @@
 			buildConfigurations = (
 				559363EB272F05DF0071A10D /* Debug */,
 				559363EC272F05DF0071A10D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		559AF1672777876700DCDC51 /* Build configuration list for PBXNativeTarget "IntentHandler" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				559AF1652777876700DCDC51 /* Debug */,
+				559AF1662777876700DCDC51 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

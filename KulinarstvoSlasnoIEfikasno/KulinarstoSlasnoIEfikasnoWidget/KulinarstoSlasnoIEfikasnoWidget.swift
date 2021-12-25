@@ -29,14 +29,9 @@ struct Provider: IntentTimelineProvider {
     }
     
     func recipe(for configuration: ConfigurationIntent) -> Recipe {
-        switch configuration.Recipe {
-        case .omlet:
-            return RecipeModel.testData[0]
-        case .pirinac:
-            return RecipeModel.testData[2]
-        default:
-            return RecipeModel.testData[0]
-        }
+        return RecipeModel.testData.first(where: {
+            $0.name == configuration.Recipe?.identifier
+        }) ?? RecipeModel.testData[0]
     }
     
     func parametereToShow(for configuration: ConfigurationIntent) -> String {

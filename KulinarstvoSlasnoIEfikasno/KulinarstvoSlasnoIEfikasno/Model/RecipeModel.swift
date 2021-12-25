@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-public struct Recipe : Codable {
+public class Recipe : Codable {
 //        var id = UUID()
     var name: String
     var prepTime: Int // In minutes
@@ -24,6 +24,14 @@ public struct Recipe : Codable {
     
     var imageName: String {
         return name
+    }
+    
+    init(name: String, prepTime: Int, ingredients: [String], steps: [String], isFavorite: Bool? = false) {
+        self.name = name
+        self.prepTime = prepTime
+        self.ingredients = ingredients
+        self.steps = steps
+        self.isFavorite = isFavorite
     }
 }
 

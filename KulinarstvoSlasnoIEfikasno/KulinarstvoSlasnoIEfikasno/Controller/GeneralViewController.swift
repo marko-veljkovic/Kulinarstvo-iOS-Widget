@@ -71,7 +71,7 @@ extension GeneralViewController : UITableViewDataSource {
         cell.title?.text = record.name
         var recipeImage = UIImage(named: record.imageName)
         
-        if recipeImage == nil, let imageData = UserDefaults.standard.object(forKey: record.imageName) as? Data {
+        if recipeImage == nil, let imageData = UserDefaults(suiteName: Datafeed.shared.kAppGroup)?.object(forKey: record.imageName) as? Data {
             recipeImage = UIImage(data: imageData)
         }
             
@@ -92,7 +92,6 @@ extension GeneralViewController : UITableViewDelegate {
 extension GeneralViewController : NewRecipeViewControllerDelegate {
     func didAddNewRecipe(_ controller: AddNewRecipeViewController, newRecipe: Recipe) {
         Datafeed.shared.recipes.append(newRecipe)
-//        self.tableView.reloadData()
     }
     
     func controllerIsDismissed(_ controller: AddNewRecipeViewController) {

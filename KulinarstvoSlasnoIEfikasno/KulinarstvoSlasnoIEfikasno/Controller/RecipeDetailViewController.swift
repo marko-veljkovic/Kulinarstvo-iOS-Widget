@@ -33,7 +33,7 @@ class RecipeDetailViewController: UIViewController {
         
         var recipeImage = UIImage(named: recipe?.imageName ?? "")
         
-        if recipeImage == nil, let imageData = UserDefaults.standard.object(forKey: recipe?.imageName ?? "") as? Data {
+        if recipeImage == nil, let imageData = UserDefaults(suiteName: Datafeed.shared.kAppGroup)?.object(forKey: recipe?.imageName ?? "") as? Data {
             recipeImage = UIImage(data: imageData)
         }
 

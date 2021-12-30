@@ -42,6 +42,7 @@
 		559AF1642777876700DCDC51 /* IntentHandler.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 559AF15B2777876700DCDC51 /* IntentHandler.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		559AF16827778ABD00DCDC51 /* KulinarstoSlasnoIEfikasnoWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 559363E1272F05DC0071A10D /* KulinarstoSlasnoIEfikasnoWidget.intentdefinition */; };
 		559AF1692777AB0100DCDC51 /* RecipeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559363CE272EF89C0071A10D /* RecipeModel.swift */; };
+		559AF16C2778F95800DCDC51 /* RecipesData.json in Resources */ = {isa = PBXBuildFile; fileRef = 550C716D2731C0890021D689 /* RecipesData.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -110,6 +111,9 @@
 		559AF15C2777876700DCDC51 /* Intents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intents.framework; path = System/Library/Frameworks/Intents.framework; sourceTree = SDKROOT; };
 		559AF15F2777876700DCDC51 /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
 		559AF1612777876700DCDC51 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		559AF16D27791C1F00DCDC51 /* KulinarstvoSlasnoIEfikasno.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = KulinarstvoSlasnoIEfikasno.entitlements; sourceTree = "<group>"; };
+		55FB9D7E277E227900B536F7 /* KulinarstoSlasnoIEfikasnoWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = KulinarstoSlasnoIEfikasnoWidgetExtension.entitlements; sourceTree = "<group>"; };
+		55FB9D7F277E22A500B536F7 /* IntentHandler.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = IntentHandler.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,6 +147,7 @@
 		5593639B272EBF730071A10D = {
 			isa = PBXGroup;
 			children = (
+				55FB9D7E277E227900B536F7 /* KulinarstoSlasnoIEfikasnoWidgetExtension.entitlements */,
 				559363A6272EBF740071A10D /* KulinarstvoSlasnoIEfikasno */,
 				559363DE272F05DC0071A10D /* KulinarstoSlasnoIEfikasnoWidget */,
 				559AF15E2777876700DCDC51 /* IntentHandler */,
@@ -164,6 +169,7 @@
 		559363A6272EBF740071A10D /* KulinarstvoSlasnoIEfikasno */ = {
 			isa = PBXGroup;
 			children = (
+				559AF16D27791C1F00DCDC51 /* KulinarstvoSlasnoIEfikasno.entitlements */,
 				559363C1272EE2090071A10D /* Model */,
 				559363BF272EE1FC0071A10D /* View */,
 				559363C0272EE2020071A10D /* Controller */,
@@ -237,6 +243,7 @@
 		559AF15E2777876700DCDC51 /* IntentHandler */ = {
 			isa = PBXGroup;
 			children = (
+				55FB9D7F277E22A500B536F7 /* IntentHandler.entitlements */,
 				559AF15F2777876700DCDC51 /* IntentHandler.swift */,
 				559AF1612777876700DCDC51 /* Info.plist */,
 			);
@@ -373,6 +380,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				559AF16C2778F95800DCDC51 /* RecipesData.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -567,8 +575,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+				CODE_SIGN_ENTITLEMENTS = KulinarstvoSlasnoIEfikasno/KulinarstvoSlasnoIEfikasno.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = L493S5S723;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = KulinarstvoSlasnoIEfikasno/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Kulinarstvo - slasno i efikasno";
@@ -596,8 +606,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+				CODE_SIGN_ENTITLEMENTS = KulinarstvoSlasnoIEfikasno/KulinarstvoSlasnoIEfikasno.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = L493S5S723;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = KulinarstvoSlasnoIEfikasno/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Kulinarstvo - slasno i efikasno";
@@ -623,8 +635,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = KulinarstoSlasnoIEfikasnoWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = L493S5S723;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = KulinarstoSlasnoIEfikasnoWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = KulinarstoSlasnoIEfikasnoWidget;
@@ -649,8 +663,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = KulinarstoSlasnoIEfikasnoWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = L493S5S723;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = KulinarstoSlasnoIEfikasnoWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = KulinarstoSlasnoIEfikasnoWidget;
@@ -673,8 +689,10 @@
 		559AF1652777876700DCDC51 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = IntentHandler/IntentHandler.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = L493S5S723;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = IntentHandler/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = IntentHandler;
@@ -697,8 +715,10 @@
 		559AF1662777876700DCDC51 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = IntentHandler/IntentHandler.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = L493S5S723;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = IntentHandler/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = IntentHandler;

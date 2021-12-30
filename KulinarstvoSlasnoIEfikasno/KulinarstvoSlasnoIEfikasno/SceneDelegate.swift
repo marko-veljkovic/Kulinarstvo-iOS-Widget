@@ -101,12 +101,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         topLevel = ["recipes" : topLevelRecipes]
         
         do {
-            let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
+            let dir = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: Datafeed.shared.kAppGroup) //FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
             let fileURL = dir?.appendingPathComponent("RecipesData.json")
             
-            
-//            let path = Bundle.main.path(forResource: "RecipesData", ofType: "json")
-//            let jsonURL = URL(fileURLWithPath: path ?? "")
             let jsonData = try JSONSerialization.data(withJSONObject: topLevel, options: .prettyPrinted)
             try jsonData.write(to: fileURL!)
         }

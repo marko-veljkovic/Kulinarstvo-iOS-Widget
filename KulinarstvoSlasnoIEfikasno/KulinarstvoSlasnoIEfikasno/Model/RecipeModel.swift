@@ -77,7 +77,7 @@ class RecipeModel {
     
     func loadFile() {
         do {
-            let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
+            let dir = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: Datafeed.shared.kAppGroup) //FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
             let fileURL = dir?.appendingPathComponent("RecipesData.json")
             
             //If file exist in document directory
@@ -168,6 +168,8 @@ class Datafeed {
             return filtered
         }
     }
+    
+    let kAppGroup = "group.com.kulinarstvo_slasno_i_efikasno"
 }
 
 extension Datafeed : RecipeModelDelegate {

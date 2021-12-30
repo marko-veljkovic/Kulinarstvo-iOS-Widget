@@ -119,7 +119,8 @@ extension AddNewRecipeViewController : UIImagePickerControllerDelegate, UINaviga
         }
         
         let data = UIImage.pngData(image)
-        UserDefaults.standard.set(data(), forKey: recipeName)
+        UserDefaults(suiteName: Datafeed.shared.kAppGroup)?.set(data(), forKey: recipeName)
+//        UserDefaults.standard.set(data(), forKey: recipeName)
     }
 }
 

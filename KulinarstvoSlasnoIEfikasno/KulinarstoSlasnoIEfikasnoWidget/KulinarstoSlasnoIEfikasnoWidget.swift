@@ -249,7 +249,7 @@ struct Kulinarstvo_widget: Widget {
 struct Kulinarstvo_widget_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            Kulinarstvo_widgetEntryView(entry: SimpleEntry(date: Date(), configuration: ConfigurationIntent(), recipe: Datafeed.shared.favRecipes.count > 0 ? Datafeed.shared.favRecipes.first! : RecipeModel.testData.last!, parameterToShow: "Sastojci"))
+            Kulinarstvo_widgetEntryView(entry: SimpleEntry(date: Date(), configuration: ConfigurationIntent(), recipe: RecipeModel.testData.first!, parameterToShow: "Sastojci"))
                 .previewContext(WidgetPreviewContext(family: .systemMedium))
             
 //            Kulinarstvo_widgetEntryView(entry: SimpleEntry(date: Date(), configuration: ConfigurationIntent(), recipe: RecipeModel.testData[0]))

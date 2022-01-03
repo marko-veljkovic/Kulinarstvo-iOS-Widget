@@ -25,7 +25,6 @@ extension IntentHandler : ConfigurationIntentHandling {
         
     }
     
-    
     func provideRecipeOptionsCollection(for intent: ConfigurationIntent, with completion: @escaping (INObjectCollection<ReceptTip>?, Error?) -> Void) {
         
         let recipes = Datafeed.shared.favRecipes.map { recipe in

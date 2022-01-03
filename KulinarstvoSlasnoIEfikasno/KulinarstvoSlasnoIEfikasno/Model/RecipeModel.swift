@@ -19,7 +19,7 @@ public class Recipe : Codable {
     var isFavorite: Bool?
     
     var url: URL? {
-        return URL(string: "kulinarstvoslasnoiefikasno://" + name)
+        return URL(string: "kulinarstvoslasnoiefikasno://" + name.replacingOccurrences(of: " ", with: "_"))
     }
     
     var imageName: String {

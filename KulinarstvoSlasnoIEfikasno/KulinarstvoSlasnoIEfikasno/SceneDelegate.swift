@@ -27,6 +27,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        
+        if !Datafeed.shared.recipeModel.isLoaded {
+            Datafeed.shared.recipeModel.loadFile()
+        }
+        
         self.shouldSave = true
         
         guard let url = URLContexts.first?.url else {
@@ -34,7 +39,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
         let urlStr = url.absoluteString
         
-        guard let recipe = RecipeModel.testData.first(where: {$0.url?.absoluteString == urlStr}) else {
+        guard let recipe = Datafeed.shared.favRecipes.first(where: {$0.url?.absoluteString == urlStr}) else {
             return
         }
         

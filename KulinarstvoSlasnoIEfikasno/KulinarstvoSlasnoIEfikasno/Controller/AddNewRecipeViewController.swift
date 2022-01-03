@@ -35,7 +35,7 @@ class AddNewRecipeViewController : UIViewController {
     var ingrediantsNumber = 3
     var stepsNumber = 3
     
-    var ingrediantsMap: [String : String] = ["0":"", "1":"", "2":""]
+    var ingrediantsMap: [String : Ingredient] = ["0":Ingredient(quantity: 0, measureUnit: "", ingredient: ""), "1":Ingredient(quantity: 0, measureUnit: "", ingredient: ""), "2":Ingredient(quantity: 0, measureUnit: "", ingredient: "")]
     var stepsMap: [String : String] = ["0":"", "1":"", "2":""]
     
     var isCurrentFavorites = true
@@ -69,14 +69,14 @@ class AddNewRecipeViewController : UIViewController {
         let sortedIngrediants = self.ingrediantsMap.sorted(by: {Int($0.key) ?? 0 < Int($1.key) ?? 0})
         let sortedSteps = self.stepsMap.sorted(by: {Int($0.key) ?? 0 < Int($1.key) ?? 0})
         
-        var ingrediantsArray: [String] = []
+        var ingrediantsArray: [Ingredient] = []
         var stepsArray: [String] = []
         
-        for ingrediant in sortedIngrediants {
-            ingrediantsArray.append(ingrediant.value)
+        for ingrediant in sortedIngrediants where ingrediant.value.quantity != 0 {
+            ingrediantsArray.append(Ingredient(quantity: ingrediant.value.quantity, measureUnit: ingrediant.value.measureUnit, ingredient: ingrediant.value.ingredient))
         }
         
-        for step in sortedSteps {
+        for step in sortedSteps where step.value != "" {
             stepsArray.append(step.value)
         }
         
@@ -101,7 +101,6 @@ class AddNewRecipeViewController : UIViewController {
         
         self.present(self.imagePicker, animated: true, completion: nil)
     }
-    
 }
 
 extension AddNewRecipeViewController : UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -144,21 +143,29 @@ extension AddNewRecipeViewController : UITableViewDataSource {
         cell.delegate = self
         
         if tableView === self.ingredientsTableView {
+            
+            cell.quantityTextField.placeholder = "Kolicina"
+            cell.cellTextField.placeholder = "Jedinica mere"
+            cell.ingredientTextField.placeholder = "Sastojak"
+            
             let record = self.ingrediantsMap[String(indexPath.row)]
             if record != nil {
-                cell.cellTextField.text = record
-            }
-            else {
-                cell.cellTextField.text = ""
+                cell.cellTextField.text = record!.measureUnit
+                cell.ingredientTextField.text = record!.ingredient
+                if record?.quantity != 0 {
+                    cell.quantityTextField.text = String(record!.quantity)
+                }
             }
         }
         else if tableView === self.stepsTableView {
+            cell.quantityTextField.isHidden = true
+            cell.ingredientTextField.isHidden = true
             let record = self.stepsMap[String(indexPath.row)]
             if record != nil {
                 cell.cellTextField.text = record
             }
             else {
-                cell.cellTextField.text = ""
+                cell.cellTextField.placeholder = "Korak"
             }
         }
         
@@ -184,23 +191,31 @@ extension AddNewRecipeViewController : AddNewRecipeTableViewCellDelegate {
         }
     }
     
-    func textFieldDidEndEditingInCell(_ tableViewCell: UITableViewCell, _ tableView: UITableView?, _ text: String?, _ textField: UITextField) {
+    func textFieldDidEndEditingInCell(_ tableViewCell: UITableViewCell, _ tableView: UITableView?, _ text: String?, _ textField: UITextField, isMeasure: Bool, isIngredient: Bool) {
         
         guard let localText = text, localText != "" else {
             return
         }
         
         //Hacky way of getting indexPath, get textfield superview (cell content) and then it super view (cell)
-        guard let index = tableView?.indexPathForRow(at: textField.superview?.superview?.frame.origin ?? CGPoint(x: 0, y: 0)) else {
+        guard let index = tableView?.indexPathForRow(at: textField.superview?.superview?.superview?.frame.origin ?? CGPoint(x: 0, y: 0)) else {
             return
         }
         let rowIndex = index.row
         
         if tableView === self.ingredientsTableView {
-            self.ingrediantsMap[String(rowIndex)] = text
+            if isMeasure {
+                self.ingrediantsMap[String(rowIndex)]?.measureUnit = localText
+            }
+            else if isIngredient {
+                self.ingrediantsMap[String(rowIndex)]?.ingredient = localText
+            }
+            else {
+                self.ingrediantsMap[String(rowIndex)]?.quantity = Int(localText) ?? 0
+            }
         }
         else if tableView === self.stepsTableView {
-            self.stepsMap[String(rowIndex)] = text
+            self.stepsMap[String(rowIndex)] = localText
         }
         
     }

@@ -3,7 +3,7 @@
         {
             "name": "Omlet",
             "prepTime": 15,
-            "ingredients": ["3 jaja", "1 paradajz"],
+            "ingredients": ["3_komada_jaja", "1_komad_paradajz"],
             "steps": ["Izmutiti jaja sitno i brzo", "Dodati sitno", "Sipati u tiganj i prziti"],
             "isFavorite": true
         },
@@ -17,7 +17,7 @@
         {
             "name": "Pirinac",
             "prepTime": 25,
-            "ingredients": ["Pirinac", "Pirinac", "Pirinac", "Pirinac", "Pirinac", "Pirinac", "Pirinac", "Pirinac", "Pirinac", "Pirinac"],
+            "ingredients": ["200_grama_Pirinac"],
             "steps": ["Dodati pirinac", "Dodati pirinac", "Dodati pirinac", "Dodati pirinac", "Dodati pirinac", "Dodati pirinac", "Dodati pirinac", "Dodati pirinac", "Dodati pirinac", "Dodati pirinac"],
             "isFavorite": false
         },

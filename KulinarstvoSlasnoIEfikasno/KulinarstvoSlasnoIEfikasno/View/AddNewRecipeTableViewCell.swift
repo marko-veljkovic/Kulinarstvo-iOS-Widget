@@ -9,7 +9,7 @@ import UIKit
 
 protocol AddNewRecipeTableViewCellDelegate : AnyObject {
     func addNewTextField(_ tableViewCell: UITableViewCell, _ tableView: UITableView?)
-    func textFieldDidEndEditingInCell(_ tableViewCell: UITableViewCell, _ tableView: UITableView?, _ text: String?, _ textField: UITextField)
+    func textFieldDidEndEditingInCell(_ tableViewCell: UITableViewCell, _ tableView: UITableView?, _ text: String?, _ textField: UITextField, isMeasure: Bool, isIngredient: Bool)
 }
 
 class AddNewRecipeTableViewCell: UITableViewCell {
@@ -18,10 +18,14 @@ class AddNewRecipeTableViewCell: UITableViewCell {
     
     @IBOutlet weak var cellTextField: UITextField!
     @IBOutlet weak var addNewTextFieldButton: UIButton!
+    @IBOutlet weak var quantityTextField: UITextField!
+    @IBOutlet weak var ingredientTextField: UITextField!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         cellTextField.delegate = self
+        quantityTextField.delegate = self
+        ingredientTextField.delegate = self
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -36,6 +40,6 @@ class AddNewRecipeTableViewCell: UITableViewCell {
 
 extension AddNewRecipeTableViewCell : UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
-        self.delegate?.textFieldDidEndEditingInCell(self, self.superview as? UITableView, textField.text, textField)
+        self.delegate?.textFieldDidEndEditingInCell(self, self.superview as? UITableView, textField.text, textField, isMeasure: textField === self.cellTextField, isIngredient: textField === self.ingredientTextField)
     }
 }

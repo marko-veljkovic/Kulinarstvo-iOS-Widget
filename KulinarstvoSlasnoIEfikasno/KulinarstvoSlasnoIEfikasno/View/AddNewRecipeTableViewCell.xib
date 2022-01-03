@@ -17,11 +17,26 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NQa-Cv-srN">
+                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="BEy-2t-J3O">
                         <rect key="frame" x="5" y="5" width="271" height="34"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <textInputTraits key="textInputTraits"/>
-                    </textField>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vAJ-LE-oAx" userLabel="Quantity Text Field">
+                                <rect key="frame" x="0.0" y="0.0" width="89" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NQa-Cv-srN">
+                                <rect key="frame" x="91" y="0.0" width="89" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="g8p-yd-QmK" userLabel="Ingredient Text Field">
+                                <rect key="frame" x="182" y="0.0" width="89" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
+                    </stackView>
                     <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i0q-iO-HOe">
                         <rect key="frame" x="281" y="5" width="34" height="34"/>
                         <constraints>
@@ -40,19 +55,21 @@
                     </button>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="NQa-Cv-srN" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="03u-ou-gAw"/>
+                    <constraint firstItem="BEy-2t-J3O" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="5" id="D7B-rg-Yj1"/>
                     <constraint firstAttribute="bottom" secondItem="i0q-iO-HOe" secondAttribute="bottom" constant="5" id="FH2-3C-4YT"/>
                     <constraint firstAttribute="trailing" secondItem="i0q-iO-HOe" secondAttribute="trailing" constant="5" id="KJg-Zs-yMi"/>
-                    <constraint firstAttribute="bottom" secondItem="NQa-Cv-srN" secondAttribute="bottom" constant="5" id="Mwa-sn-Kmf"/>
                     <constraint firstItem="i0q-iO-HOe" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="QQY-29-I5r"/>
-                    <constraint firstItem="NQa-Cv-srN" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="5" id="SGc-af-TbB"/>
-                    <constraint firstItem="i0q-iO-HOe" firstAttribute="leading" secondItem="NQa-Cv-srN" secondAttribute="trailing" constant="5" id="WKB-DY-Ifp"/>
+                    <constraint firstAttribute="bottom" secondItem="BEy-2t-J3O" secondAttribute="bottom" constant="5" id="cTh-eI-QzE"/>
+                    <constraint firstItem="i0q-iO-HOe" firstAttribute="leading" secondItem="BEy-2t-J3O" secondAttribute="trailing" constant="5" id="el4-iI-cf5"/>
+                    <constraint firstItem="BEy-2t-J3O" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="kh2-GZ-stb"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="addNewTextFieldButton" destination="i0q-iO-HOe" id="hS3-Mr-zoL"/>
                 <outlet property="cellTextField" destination="NQa-Cv-srN" id="uCY-gp-4sJ"/>
+                <outlet property="ingredientTextField" destination="g8p-yd-QmK" id="fZQ-JA-zyf"/>
+                <outlet property="quantityTextField" destination="vAJ-LE-oAx" id="hdh-6S-F60"/>
             </connections>
             <point key="canvasLocation" x="139" y="140"/>
         </tableViewCell>

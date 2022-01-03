@@ -60,9 +60,11 @@ extension RecipeDetailViewController : UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
         
-        let wantedList = indexPath.section == 0 ? self.recipe?.ingredients : self.recipe?.steps
+        let wantedList = indexPath.section == 0 ? self.recipe?.stringIngredients : self.recipe?.steps
         
-        cell.textLabel?.text = wantedList?[indexPath.row]
+        if indexPath.section != 0 || self.recipe?.ingredients[indexPath.row].quantity != 0 {
+            cell.textLabel?.text = wantedList?[indexPath.row]
+        }
         return cell
     }
     

@@ -11,19 +11,15 @@ class GeneralViewController: UIViewController {
     
     var addNewRecipeViewController: AddNewRecipeViewController?
     
-//    lazy var recipeModel: RecipeModel = {
-//        var model = RecipeModel()
-//        model.delegate = self
-//        return model
-//    }()
-    
     var isFavorites: Bool
+    var isMyRecipes: Bool
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var addNewRecipeButton: UIButton!
     
-    init(isFavorites: Bool) {
+    init(isFavorites: Bool = false, isMyRecipes: Bool = false) {
         self.isFavorites = isFavorites
+        self.isMyRecipes = isMyRecipes
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -46,7 +42,7 @@ class GeneralViewController: UIViewController {
         self.tableView.dataSource = self
         self.tableView.register(UINib(nibName: "RecipeTableViewCell", bundle: nil), forCellReuseIdentifier: "RecipeCell")
         
-        self.addNewRecipeButton.isHidden = !self.isFavorites
+        self.addNewRecipeButton.isHidden = !self.isMyRecipes
     }
     
     @IBAction func addNewRecipeButtonClicked(_ sender: Any) {
@@ -60,13 +56,15 @@ class GeneralViewController: UIViewController {
 
 extension GeneralViewController : UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.isFavorites ? Datafeed.shared.favRecipes.count : Datafeed.shared.recipes.count
+        return self.isFavorites ? Datafeed.shared.favRecipes.count : self.isMyRecipes ? Datafeed.shared.myRecipes.count : Datafeed.shared.recipes.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "RecipeCell") as! RecipeTableViewCell
         
-        let record = self.isFavorites ? Datafeed.shared.favRecipes[indexPath.row] : Datafeed.shared.recipes[indexPath.row]
+        let record = self.isFavorites ? Datafeed.shared.favRecipes[indexPath.row] :
+                     self.isMyRecipes ? Datafeed.shared.myRecipes[indexPath.row] :
+                                        Datafeed.shared.recipes[indexPath.row]
         
         cell.title?.text = record.name
         var recipeImage = UIImage(named: record.imageName)
@@ -84,7 +82,7 @@ extension GeneralViewController : UITableViewDataSource {
 extension GeneralViewController : UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.tableView.deselectRow(at: indexPath, animated: false)
-        let destination = RecipeDetailViewController(recipe: self.isFavorites ? Datafeed.shared.favRecipes[indexPath.row] : Datafeed.shared.recipes[indexPath.row])
+        let destination = RecipeDetailViewController(recipe: self.isFavorites ? Datafeed.shared.favRecipes[indexPath.row] : self.isMyRecipes ? Datafeed.shared.myRecipes[indexPath.row] : Datafeed.shared.recipes[indexPath.row])
         self.navigationController?.pushViewController(destination, animated: true)
     }
 }

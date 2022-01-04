@@ -5,35 +5,40 @@
             "prepTime": 15,
             "ingredients": ["3_komada_jaja", "1_komad_paradajz"],
             "steps": ["Izmutiti jaja sitno i brzo", "Dodati sitno", "Sipati u tiganj i prziti"],
-            "isFavorite": true
+            "isFavorite": true,
+            "isMyRecipe": false
         },
         {
             "name": "Spagete karbonare",
             "prepTime": 45,
             "ingredients": [],
             "steps": [],
-            "isFavorite": true
+            "isFavorite": true,
+            "isMyRecipe": false
         },
         {
             "name": "Pirinac",
             "prepTime": 25,
             "ingredients": ["200_grama_Pirinac"],
             "steps": ["Dodati pirinac", "Dodati pirinac", "Dodati pirinac", "Dodati pirinac", "Dodati pirinac", "Dodati pirinac", "Dodati pirinac", "Dodati pirinac", "Dodati pirinac", "Dodati pirinac"],
-            "isFavorite": false
+            "isFavorite": false,
+            "isMyRecipe": false
         },
         {
             "name": "Mesano povrce",
             "prepTime": 30,
             "ingredients": [],
             "steps": [],
-            "isFavorite": false
+            "isFavorite": false,
+            "isMyRecipe": true
         },
         {
             "name": "Sendvic",
             "prepTime": 5,
             "ingredients": [],
             "steps": [],
-            "isFavorite": true
+            "isFavorite": true,
+            "isMyRecipe": false
         },
     ]
 }

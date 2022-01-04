@@ -15,8 +15,6 @@
 		559363B4272EBF760071A10D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 559363B2272EBF760071A10D /* LaunchScreen.storyboard */; };
 		559363BD272ED7E20071A10D /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559363BB272ED7E20071A10D /* TabBarViewController.swift */; };
 		559363BE272ED7E20071A10D /* TabBarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 559363BC272ED7E20071A10D /* TabBarViewController.xib */; };
-		559363C4272EE2460071A10D /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559363C2272EE2460071A10D /* FavoritesViewController.swift */; };
-		559363C5272EE2460071A10D /* FavoritesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 559363C3272EE2460071A10D /* FavoritesViewController.xib */; };
 		559363C8272EE26B0071A10D /* GeneralViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559363C6272EE26B0071A10D /* GeneralViewController.swift */; };
 		559363C9272EE26B0071A10D /* GeneralViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 559363C7272EE26B0071A10D /* GeneralViewController.xib */; };
 		559363CC272EE8EC0071A10D /* RecipeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559363CA272EE8EC0071A10D /* RecipeTableViewCell.swift */; };
@@ -87,8 +85,6 @@
 		559363B5272EBF760071A10D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		559363BB272ED7E20071A10D /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		559363BC272ED7E20071A10D /* TabBarViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TabBarViewController.xib; sourceTree = "<group>"; };
-		559363C2272EE2460071A10D /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
-		559363C3272EE2460071A10D /* FavoritesViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FavoritesViewController.xib; sourceTree = "<group>"; };
 		559363C6272EE26B0071A10D /* GeneralViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralViewController.swift; sourceTree = "<group>"; };
 		559363C7272EE26B0071A10D /* GeneralViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GeneralViewController.xib; sourceTree = "<group>"; };
 		559363CA272EE8EC0071A10D /* RecipeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeTableViewCell.swift; sourceTree = "<group>"; };
@@ -187,7 +183,6 @@
 			isa = PBXGroup;
 			children = (
 				559363BC272ED7E20071A10D /* TabBarViewController.xib */,
-				559363C3272EE2460071A10D /* FavoritesViewController.xib */,
 				559363C7272EE26B0071A10D /* GeneralViewController.xib */,
 				559363CA272EE8EC0071A10D /* RecipeTableViewCell.swift */,
 				559363CB272EE8EC0071A10D /* RecipeTableViewCell.xib */,
@@ -203,7 +198,6 @@
 			isa = PBXGroup;
 			children = (
 				559363BB272ED7E20071A10D /* TabBarViewController.swift */,
-				559363C2272EE2460071A10D /* FavoritesViewController.swift */,
 				559363C6272EE26B0071A10D /* GeneralViewController.swift */,
 				559363D0272EFC440071A10D /* RecipeDetailViewController.swift */,
 				559363F0272F3FC10071A10D /* AddNewRecipeViewController.swift */,
@@ -360,7 +354,6 @@
 				559363C9272EE26B0071A10D /* GeneralViewController.xib in Resources */,
 				550C716E2731C0890021D689 /* RecipesData.json in Resources */,
 				559363BE272ED7E20071A10D /* TabBarViewController.xib in Resources */,
-				559363C5272EE2460071A10D /* FavoritesViewController.xib in Resources */,
 				559363B1272EBF760071A10D /* Assets.xcassets in Resources */,
 				559363CD272EE8EC0071A10D /* RecipeTableViewCell.xib in Resources */,
 			);
@@ -400,7 +393,6 @@
 				559363CC272EE8EC0071A10D /* RecipeTableViewCell.swift in Sources */,
 				559363F2272F3FC10071A10D /* AddNewRecipeViewController.swift in Sources */,
 				559363E6272F05DF0071A10D /* KulinarstoSlasnoIEfikasnoWidget.intentdefinition in Sources */,
-				559363C4272EE2460071A10D /* FavoritesViewController.swift in Sources */,
 				559363AA272EBF740071A10D /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

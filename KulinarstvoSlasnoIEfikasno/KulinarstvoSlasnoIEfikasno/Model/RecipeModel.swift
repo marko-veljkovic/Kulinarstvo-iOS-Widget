@@ -17,6 +17,7 @@ public class Recipe : Codable {
     var steps: [String]
     
     var isFavorite: Bool?
+    var isMyRecipe: Bool?
     
     var stringIngredients: [String] {
         var stringIngredients: [String] = []
@@ -35,12 +36,13 @@ public class Recipe : Codable {
         return name
     }
     
-    init(name: String, prepTime: Int, ingredients: [Ingredient], steps: [String], isFavorite: Bool? = false) {
+    init(name: String, prepTime: Int, ingredients: [Ingredient], steps: [String], isFavorite: Bool? = false, isMyRecipe: Bool? = false) {
         self.name = name
         self.prepTime = prepTime
         self.ingredients = ingredients
         self.steps = steps
         self.isFavorite = isFavorite
+        self.isMyRecipe = isMyRecipe
     }
 }
 
@@ -159,6 +161,8 @@ class RecipeModel {
                 rec.steps = (r["steps"] as? [String] ?? [])
             case "isFavorite":
                 rec.isFavorite = (r["isFavorite"] as? Bool ?? false)
+            case "isMyRecipe":
+                rec.isMyRecipe = (r["isMyRecipe"] as? Bool ?? false)
             default:
                 ()
             }
@@ -197,6 +201,15 @@ class Datafeed {
         get {
             let filtered = self.recipes.filter {
                 $0.isFavorite ?? false
+            }
+            return filtered
+        }
+    }
+    
+    var myRecipes: [Recipe] {
+        get {
+            let filtered = self.recipes.filter {
+                $0.isMyRecipe ?? false
             }
             return filtered
         }

@@ -9,8 +9,8 @@ import UIKit
 
 class TabBarViewController: UITabBarController {
     
-    var generalNavigationController: UINavigationController = {
-        let generalViewController = GeneralViewController(isFavorites: false)
+    let generalNavigationController: UINavigationController = {
+        let generalViewController = GeneralViewController()
         generalViewController.navigationItem.title = "Pregled"
         let navigationController = UINavigationController(rootViewController: generalViewController)
         navigationController.title = "Pregled"
@@ -18,7 +18,7 @@ class TabBarViewController: UITabBarController {
         return navigationController
     }()
     
-    var favoritesNavigationController: UINavigationController = {
+    let favoritesNavigationController: UINavigationController = {
         let favoritesViewController = GeneralViewController(isFavorites: true)
         favoritesViewController.navigationItem.title = "Omiljeno"
         let navigationController = UINavigationController(rootViewController: favoritesViewController)
@@ -27,10 +27,19 @@ class TabBarViewController: UITabBarController {
         return navigationController
     }()
     
+    let myRecipesNavigationController: UINavigationController = {
+        let myRecipesViewController = GeneralViewController(isMyRecipes: true)
+        myRecipesViewController.navigationItem.title = "Moji recepti"
+        let navigationController = UINavigationController(rootViewController: myRecipesViewController)
+        navigationController.title = "Moji recepti"
+        navigationController.tabBarItem.image = UIImage(systemName: "person.fill")
+        return navigationController
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.viewControllers = [generalNavigationController, favoritesNavigationController]
+        self.viewControllers = [generalNavigationController, favoritesNavigationController, myRecipesNavigationController]
     }
     
     func generate(vc: UIViewController, title: String, imageName: String) -> UINavigationController {

@@ -80,9 +80,9 @@ class AddNewRecipeViewController : UIViewController {
             stepsArray.append(step.value)
         }
         
-        let newRecipe = Recipe(name: recipeName, prepTime: Int(recipePrepTime) ?? 0, ingredients: ingrediantsArray, steps: stepsArray, isFavorite: self.isCurrentFavorites)
+        let newRecipe = Recipe(name: recipeName, prepTime: Int(recipePrepTime) ?? 0, ingredients: ingrediantsArray, steps: stepsArray, isFavorite: self.isCurrentFavorites, isMyRecipe: true)
         
-        RecipeModel.myTestData.append(newRecipe)
+//        RecipeModel.myTestData.append(newRecipe)
         
         self.delegate?.didAddNewRecipe(self, newRecipe: newRecipe)
         

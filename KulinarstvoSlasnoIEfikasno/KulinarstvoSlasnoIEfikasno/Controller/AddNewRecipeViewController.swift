@@ -28,6 +28,8 @@ class AddNewRecipeViewController : UIViewController {
     @IBOutlet weak var chooseImageButton: UIButton!
     @IBOutlet weak var recipeImageView: UIImageView!
     
+    @IBOutlet weak var categoryPickerView: UIPickerView!
+    
     var imagePicker = UIImagePickerController()
     
     weak var delegate: NewRecipeViewControllerDelegate?
@@ -39,6 +41,8 @@ class AddNewRecipeViewController : UIViewController {
     var stepsMap: [String : String] = ["0":"", "1":"", "2":""]
     
     var isCurrentFavorites = true
+    
+    var recipeCategory = RecipeCategory.snack
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,6 +60,9 @@ class AddNewRecipeViewController : UIViewController {
         self.stepsTableView.register(UINib(nibName: "AddNewRecipeTableViewCell", bundle: nil), forCellReuseIdentifier: "textFieldCell")
         
         self.addNewRecipeButton.titleLabel?.text = "Dodaj"
+        
+        self.categoryPickerView.delegate = self
+        self.categoryPickerView.dataSource = self
     }
 
     @IBAction func addNewRecipeButtonClicked(_ sender: Any) {
@@ -80,9 +87,7 @@ class AddNewRecipeViewController : UIViewController {
             stepsArray.append(step.value)
         }
         
-        let newRecipe = Recipe(name: recipeName, prepTime: Int(recipePrepTime) ?? 0, ingredients: ingrediantsArray, steps: stepsArray, isFavorite: self.isCurrentFavorites, isMyRecipe: true)
-        
-//        RecipeModel.myTestData.append(newRecipe)
+        let newRecipe = Recipe(name: recipeName, prepTime: Int(recipePrepTime) ?? 0, ingredients: ingrediantsArray, steps: stepsArray, isFavorite: self.isCurrentFavorites, isMyRecipe: true, category: self.recipeCategory)
         
         self.delegate?.didAddNewRecipe(self, newRecipe: newRecipe)
         
@@ -218,5 +223,45 @@ extension AddNewRecipeViewController : AddNewRecipeTableViewCellDelegate {
             self.stepsMap[String(rowIndex)] = localText
         }
         
+    }
+}
+
+extension AddNewRecipeViewController : UIPickerViewDelegate {
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        let category = RecipeCategory(rawValue: row) ?? .snack
+        switch category {
+        case .coldSideDish:
+            return "Hladno predjelo"
+        case .warmSideDish:
+            return "Toplo predjelo"
+        case .mainDish:
+            return "Glavno jelo"
+        case .snack:
+            return "Uzina"
+        case .drink:
+            return "Pice"
+        case .soup:
+            return "Supe i corbe"
+        case .dessert:
+            return "Dezert"
+        case .salad:
+            return "Salata"
+        case .bread:
+            return "Hleba"
+        }
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        self.recipeCategory = RecipeCategory(rawValue: row) ?? .snack
+    }
+}
+
+extension AddNewRecipeViewController : UIPickerViewDataSource {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return RecipeCategory.allCases.count
     }
 }

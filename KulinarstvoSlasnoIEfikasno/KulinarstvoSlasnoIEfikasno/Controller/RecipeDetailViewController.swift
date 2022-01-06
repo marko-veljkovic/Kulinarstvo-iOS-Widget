@@ -10,6 +10,7 @@ import UIKit
 class RecipeDetailViewController: UIViewController {
 
     @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var categoryLabel: UILabel!
     @IBOutlet weak var recipeImageView: UIImageView!
     @IBOutlet weak var tableView: UITableView!
     
@@ -31,6 +32,30 @@ class RecipeDetailViewController: UIViewController {
         
         self.titleLabel?.text = recipe?.name
         
+        let recipeCategory = recipe?.category ?? .snack
+        self.categoryLabel.text = {
+            switch recipeCategory {
+            case .coldSideDish:
+                return "Hladno predjelo"
+            case .warmSideDish:
+                return "Toplo predjelo"
+            case .mainDish:
+                return "Glavno jelo"
+            case .snack:
+                return "Uzina"
+            case .drink:
+                return "Pice"
+            case .soup:
+                return "Supe i corbe"
+            case .dessert:
+                return "Dezert"
+            case .salad:
+                return "Salata"
+            case .bread:
+                return "Hleba"
+            }
+        }()
+        
         var recipeImage = UIImage(named: recipe?.imageName ?? "")
         
         if recipeImage == nil, let imageData = UserDefaults(suiteName: Datafeed.shared.kAppGroup)?.object(forKey: recipe?.imageName ?? "") as? Data {
@@ -39,8 +64,6 @@ class RecipeDetailViewController: UIViewController {
 
         self.recipeImageView.image = recipeImage //UIImage(named: recipe?.imageName ?? "")
     }
-
-
 }
 
 extension RecipeDetailViewController : UITableViewDataSource {

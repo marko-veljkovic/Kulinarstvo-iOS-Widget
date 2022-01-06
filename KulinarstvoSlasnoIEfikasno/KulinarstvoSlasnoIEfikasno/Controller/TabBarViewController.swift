@@ -20,9 +20,9 @@ class TabBarViewController: UITabBarController {
     
     let favoritesNavigationController: UINavigationController = {
         let favoritesViewController = GeneralViewController(isFavorites: true)
-        favoritesViewController.navigationItem.title = "Omiljeno"
+        favoritesViewController.navigationItem.title = "Omiljeni recepti"
         let navigationController = UINavigationController(rootViewController: favoritesViewController)
-        navigationController.title = "Omiljeno"
+        navigationController.title = "Omiljeni recepti"
         navigationController.tabBarItem.image = UIImage(systemName: "star.fill")
         return navigationController
     }()

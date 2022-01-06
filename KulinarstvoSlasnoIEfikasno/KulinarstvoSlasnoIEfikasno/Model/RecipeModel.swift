@@ -19,6 +19,8 @@ public class Recipe : Codable {
     var isFavorite: Bool?
     var isMyRecipe: Bool?
     
+    var category: RecipeCategory?
+    
     var stringIngredients: [String] {
         var stringIngredients: [String] = []
         for ingredient in self.ingredients {
@@ -36,13 +38,14 @@ public class Recipe : Codable {
         return name
     }
     
-    init(name: String, prepTime: Int, ingredients: [Ingredient], steps: [String], isFavorite: Bool? = false, isMyRecipe: Bool? = false) {
+    init(name: String, prepTime: Int, ingredients: [Ingredient], steps: [String], isFavorite: Bool? = false, isMyRecipe: Bool? = false, category: RecipeCategory) {
         self.name = name
         self.prepTime = prepTime
         self.ingredients = ingredients
         self.steps = steps
         self.isFavorite = isFavorite
         self.isMyRecipe = isMyRecipe
+        self.category = category
     }
 }
 
@@ -56,6 +59,10 @@ public struct Ingredient : Codable {
         self.measureUnit = measureUnit
         self.ingredient = ingredient
     }
+}
+
+public enum RecipeCategory : Int, Codable, CaseIterable {
+    case coldSideDish = 0, warmSideDish, mainDish, snack, drink, soup, dessert, salad, bread
 }
 
 protocol RecipeModelDelegate : AnyObject {
@@ -75,24 +82,22 @@ class RecipeModel {
             "Izmutiti jaja sitno i brzo", "Dodati sitno", "Lorem ipsum za proveru duzine i sirine opisa postupka", "Sipati u tiganj i prziti", "Proba", "priprema",
             "Izmutiti jaja sitno i brzo", "Dodati sitno", "Lorem ipsum za proveru duzine i sirine opisa postupka", "Sipati u tiganj i prziti", "Proba", "priprema", "7 korak po redu",
             "Izmutiti jaja sitno i brzo", "Dodati sitno", "Lorem ipsum za proveru duzine i sirine opisa postupka", "Sipati u tiganj i prziti", "Proba", "priprema", "7 korak po redu"
-        ]),
-        Recipe(name: "Spagete karbonara", prepTime: 45, ingredients: [], steps: []),
+        ], category: .warmSideDish),
+        Recipe(name: "Spagete karbonara", prepTime: 45, ingredients: [], steps: [], category: .mainDish),
         Recipe(name: "Pirinac", prepTime: 20,
                ingredients: [],
-               steps: [ "Oprati pirinac", "Dodati vodu", "Dodati zejtin", "Dodati so", "Kuvati 20ak minuta"]),
-        Recipe(name: "Mesano povrce", prepTime: 25, ingredients: [], steps: []),
-        Recipe(name: "Sendvic", prepTime: 5, ingredients: [], steps: [])
+               steps: [ "Oprati pirinac", "Dodati vodu", "Dodati zejtin", "Dodati so", "Kuvati 20ak minuta"], category: .warmSideDish),
+        Recipe(name: "Mesano povrce", prepTime: 25, ingredients: [], steps: [], category: .warmSideDish),
+        Recipe(name: "Sendvic", prepTime: 5, ingredients: [], steps: [], category: .bread)
     ]
 
     static var myTestData = [
-        Recipe(name: "Omlet", prepTime: 15, ingredients: [
-            
-        ], steps: [
+        Recipe(name: "Omlet", prepTime: 15, ingredients: [], steps: [
             "Izmutiti jaja", "Dodati sitno seckan paradajz", "Sipati u tiganj i prziti"
-        ]),
+        ], category: .warmSideDish),
         Recipe(name: "Sendvic", prepTime: 5, ingredients: [], steps: [
             "Uzeti jedno parce hleba", "Staviti pecenicu na njega", "Staviti kackavalj preko", "Staviti drugo parce hleba"
-        ])
+        ], category: .snack)
     ]
     
     private var recipes: [Recipe] = []
@@ -133,10 +138,10 @@ class RecipeModel {
     
     func parseRecipe(recipe: Any) -> Recipe {
         guard let r = recipe as? [String:Any] else {
-            return Recipe(name: "", prepTime: 0, ingredients: [], steps: [], isFavorite: false)
+            return Recipe(name: "", prepTime: 0, ingredients: [], steps: [], isFavorite: false, category: .snack)
         }
         
-        let rec = Recipe(name: "", prepTime: 0, ingredients: [], steps: [], isFavorite: false)
+        let rec = Recipe(name: "", prepTime: 0, ingredients: [], steps: [], isFavorite: false, category: .snack)
         for recipeKey in r.keys {
             switch recipeKey {
             case "name":
@@ -163,6 +168,8 @@ class RecipeModel {
                 rec.isFavorite = (r["isFavorite"] as? Bool ?? false)
             case "isMyRecipe":
                 rec.isMyRecipe = (r["isMyRecipe"] as? Bool ?? false)
+            case "category":
+                rec.category = RecipeCategory(rawValue: (r["category"] as? Int ?? 0))
             default:
                 ()
             }

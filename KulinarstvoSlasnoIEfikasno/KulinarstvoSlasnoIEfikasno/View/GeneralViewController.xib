@@ -11,6 +11,8 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="GeneralViewController" customModule="KulinarstvoSlasnoIEfikasno" customModuleProvider="target">
             <connections>
                 <outlet property="addNewRecipeButton" destination="Uei-XV-0Xu" id="pGr-EB-KKQ"/>
+                <outlet property="categoryButton" destination="UmV-vL-yB3" id="29U-iS-irn"/>
+                <outlet property="searchBar" destination="vz9-3c-syW" id="OVY-kD-0Ty"/>
                 <outlet property="tableView" destination="LX9-VR-ktn" id="umG-Rd-qBr"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -20,11 +22,28 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zjh-aL-8RO">
+                    <rect key="frame" x="0.0" y="44" width="414" height="51"/>
+                    <subviews>
+                        <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="vz9-3c-syW">
+                            <rect key="frame" x="0.0" y="0.0" width="347" height="51"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </searchBar>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UmV-vL-yB3" userLabel="Category Button">
+                            <rect key="frame" x="347" y="0.0" width="67" height="51"/>
+                            <state key="normal" title="Button"/>
+                            <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                            <connections>
+                                <action selector="categoryButtonClicked:" destination="-1" eventType="touchUpInside" id="8D5-dw-K9B"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                </stackView>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="LX9-VR-ktn">
-                    <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                    <rect key="frame" x="0.0" y="95" width="414" height="767"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </tableView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uei-XV-0Xu">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uei-XV-0Xu" userLabel="Add New Recipe Button">
                     <rect key="frame" x="339" y="787" width="55" height="55"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="55" id="EIU-m6-9mT"/>
@@ -43,12 +62,15 @@
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
+                <constraint firstItem="zjh-aL-8RO" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="8MN-Nt-Upv"/>
                 <constraint firstItem="LX9-VR-ktn" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Eud-Sr-mMH"/>
-                <constraint firstItem="LX9-VR-ktn" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="ZPu-Sb-7qy"/>
+                <constraint firstItem="zjh-aL-8RO" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="MWf-xn-Mzp"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="Uei-XV-0Xu" secondAttribute="bottom" constant="20" id="b5d-u0-Qqk"/>
+                <constraint firstItem="zjh-aL-8RO" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="fKF-xx-YCW"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Uei-XV-0Xu" secondAttribute="trailing" constant="20" id="kRu-Fm-aX1"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="LX9-VR-ktn" secondAttribute="bottom" id="pFr-fq-Gvv"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="LX9-VR-ktn" secondAttribute="trailing" id="yYu-TF-IEd"/>
+                <constraint firstItem="LX9-VR-ktn" firstAttribute="top" secondItem="zjh-aL-8RO" secondAttribute="bottom" id="zdp-xX-ywO"/>
             </constraints>
             <point key="canvasLocation" x="139" y="140"/>
         </view>

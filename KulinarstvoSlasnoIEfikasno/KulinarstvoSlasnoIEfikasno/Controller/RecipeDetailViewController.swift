@@ -17,9 +17,12 @@ class RecipeDetailViewController: UIViewController {
     @IBOutlet weak var numOfPersonsTextLabel: UILabel!
     @IBOutlet weak var decreaseNumOfPersons: UIButton!
     @IBOutlet weak var increaseNumOfPersons: UIButton!
+    @IBOutlet weak var changeRecipeButton: UIButton!
+    @IBOutlet weak var deleteRecipeButton: UIButton!
     
     var localNumberOfPersons: Int = 0
     var localArrayOfIngredients: [Ingredient] = []
+    var oldRecipeIndex: Int?
     
     var localStringIngredients: [String] {
         var stringIngredients: [String] = []
@@ -49,6 +52,26 @@ class RecipeDetailViewController: UIViewController {
 
         self.tableView.dataSource = self
         
+        self.changeRecipeButton.setTitle("Izmeni recept", for: .normal)
+        self.changeRecipeButton.isHidden = !(self.recipe.isMyRecipe ?? false)
+        
+        self.deleteRecipeButton.setTitle("Obrisi recept", for: .normal)
+        self.deleteRecipeButton.isHidden = !(self.recipe.isMyRecipe ?? false)
+        
+        self.setRecipeData()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if self.oldRecipeIndex != nil {
+            self.recipe = Datafeed.shared.recipes[self.oldRecipeIndex!]
+        }
+        
+        self.setRecipeData()
+    }
+    
+    func setRecipeData() {
         self.titleLabel?.text = recipe.name
         
         let recipeCategory = recipe.category ?? .snack
@@ -81,7 +104,7 @@ class RecipeDetailViewController: UIViewController {
             recipeImage = UIImage(data: imageData)
         }
 
-        self.recipeImageView.image = recipeImage //UIImage(named: recipe?.imageName ?? "")
+        self.recipeImageView.image = recipeImage
         
         self.setNumberOfPersonsField()
     }
@@ -113,6 +136,23 @@ class RecipeDetailViewController: UIViewController {
         self.localNumberOfPersons += 1
         self.updateIngredientsQuantity()
         self.setNumberOfPersonsField()
+    }
+    
+    @IBAction func changeRecipeButtonClicked(_ sender: Any) {
+        let addNewRecipeViewController = AddNewRecipeViewController(existingRecipe: self.recipe)
+        addNewRecipeViewController.delegate = self
+        self.navigationController?.pushViewController(addNewRecipeViewController, animated: true)
+    }
+    
+    @IBAction func deleteRecipeButtonClicked(_ sender: Any) {
+        guard let currentRecipeIndex = Datafeed.shared.recipes.firstIndex(where: {
+            $0.name == self.recipe.name
+        }) else {
+            return
+        }
+        Datafeed.shared.recipes.remove(at: currentRecipeIndex)
+        self.navigationController?.popViewController(animated: true)
+        self.dismiss(animated: true, completion: nil)
     }
     
     func updateIngredientsQuantity() {
@@ -148,6 +188,25 @@ extension RecipeDetailViewController : UITableViewDataSource {
         }
         return cell
     }
+}
+
+//MARK: - NewRecipeViewControllerDelegate
+extension RecipeDetailViewController : NewRecipeViewControllerDelegate {
+    func didAddNewRecipe(_ controller: AddNewRecipeViewController, newRecipe: Recipe) {
+        
+    }
     
+    func controllerIsDismissed(_ controller: AddNewRecipeViewController) {
+        
+    }
     
+    func didEditRecipe(_ controller: AddNewRecipeViewController, oldRecipe: Recipe, newRecipe: Recipe) {
+        guard let oldRecipeIndex = Datafeed.shared.recipes.firstIndex(where: {
+            $0.name == oldRecipe.name
+        }) else {
+            return
+        }
+        self.oldRecipeIndex = oldRecipeIndex
+        Datafeed.shared.recipes[oldRecipeIndex] = newRecipe
+    }
 }

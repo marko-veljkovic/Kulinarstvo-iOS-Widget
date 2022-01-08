@@ -11,7 +11,9 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RecipeDetailViewController" customModule="KulinarstvoSlasnoIEfikasno" customModuleProvider="target">
             <connections>
                 <outlet property="categoryLabel" destination="R93-eA-q6j" id="IH1-g4-U3o"/>
+                <outlet property="changeRecipeButton" destination="dV3-qi-Yma" id="NT8-qB-BOI"/>
                 <outlet property="decreaseNumOfPersons" destination="VO9-Bq-McK" id="8Yx-Nq-ZnK"/>
+                <outlet property="deleteRecipeButton" destination="ekC-4w-jrb" id="I9b-0p-jXi"/>
                 <outlet property="increaseNumOfPersons" destination="yv8-Xn-Yb8" id="J8w-3q-Pzh"/>
                 <outlet property="numOfPersonsTextLabel" destination="2IL-du-YMM" id="fbw-ze-Ves"/>
                 <outlet property="recipeImageView" destination="PLq-eI-ak3" id="qnc-bp-LxH"/>
@@ -84,9 +86,33 @@
                             <directionalEdgeInsets key="directionalLayoutMargins" top="8" leading="15" bottom="8" trailing="15"/>
                         </stackView>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Ezq-Pc-G5o">
-                            <rect key="frame" x="0.0" y="214" width="414" height="604"/>
+                            <rect key="frame" x="0.0" y="214" width="414" height="563"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         </tableView>
+                        <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="sda-U1-SHi">
+                            <rect key="frame" x="0.0" y="777" width="414" height="41"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dV3-qi-Yma" userLabel="Change Recipe Button">
+                                    <rect key="frame" x="10" y="5" width="192" height="31"/>
+                                    <state key="normal" title="Button"/>
+                                    <buttonConfiguration key="configuration" style="filled" title="Button"/>
+                                    <connections>
+                                        <action selector="changeRecipeButtonClicked:" destination="-1" eventType="touchUpInside" id="GDj-R7-4m9"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ekC-4w-jrb" userLabel="Delete Recipe Button">
+                                    <rect key="frame" x="212" y="5" width="192" height="31"/>
+                                    <state key="normal" title="Button"/>
+                                    <buttonConfiguration key="configuration" style="filled" title="Button">
+                                        <color key="baseBackgroundColor" systemColor="systemRedColor"/>
+                                    </buttonConfiguration>
+                                    <connections>
+                                        <action selector="deleteRecipeButtonClicked:" destination="-1" eventType="touchUpInside" id="yPW-S7-Gud"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <directionalEdgeInsets key="directionalLayoutMargins" top="5" leading="10" bottom="5" trailing="10"/>
+                        </stackView>
                     </subviews>
                 </stackView>
             </subviews>
@@ -104,6 +130,9 @@
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

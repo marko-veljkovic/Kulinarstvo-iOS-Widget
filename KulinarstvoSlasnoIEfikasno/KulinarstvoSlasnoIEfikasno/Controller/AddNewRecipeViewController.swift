@@ -2,7 +2,7 @@
 //  AddNewRecipeViewController.swift
 //  KulinarstvoSlasnoIEfikasno
 //
-//  Created by Marko Veljkovic private on 31.10.21..
+//  Created by Marko Veljkovic private on 31.10.21.
 //
 
 import UIKit
@@ -10,6 +10,7 @@ import UIKit
 protocol NewRecipeViewControllerDelegate : AnyObject {
     func didAddNewRecipe(_ controller: AddNewRecipeViewController, newRecipe: Recipe)
     func controllerIsDismissed(_ controller: AddNewRecipeViewController)
+    func didEditRecipe(_ controller: AddNewRecipeViewController, oldRecipe: Recipe, newRecipe: Recipe)
 }
 
 class AddNewRecipeViewController : UIViewController {
@@ -45,6 +46,17 @@ class AddNewRecipeViewController : UIViewController {
     
     var recipeCategory = RecipeCategory.snack
     
+    var existingRecipe: Recipe?
+    
+    init(existingRecipe: Recipe? = nil) {
+        self.existingRecipe = existingRecipe
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -60,15 +72,54 @@ class AddNewRecipeViewController : UIViewController {
         self.ingredientsTableView.register(UINib(nibName: "AddNewRecipeTableViewCell", bundle: nil), forCellReuseIdentifier: "textFieldCell")
         self.stepsTableView.register(UINib(nibName: "AddNewRecipeTableViewCell", bundle: nil), forCellReuseIdentifier: "textFieldCell")
         
-        self.addNewRecipeButton.titleLabel?.text = "Dodaj"
+        self.addNewRecipeButton.titleLabel?.text = self.existingRecipe != nil ? "Sacuvaj" : "Dodaj recept"
         
         self.categoryPickerView.delegate = self
         self.categoryPickerView.dataSource = self
+        
+        if self.existingRecipe != nil {
+            self.fillFields()
+        }
+    }
+    
+    func fillFields() {
+        self.recipeNameTextField.text = self.existingRecipe!.name
+        self.preparationTimeTextField.text = String(self.existingRecipe!.prepTime)
+        self.numOfPersonsTextField.text = String(self.existingRecipe!.numOfPersons)
+        self.isFavoritesSwitch.isOn = self.existingRecipe!.isFavorite ?? false
+        self.recipeImageView.image = UIImage(named: self.existingRecipe!.imageName)
+        
+        let selectedCategoryIndex = self.existingRecipe!.category?.rawValue ?? 0
+        self.categoryPickerView.selectRow(selectedCategoryIndex, inComponent: 0, animated: true)
+        
+        self.ingrediantsNumber = self.existingRecipe!.ingredients.count != 0 ? self.existingRecipe!.ingredients.count : 1
+        self.stepsNumber = self.existingRecipe!.steps.count != 0 ? self.existingRecipe!.steps.count : 1
+        
+        var localIngredientMap: [String:Ingredient] = [:]
+        for (ingredientIndex, ingredient) in self.existingRecipe!.ingredients.enumerated() {
+            localIngredientMap[String(ingredientIndex)] = ingredient
+        }
+        if self.existingRecipe!.ingredients.count != 0 {
+            self.ingrediantsMap = localIngredientMap
+        }
+        else {
+            self.ingrediantsMap = ["0":Ingredient(quantity: 0, measureUnit: "", ingredient: "")]
+        }
+        
+        var localStepsMap: [String:String] = [:]
+        for (stepIndex, step) in self.existingRecipe!.steps.enumerated() {
+            localStepsMap[String(stepIndex)] = step
+        }
+        if self.existingRecipe!.steps.count != 0 {
+            self.stepsMap = localStepsMap
+        }
+        else {
+            self.stepsMap = ["0":""]
+        }
     }
 
     @IBAction func addNewRecipeButtonClicked(_ sender: Any) {
-        self.recipeNameTextField.becomeFirstResponder() // Added this line so that eventualy current selected text field in table view will lose focus and its value will be
-                                                        // saved in map and sent further
+        self.recipeNameTextField.becomeFirstResponder() // Added this line so that eventualy current selected text field in table view will lose focus and its value will be saved in map and sent further
         let recipeName = self.recipeNameTextField.text ?? ""
         let recipePrepTime = self.preparationTimeTextField.text ?? ""
         let recipeNumOfPersons = self.numOfPersonsTextField.text ?? ""
@@ -91,7 +142,12 @@ class AddNewRecipeViewController : UIViewController {
         
         let newRecipe = Recipe(name: recipeName, prepTime: Int(recipePrepTime) ?? 0, ingredients: ingrediantsArray, steps: stepsArray, isFavorite: self.isCurrentFavorites, isMyRecipe: true, category: self.recipeCategory, numOfPersons: Int(recipeNumOfPersons) ?? 0)
         
-        self.delegate?.didAddNewRecipe(self, newRecipe: newRecipe)
+        if self.existingRecipe != nil {
+            self.delegate?.didEditRecipe(self, oldRecipe: self.existingRecipe!, newRecipe: newRecipe)
+        }
+        else {
+            self.delegate?.didAddNewRecipe(self, newRecipe: newRecipe)
+        }
         
         self.navigationController?.popViewController(animated: true)
         self.delegate?.controllerIsDismissed(self)
@@ -115,8 +171,6 @@ extension AddNewRecipeViewController : UIImagePickerControllerDelegate, UINaviga
         self.recipeImageView.image = info[.originalImage] as? UIImage
         self.recipeImageView.backgroundColor = .clear
         self.dismiss(animated: true, completion: nil)
-        
-//        self.saveImage(image: info[.originalImage] as? UIImage)
     }
     
     private func saveImage(recipeName: String) {
@@ -126,7 +180,6 @@ extension AddNewRecipeViewController : UIImagePickerControllerDelegate, UINaviga
         
         let data = UIImage.pngData(image)
         UserDefaults(suiteName: Datafeed.shared.kAppGroup)?.set(data(), forKey: recipeName)
-//        UserDefaults.standard.set(data(), forKey: recipeName)
     }
 }
 

@@ -210,6 +210,10 @@ extension GeneralViewController : NewRecipeViewControllerDelegate {
     func controllerIsDismissed(_ controller: AddNewRecipeViewController) {
         self.addNewRecipeViewController = nil
     }
+    
+    func didEditRecipe(_ controller: AddNewRecipeViewController, oldRecipe: Recipe, newRecipe: Recipe) {
+        
+    }
 }
 
 //MARK: - DatafeedDelegate

@@ -112,6 +112,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             recipeDict["isMyRecipe"] = recipe.isMyRecipe
             recipeDict["category"] = recipe.category?.rawValue ?? 0
             
+            recipeDict["numOfPersons"] = recipe.numOfPersons
+            
             topLevelRecipes.append(recipeDict)
         }
         topLevel = ["recipes" : topLevelRecipes]

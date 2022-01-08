@@ -3,11 +3,12 @@
         {
             "name": "Omlet",
             "prepTime": 15,
-            "ingredients": ["3_komada_jaja", "1_komad_paradajz"],
+            "ingredients": ["3_komada_jaja", "1.5_komad_paradajz"],
             "steps": ["Izmutiti jaja sitno i brzo", "Dodati sitno", "Sipati u tiganj i prziti"],
             "isFavorite": true,
             "isMyRecipe": false,
-            "category": 0
+            "category": 0,
+            "numOfPersons": 1
         },
         {
             "name": "Spagete karbonare",
@@ -16,7 +17,8 @@
             "steps": [],
             "isFavorite": true,
             "isMyRecipe": false,
-            "category": 1
+            "category": 1,
+            "numOfPersons": 2
         },
         {
             "name": "Pirinac",
@@ -25,7 +27,8 @@
             "steps": ["Dodati pirinac", "Dodati pirinac", "Dodati pirinac", "Dodati pirinac", "Dodati pirinac", "Dodati pirinac", "Dodati pirinac", "Dodati pirinac", "Dodati pirinac", "Dodati pirinac"],
             "isFavorite": false,
             "isMyRecipe": false,
-            "category": 2
+            "category": 2,
+            "numOfPersons": 4
         },
         {
             "name": "Mesano povrce",
@@ -34,7 +37,8 @@
             "steps": [],
             "isFavorite": false,
             "isMyRecipe": true,
-            "category": 3
+            "category": 3,
+            "numOfPersons": 1
         },
         {
             "name": "Sendvic",
@@ -43,7 +47,8 @@
             "steps": [],
             "isFavorite": true,
             "isMyRecipe": false,
-            "category": 5
+            "category": 5,
+            "numOfPersons": 1
         },
     ]
 }

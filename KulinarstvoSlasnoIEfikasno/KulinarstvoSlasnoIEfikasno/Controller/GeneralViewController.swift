@@ -18,12 +18,15 @@ class GeneralViewController: UIViewController {
     @IBOutlet weak var addNewRecipeButton: UIButton!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var categoryButton: UIButton!
+    @IBOutlet weak var clearCategoryButton: UIButton!
     
     var recipes: [Recipe] = []
     var unfilteredRecipes: [Recipe] = []
     var categoryRecipes: [Recipe] = []
     
     var categoryPicked: RecipeCategory?
+    
+    var refreshControl: UIRefreshControl?
     
     init(isFavorites: Bool = false, isMyRecipes: Bool = false) {
         self.isFavorites = isFavorites
@@ -53,7 +56,14 @@ class GeneralViewController: UIViewController {
         self.tableView.dataSource = self
         self.tableView.register(UINib(nibName: "RecipeTableViewCell", bundle: nil), forCellReuseIdentifier: "RecipeCell")
         
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl!.addTarget(self, action: #selector(self.refreshTable), for: .valueChanged)
+        self.refreshControl!.tintColor = .blue
+        self.tableView.refreshControl = self.refreshControl!
+        
         self.addNewRecipeButton.isHidden = !self.isMyRecipes
+        self.clearCategoryButton.isHidden = true
+        self.clearCategoryButton.setTitle("Ponisti", for: .normal)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -61,6 +71,13 @@ class GeneralViewController: UIViewController {
         
         self.recipes =  self.isFavorites ? Datafeed.shared.favRecipes : self.isMyRecipes ? Datafeed.shared.myRecipes : Datafeed.shared.recipes
         self.unfilteredRecipes = self.recipes
+        self.tableView.reloadData()
+    }
+    
+    @objc
+    func refreshTable() {
+        self.tableView.reloadData()
+        self.refreshControl?.endRefreshing()
     }
     
     @IBAction func addNewRecipeButtonClicked(_ sender: Any) {
@@ -89,6 +106,7 @@ class GeneralViewController: UIViewController {
             self.recipes = self.categoryRecipes
             self.tableView.reloadData()
             self.categoryButton.setTitle(self.setCategoryButtonTitle(), for: .normal)
+            self.clearCategoryButton.isHidden = false
         }))
         alert.addAction(UIAlertAction(title: "Ponisti", style: .cancel, handler: {_ in
             self.categoryPicked = nil
@@ -124,6 +142,15 @@ class GeneralViewController: UIViewController {
             return "Izaberi kategoriju"
         }
     }
+    
+    @IBAction func clearCategoryButtonClicked(_ sender: Any) {
+        self.categoryPicked = nil
+        self.recipes = self.unfilteredRecipes
+        self.tableView.reloadData()
+        self.categoryButton.setTitle(self.setCategoryButtonTitle(), for: .normal)
+        self.clearCategoryButton.isHidden = true
+    }
+    
 }
 
 //MARK: - UITableViewDataSource
@@ -200,6 +227,18 @@ extension GeneralViewController : UISearchBarDelegate {
         }
         
         self.tableView.reloadData()
+    }
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        self.searchBar.showsCancelButton = true
+        let searcBarCancelButton = self.searchBar.value(forKey: "cancelButton") as! UIButton
+        searcBarCancelButton.setTitle("Ponisti", for: .normal)
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.showsCancelButton = false
+        searchBar.text = ""
+        searchBar.resignFirstResponder()
     }
 }
 

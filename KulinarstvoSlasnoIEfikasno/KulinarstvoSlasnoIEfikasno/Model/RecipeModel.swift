@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 public class Recipe : Codable {
-//        var id = UUID()
+    
     var name: String
     var prepTime: Int // In minutes
     
@@ -21,10 +21,13 @@ public class Recipe : Codable {
     
     var category: RecipeCategory?
     
+    var numOfPersons: Int = 0
+    
     var stringIngredients: [String] {
         var stringIngredients: [String] = []
         for ingredient in self.ingredients {
-            let stringIngredient = "\(ingredient.quantity) \(ingredient.measureUnit) \(ingredient.ingredient)"
+            let tmp = ingredient.quantity.truncatingRemainder(dividingBy: 1) == 0 ? String(format: "%.0f", ingredient.quantity) : String(ingredient.quantity)
+            let stringIngredient = tmp + " \(ingredient.measureUnit) \(ingredient.ingredient)"
             stringIngredients.append(stringIngredient)
         }
         return stringIngredients
@@ -38,7 +41,7 @@ public class Recipe : Codable {
         return name
     }
     
-    init(name: String, prepTime: Int, ingredients: [Ingredient], steps: [String], isFavorite: Bool? = false, isMyRecipe: Bool? = false, category: RecipeCategory) {
+    init(name: String, prepTime: Int, ingredients: [Ingredient], steps: [String], isFavorite: Bool? = false, isMyRecipe: Bool? = false, category: RecipeCategory, numOfPersons: Int = 0) {
         self.name = name
         self.prepTime = prepTime
         self.ingredients = ingredients
@@ -46,15 +49,16 @@ public class Recipe : Codable {
         self.isFavorite = isFavorite
         self.isMyRecipe = isMyRecipe
         self.category = category
+        self.numOfPersons = numOfPersons
     }
 }
 
 public struct Ingredient : Codable {
-    var quantity: Int
+    var quantity: Double
     var measureUnit: String
     var ingredient: String
     
-    init(quantity: Int, measureUnit: String, ingredient: String) {
+    init(quantity: Double, measureUnit: String, ingredient: String) {
         self.quantity = quantity
         self.measureUnit = measureUnit
         self.ingredient = ingredient
@@ -159,7 +163,7 @@ class RecipeModel {
                     let quantity = parts[0]
                     let measureUnit = parts[1]
                     let ingredient = parts[2]
-                    ingredients.append(Ingredient(quantity: Int(quantity) ?? 0, measureUnit: String(measureUnit), ingredient: String(ingredient)))
+                    ingredients.append(Ingredient(quantity: Double(quantity) ?? 0, measureUnit: String(measureUnit), ingredient: String(ingredient)))
                 }
                 rec.ingredients = ingredients
             case "steps":
@@ -170,6 +174,8 @@ class RecipeModel {
                 rec.isMyRecipe = (r["isMyRecipe"] as? Bool ?? false)
             case "category":
                 rec.category = RecipeCategory(rawValue: (r["category"] as? Int ?? 0))
+            case "numOfPersons":
+                rec.numOfPersons = (r["numOfPersons"] as? Int ?? 0)
             default:
                 ()
             }

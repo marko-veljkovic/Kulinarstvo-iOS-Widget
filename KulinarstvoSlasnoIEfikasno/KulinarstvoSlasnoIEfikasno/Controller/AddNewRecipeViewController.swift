@@ -16,7 +16,8 @@ class AddNewRecipeViewController : UIViewController {
 
     @IBOutlet weak var addNewRecipeLabel: UILabel!
     @IBOutlet weak var recipeNameTextField: UITextField!
-    @IBOutlet weak var preparationTimeTextLabel: UITextField!
+    @IBOutlet weak var preparationTimeTextField: UITextField!
+    @IBOutlet weak var numOfPersonsTextField: UITextField!
     @IBOutlet weak var isFavoritesLabel: UILabel!
     
     @IBOutlet weak var ingredientsTableView: UITableView!
@@ -69,7 +70,8 @@ class AddNewRecipeViewController : UIViewController {
         self.recipeNameTextField.becomeFirstResponder() // Added this line so that eventualy current selected text field in table view will lose focus and its value will be
                                                         // saved in map and sent further
         let recipeName = self.recipeNameTextField.text ?? ""
-        let recipePrepTime = self.preparationTimeTextLabel.text ?? ""
+        let recipePrepTime = self.preparationTimeTextField.text ?? ""
+        let recipeNumOfPersons = self.numOfPersonsTextField.text ?? ""
         
         self.saveImage(recipeName: recipeName)
         
@@ -87,7 +89,7 @@ class AddNewRecipeViewController : UIViewController {
             stepsArray.append(step.value)
         }
         
-        let newRecipe = Recipe(name: recipeName, prepTime: Int(recipePrepTime) ?? 0, ingredients: ingrediantsArray, steps: stepsArray, isFavorite: self.isCurrentFavorites, isMyRecipe: true, category: self.recipeCategory)
+        let newRecipe = Recipe(name: recipeName, prepTime: Int(recipePrepTime) ?? 0, ingredients: ingrediantsArray, steps: stepsArray, isFavorite: self.isCurrentFavorites, isMyRecipe: true, category: self.recipeCategory, numOfPersons: Int(recipeNumOfPersons) ?? 0)
         
         self.delegate?.didAddNewRecipe(self, newRecipe: newRecipe)
         
@@ -216,7 +218,7 @@ extension AddNewRecipeViewController : AddNewRecipeTableViewCellDelegate {
                 self.ingrediantsMap[String(rowIndex)]?.ingredient = localText
             }
             else {
-                self.ingrediantsMap[String(rowIndex)]?.quantity = Int(localText) ?? 0
+                self.ingrediantsMap[String(rowIndex)]?.quantity = Double(localText) ?? 0
             }
         }
         else if tableView === self.stepsTableView {

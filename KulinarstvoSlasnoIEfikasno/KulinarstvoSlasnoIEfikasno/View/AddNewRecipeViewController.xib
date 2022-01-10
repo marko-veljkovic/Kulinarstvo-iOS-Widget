@@ -73,6 +73,7 @@
                                     <constraints>
                                         <constraint firstAttribute="height" constant="30" id="eYz-62-Rh7"/>
                                     </constraints>
+                                    <color key="onTintColor" red="0.1862653792" green="0.42563992740000001" blue="0.3058671355" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                     <connections>
                                         <action selector="isFavoritesSwitchSwitched:" destination="-1" eventType="valueChanged" id="OJF-eX-QR8"/>
                                     </connections>
@@ -83,13 +84,14 @@
                                 <constraint firstAttribute="height" constant="30" id="r9Q-Dv-1GA"/>
                             </constraints>
                         </stackView>
-                        <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1Ye-yG-Fa0">
+                        <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="1Ye-yG-Fa0">
                             <rect key="frame" x="0.0" y="138.5" width="404" height="50"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e9u-V6-9hx">
-                                    <rect key="frame" x="0.0" y="0.0" width="354" height="50"/>
-                                    <state key="normal" title="Button"/>
-                                    <buttonConfiguration key="configuration" style="plain" title="Izaberi sliku jela"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="344" height="50"/>
+                                    <directionalEdgeInsets key="directionalLayoutMargins" top="10" leading="10" bottom="10" trailing="10"/>
+                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                    <state key="normal" title="Izaberi sliku jela"/>
                                     <connections>
                                         <action selector="chooseImageButtonClicked:" destination="-1" eventType="touchUpInside" id="osB-a1-FO5"/>
                                     </connections>
@@ -119,17 +121,17 @@
                             </constraints>
                         </pickerView>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="35" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Y8V-sC-R2L">
-                            <rect key="frame" x="0.0" y="299" width="404" height="239"/>
+                            <rect key="frame" x="0.0" y="299" width="404" height="239.5"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         </tableView>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="35" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="1DH-mf-Jak">
-                            <rect key="frame" x="0.0" y="543" width="404" height="239"/>
+                            <rect key="frame" x="0.0" y="543.5" width="404" height="239.5"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         </tableView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8iZ-Na-3HV">
-                            <rect key="frame" x="0.0" y="787" width="404" height="31"/>
-                            <state key="normal" title="Button"/>
-                            <buttonConfiguration key="configuration" style="plain" title="Dodaj"/>
+                            <rect key="frame" x="0.0" y="788" width="404" height="30"/>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" title="Dodaj"/>
                             <connections>
                                 <action selector="addNewRecipeButtonClicked:" destination="-1" eventType="touchUpInside" id="mNL-HQ-d9m"/>
                             </connections>

@@ -52,6 +52,15 @@ class GeneralViewController: UIViewController {
         
         self.categoryButton.setTitle("Izaberi kategoriju", for: .normal)
         
+        self.categoryButton.backgroundColor = AppTheme.backgroundUniversalGreen
+        self.categoryButton.setTitleColor(AppTheme.textUniversalGreen, for: .normal)
+        
+        self.categoryButton.layer.cornerRadius = 10
+        self.categoryButton.layer.borderWidth = 2
+        self.categoryButton.layer.borderColor = AppTheme.backgroundUniversalGreen.cgColor
+        
+        self.addNewRecipeButton.tintColor = AppTheme.backgroundUniversalGreen
+        
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.tableView.register(UINib(nibName: "RecipeTableViewCell", bundle: nil), forCellReuseIdentifier: "RecipeCell")

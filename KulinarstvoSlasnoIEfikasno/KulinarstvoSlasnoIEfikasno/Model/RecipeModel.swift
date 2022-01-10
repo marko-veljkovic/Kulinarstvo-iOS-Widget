@@ -237,3 +237,8 @@ extension Datafeed : RecipeModelDelegate {
     }
     
 }
+
+class AppTheme {
+    static let backgroundUniversalGreen = UIColor(displayP3Red: 4/255, green: 110/255, blue: 75/255, alpha: 1)
+    static let textUniversalGreen = UIColor(displayP3Red: 190/255, green: 255/255, blue: 249/255, alpha: 1)
+}

@@ -57,6 +57,20 @@ class RecipeDetailViewController: UIViewController {
         
         self.deleteRecipeButton.setTitle("Obrisi recept", for: .normal)
         self.deleteRecipeButton.isHidden = !(self.recipe.isMyRecipe ?? false)
+        self.deleteRecipeButton.backgroundColor = .red
+        self.deleteRecipeButton.layer.cornerRadius = 10
+        self.deleteRecipeButton.layer.borderWidth = 2
+        self.deleteRecipeButton.layer.borderColor = UIColor.red.cgColor
+        
+        [self.increaseNumOfPersons, self.decreaseNumOfPersons, changeRecipeButton].forEach {
+            $0?.backgroundColor = AppTheme.backgroundUniversalGreen
+            $0?.setTitleColor(AppTheme.textUniversalGreen, for: .normal)
+            
+            $0?.layer.cornerRadius = 10
+            $0?.layer.borderWidth = 2
+            $0?.layer.borderColor = AppTheme.backgroundUniversalGreen.cgColor
+        }
+        self.decreaseNumOfPersons.setTitleColor(UIColor.gray, for: .disabled)
         
         self.setRecipeData()
     }

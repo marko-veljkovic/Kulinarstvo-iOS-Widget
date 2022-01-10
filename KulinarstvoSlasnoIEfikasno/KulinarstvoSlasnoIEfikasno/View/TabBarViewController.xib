@@ -20,7 +20,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tabBar contentMode="scaleToFill" barStyle="black" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zvY-hL-GVk">
-                    <rect key="frame" x="0.0" y="813" width="414" height="49"/>
+                    <rect key="frame" x="0.0" y="779" width="414" height="83"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <items>
                         <tabBarItem title="Pregled" id="X6o-7Z-wWI">

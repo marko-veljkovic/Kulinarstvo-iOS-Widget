@@ -23,9 +23,10 @@ class AddNewRecipeTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        cellTextField.delegate = self
-        quantityTextField.delegate = self
-        ingredientTextField.delegate = self
+        self.cellTextField.delegate = self
+        self.quantityTextField.delegate = self
+        self.ingredientTextField.delegate = self
+        self.addNewTextFieldButton.tintColor = AppTheme.backgroundUniversalGreen
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

@@ -24,21 +24,21 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="-2" translatesAutoresizingMaskIntoConstraints="NO" id="zjh-aL-8RO">
-                    <rect key="frame" x="0.0" y="44" width="414" height="80"/>
+                    <rect key="frame" x="0.0" y="44" width="414" height="83"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="Akk-th-FDD">
-                            <rect key="frame" x="8" y="0.0" width="398" height="31"/>
+                            <rect key="frame" x="8" y="0.0" width="398" height="34"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UmV-vL-yB3" userLabel="Category Button">
-                                    <rect key="frame" x="0.0" y="0.0" width="323" height="31"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="323" height="34"/>
+                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                     <state key="normal" title="Button"/>
-                                    <buttonConfiguration key="configuration" style="filled" title="Button"/>
                                     <connections>
                                         <action selector="categoryButtonClicked:" destination="-1" eventType="touchUpInside" id="8D5-dw-K9B"/>
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZlG-hh-Kel">
-                                    <rect key="frame" x="323" y="0.0" width="75" height="31"/>
+                                    <rect key="frame" x="323" y="0.0" width="75" height="34"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="75" id="VXI-65-8vp"/>
                                     </constraints>
@@ -51,7 +51,7 @@
                             </subviews>
                         </stackView>
                         <searchBar contentMode="redraw" searchBarStyle="minimal" translatesAutoresizingMaskIntoConstraints="NO" id="vz9-3c-syW">
-                            <rect key="frame" x="8" y="29" width="398" height="51"/>
+                            <rect key="frame" x="8" y="32" width="398" height="51"/>
                             <directionalEdgeInsets key="directionalLayoutMargins" top="0.0" leading="0.0" bottom="0.0" trailing="0.0"/>
                             <textInputTraits key="textInputTraits"/>
                         </searchBar>
@@ -59,20 +59,21 @@
                     <directionalEdgeInsets key="directionalLayoutMargins" top="0.0" leading="8" bottom="0.0" trailing="8"/>
                 </stackView>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="LX9-VR-ktn">
-                    <rect key="frame" x="0.0" y="124" width="414" height="738"/>
+                    <rect key="frame" x="0.0" y="127" width="414" height="735"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </tableView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uei-XV-0Xu" userLabel="Add New Recipe Button">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uei-XV-0Xu" userLabel="Add New Recipe Button">
                     <rect key="frame" x="339" y="787" width="55" height="55"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="55" id="EIU-m6-9mT"/>
                         <constraint firstAttribute="width" constant="55" id="fJ8-Zl-RmA"/>
                     </constraints>
-                    <buttonConfiguration key="configuration" style="plain" image="plus.circle.fill" catalog="system">
-                        <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="font">
+                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                    <state key="normal" image="plus.circle.fill" catalog="system">
+                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="font">
                             <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
                         </preferredSymbolConfiguration>
-                    </buttonConfiguration>
+                    </state>
                     <connections>
                         <action selector="addNewRecipeButtonClicked:" destination="-1" eventType="touchUpInside" id="TJj-FQ-BYH"/>
                     </connections>

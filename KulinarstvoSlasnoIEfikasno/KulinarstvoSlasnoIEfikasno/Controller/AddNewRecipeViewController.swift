@@ -77,6 +77,15 @@ class AddNewRecipeViewController : UIViewController {
         self.categoryPickerView.delegate = self
         self.categoryPickerView.dataSource = self
         
+        [self.addNewRecipeButton, self.chooseImageButton].forEach {
+            $0?.backgroundColor = AppTheme.backgroundUniversalGreen
+            $0?.setTitleColor(AppTheme.textUniversalGreen, for: .normal)
+            
+            $0?.layer.cornerRadius = 10
+            $0?.layer.borderWidth = 2
+            $0?.layer.borderColor = AppTheme.backgroundUniversalGreen.cgColor
+        }
+        
         if self.existingRecipe != nil {
             self.fillFields()
         }

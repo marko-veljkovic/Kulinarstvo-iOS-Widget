@@ -89,7 +89,10 @@ class RecipeModel {
         ], category: .warmSideDish),
         Recipe(name: "Spagete karbonara", prepTime: 45, ingredients: [], steps: [], category: .mainDish),
         Recipe(name: "Pirinac", prepTime: 20,
-               ingredients: [],
+               ingredients: [Ingredient(quantity: 200, measureUnit: "grama", ingredient: "pirinac"),
+                             Ingredient(quantity: 2, measureUnit: "kasike", ingredient: "zejtin"),
+                             Ingredient(quantity: 1, measureUnit: "prstohvat", ingredient: "soli"),
+                             Ingredient(quantity: 400, measureUnit: "mililitra", ingredient: "voda")],
                steps: [ "Oprati pirinac", "Dodati vodu", "Dodati zejtin", "Dodati so", "Kuvati 20ak minuta"], category: .warmSideDish),
         Recipe(name: "Mesano povrce", prepTime: 25, ingredients: [], steps: [], category: .warmSideDish),
         Recipe(name: "Sendvic", prepTime: 5, ingredients: [], steps: [], category: .bread)

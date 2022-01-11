@@ -96,7 +96,8 @@ struct Kulinarstvo_widgetEntryView : View {
             Link(destination: entry.recipe.url ?? URL(fileURLWithPath: "")) {
                 RecipeLargeView(
                     recipe: entry.recipe,
-                    ingredients: entry.recipe.steps.count >= 7 ?
+                    ingredients:
+                        entry.recipe.steps.count >= 7 && entry.recipe.ingredients.count >= 7 ?
                         Array(entry.recipe.stringIngredients.dropLast(entry.recipe.ingredients.count - 7)) :
                         entry.recipe.ingredients.count > 18 ?
                         Array(entry.recipe.stringIngredients.dropLast(entry.recipe.ingredients.count - 18)) :
@@ -125,9 +126,9 @@ struct RecipeView: View {
             VStack {
                 Spacer()
                 Text(recipe.name)
-                    .foregroundColor(.white)
+                    .foregroundColor(Color(AppTheme.textUniversalGreen))
                     .padding(5)
-                    .background(.gray.opacity(0.8))
+                    .background(Color(AppTheme.backgroundUniversalGreen).opacity(0.8))
                     .multilineTextAlignment(.center)
             }
         }.padding(5)
@@ -146,9 +147,9 @@ struct ImageRecipeView: View {
             VStack {
 //                Spacer()
                 Text(recipe.name)
-                    .foregroundColor(.white)
+                    .foregroundColor(Color(AppTheme.textUniversalGreen))
                     .padding(5)
-                    .background(.gray.opacity(0.8))
+                    .background(Color(AppTheme.backgroundUniversalGreen).opacity(0.8))
                     .multilineTextAlignment(.center)
             }
         }.padding(5)
@@ -157,6 +158,8 @@ struct ImageRecipeView: View {
 
 struct ListItemsView: View {
     
+    @Environment(\.colorScheme) var colorScheme
+    
     @State var items: [String]
     @State var areAllItemsPrinted: Bool
     @State var listName: String
@@ -164,12 +167,14 @@ struct ListItemsView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             Text("\(listName): ")
+                .foregroundColor(Color(colorScheme == .dark ? AppTheme.textUniversalGreen : AppTheme.backgroundUniversalGreen))
             ForEach(items, id: \.self) {item in
                 VStack {
                     Text("- " + item)
                         .font(.system(size: 10, design: .monospaced))
                         .frame(width: 175, alignment: .leading)
                         .lineLimit(2)
+                        .foregroundColor(Color(colorScheme == .dark ? AppTheme.textUniversalGreen : AppTheme.backgroundUniversalGreen))
                 }
             }
             if !areAllItemsPrinted {
@@ -229,10 +234,12 @@ struct RecipeLargeView: View {
         else {
             VStack(spacing: 0) {
                 ImageRecipeView(recipe: recipe)
+                Spacer()
                 HStack(alignment: .top, spacing: 5) {
                     ListItemsView(items: ingredients, areAllItemsPrinted: isAllIngredientsPrinted, listName: "Sastojci")
                     ListItemsView(items: steps, areAllItemsPrinted: isAllStepsPrinted, listName: "Priprema")
                 }
+                Spacer()
             }
             .fixedSize()
         }
@@ -255,8 +262,8 @@ struct Kulinarstvo_widget: Widget {
 struct Kulinarstvo_widget_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            Kulinarstvo_widgetEntryView(entry: SimpleEntry(date: Date(), configuration: ConfigurationIntent(), recipe: RecipeModel.testData.first!, parameterToShow: "Sastojci"))
-                .previewContext(WidgetPreviewContext(family: .systemMedium))
+            Kulinarstvo_widgetEntryView(entry: SimpleEntry(date: Date(), configuration: ConfigurationIntent(), recipe: RecipeModel.testData[0], parameterToShow: "Sastojci"))
+                .previewContext(WidgetPreviewContext(family: .systemLarge))
             
 //            Kulinarstvo_widgetEntryView(entry: SimpleEntry(date: Date(), configuration: ConfigurationIntent(), recipe: RecipeModel.testData[0]))
 //                .previewContext(WidgetPreviewContext(family: .systemMedium))

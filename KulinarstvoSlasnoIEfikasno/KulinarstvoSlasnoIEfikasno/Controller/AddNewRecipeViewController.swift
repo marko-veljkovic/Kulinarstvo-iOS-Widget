@@ -62,7 +62,7 @@ class AddNewRecipeViewController : UIViewController {
         
         self.addNewRecipeLabel.text = "Dodaj novi recept"
         self.isFavoritesLabel.text = "Dodati u omiljene?"
-        self.chooseImageButton.titleLabel?.text = "Izaberi sliku jela"
+        self.chooseImageButton.setTitle("Izaberi sliku jela", for: .normal)
         
         self.ingredientsTableView.dataSource = self
         self.stepsTableView.dataSource = self
@@ -71,8 +71,6 @@ class AddNewRecipeViewController : UIViewController {
         
         self.ingredientsTableView.register(UINib(nibName: "AddNewRecipeTableViewCell", bundle: nil), forCellReuseIdentifier: "textFieldCell")
         self.stepsTableView.register(UINib(nibName: "AddNewRecipeTableViewCell", bundle: nil), forCellReuseIdentifier: "textFieldCell")
-        
-        self.addNewRecipeButton.titleLabel?.text = self.existingRecipe != nil ? "Sacuvaj" : "Dodaj recept"
         
         self.categoryPickerView.delegate = self
         self.categoryPickerView.dataSource = self
@@ -86,6 +84,8 @@ class AddNewRecipeViewController : UIViewController {
             $0?.layer.borderColor = AppTheme.backgroundUniversalGreen.cgColor
         }
         
+        self.addNewRecipeButton.setTitle(self.existingRecipe != nil ? "Sacuvaj" : "Dodaj recept", for: .normal)
+        
         if self.existingRecipe != nil {
             self.fillFields()
         }
@@ -95,6 +95,7 @@ class AddNewRecipeViewController : UIViewController {
         self.recipeNameTextField.text = self.existingRecipe!.name
         self.preparationTimeTextField.text = String(self.existingRecipe!.prepTime)
         self.numOfPersonsTextField.text = String(self.existingRecipe!.numOfPersons)
+        self.isCurrentFavorites = self.existingRecipe!.isFavorite ?? false
         self.isFavoritesSwitch.isOn = self.existingRecipe!.isFavorite ?? false
         self.recipeImageView.image = UIImage(named: self.existingRecipe!.imageName)
         

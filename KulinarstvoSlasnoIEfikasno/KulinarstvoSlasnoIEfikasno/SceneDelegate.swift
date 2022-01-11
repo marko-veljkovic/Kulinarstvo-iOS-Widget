@@ -45,7 +45,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let cv = window?.rootViewController as! TabBarViewController
         (cv.selectedViewController as? UINavigationController)?.pushViewController(RecipeDetailViewController(recipe: recipe), animated: true)
-        
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -129,7 +128,4 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             
         }
     }
-
-
 }
-

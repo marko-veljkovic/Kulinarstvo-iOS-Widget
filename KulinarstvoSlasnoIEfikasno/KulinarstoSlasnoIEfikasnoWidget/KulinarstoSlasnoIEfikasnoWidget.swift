@@ -81,26 +81,32 @@ struct Kulinarstvo_widgetEntryView : View {
                 .widgetURL(entry.recipe.url)
         case .systemMedium:
             if entry.parameterToShow == "Sastojci" {
-                RecipeMediumView(recipe: entry.recipe, ingredients: entry.recipe.ingredients.count > 7 ? Array(entry.recipe.stringIngredients.dropLast(entry.recipe.ingredients.count - 7)) : entry.recipe.stringIngredients, isAllIngredientsPrinted: entry.recipe.ingredients.count <= 7, listName: "Sastojci")
+                Link(destination: entry.recipe.url ?? URL(fileURLWithPath: "")) {
+                    RecipeMediumView(recipe: entry.recipe, ingredients: entry.recipe.ingredients.count > 7 ? Array(entry.recipe.stringIngredients.dropLast(entry.recipe.ingredients.count - 7)) : entry.recipe.stringIngredients, isAllIngredientsPrinted: entry.recipe.ingredients.count <= 7, listName: "Sastojci")
+                }
             }
             else {
-                RecipeMediumView(recipe: entry.recipe, ingredients: entry.recipe.steps.count > 7 ? Array(entry.recipe.steps.dropLast(entry.recipe.steps.count - 7)) : entry.recipe.steps, isAllIngredientsPrinted: entry.recipe.steps.count <= 7, listName: "Priprema")
+                Link(destination: entry.recipe.url ?? URL(fileURLWithPath: "")) {
+                    RecipeMediumView(recipe: entry.recipe, ingredients: entry.recipe.steps.count > 7 ? Array(entry.recipe.steps.dropLast(entry.recipe.steps.count - 7)) : entry.recipe.steps, isAllIngredientsPrinted: entry.recipe.steps.count <= 7, listName: "Priprema")
+                }
             }
             
             
         case .systemLarge:
-            RecipeLargeView(
-                recipe: entry.recipe,
-                ingredients: entry.recipe.steps.count >= 7 ?
-                    Array(entry.recipe.stringIngredients.dropLast(entry.recipe.ingredients.count - 7)) :
-                    entry.recipe.ingredients.count > 18 ?
-                    Array(entry.recipe.stringIngredients.dropLast(entry.recipe.ingredients.count - 18)) :
-                    entry.recipe.stringIngredients,
-                isAllIngredientsPrinted: (entry.recipe.ingredients.count < 20 || entry.recipe.steps.count <= 7),
-                steps: entry.recipe.steps.count > 18 ?
-                    Array(entry.recipe.steps.dropLast(entry.recipe.steps.count - 18)) :
-                    entry.recipe.steps,
-                isAllStepsPrinted: entry.recipe.steps.count <= 18)
+            Link(destination: entry.recipe.url ?? URL(fileURLWithPath: "")) {
+                RecipeLargeView(
+                    recipe: entry.recipe,
+                    ingredients: entry.recipe.steps.count >= 7 ?
+                        Array(entry.recipe.stringIngredients.dropLast(entry.recipe.ingredients.count - 7)) :
+                        entry.recipe.ingredients.count > 18 ?
+                        Array(entry.recipe.stringIngredients.dropLast(entry.recipe.ingredients.count - 18)) :
+                        entry.recipe.stringIngredients,
+                    isAllIngredientsPrinted: (entry.recipe.ingredients.count < 20 || entry.recipe.steps.count <= 7),
+                    steps: entry.recipe.steps.count > 18 ?
+                        Array(entry.recipe.steps.dropLast(entry.recipe.steps.count - 18)) :
+                        entry.recipe.steps,
+                    isAllStepsPrinted: entry.recipe.steps.count <= 18)
+            }
         default:
             Text("")
         }

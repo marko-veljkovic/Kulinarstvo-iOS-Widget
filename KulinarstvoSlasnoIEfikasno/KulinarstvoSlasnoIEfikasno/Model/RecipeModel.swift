@@ -34,7 +34,7 @@ public class Recipe : Codable {
     }
     
     var url: URL? {
-        return URL(string: "kulinarstvoslasnoiefikasno://" + name.replacingOccurrences(of: " ", with: "_"))
+        return URL(string: "kulinarstvoslasnoiefikasno://" + name.replacingOccurrences(of: " ", with: ""))
     }
     
     var imageName: String {

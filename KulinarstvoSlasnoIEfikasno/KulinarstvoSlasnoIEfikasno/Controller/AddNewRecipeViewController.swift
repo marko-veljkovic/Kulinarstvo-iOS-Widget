@@ -78,6 +78,7 @@ class AddNewRecipeViewController : UIViewController {
         [self.addNewRecipeButton, self.chooseImageButton].forEach {
             $0?.backgroundColor = AppTheme.backgroundUniversalGreen
             $0?.setTitleColor(AppTheme.textUniversalGreen, for: .normal)
+            $0?.setTitleColor(.gray, for: .disabled)
             
             $0?.layer.cornerRadius = 10
             $0?.layer.borderWidth = 2
@@ -85,6 +86,11 @@ class AddNewRecipeViewController : UIViewController {
         }
         
         self.addNewRecipeButton.setTitle(self.existingRecipe != nil ? "Sacuvaj" : "Dodaj recept", for: .normal)
+        self.addNewRecipeButton.isEnabled = false
+        
+        [self.recipeNameTextField, self.preparationTimeTextField, self.numOfPersonsTextField].forEach {
+            $0?.delegate = self
+        }
         
         if self.existingRecipe != nil {
             self.fillFields()
@@ -165,9 +171,12 @@ class AddNewRecipeViewController : UIViewController {
     
     @IBAction func isFavoritesSwitchSwitched(_ sender: Any) {
         self.isCurrentFavorites = !isCurrentFavorites
+        self.addNewRecipeButton.isEnabled = true
     }
     
     @IBAction func chooseImageButtonClicked(_ sender: Any) {
+        self.addNewRecipeButton.isEnabled = true
+        
         self.imagePicker.delegate = self
         self.imagePicker.sourceType = .savedPhotosAlbum
         self.imagePicker.allowsEditing = false
@@ -176,6 +185,7 @@ class AddNewRecipeViewController : UIViewController {
     }
 }
 
+//MARK: - UIImagePickerControllerDelegate, UINavigationControllerDelegate
 extension AddNewRecipeViewController : UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         self.recipeImageView.image = info[.originalImage] as? UIImage
@@ -193,6 +203,7 @@ extension AddNewRecipeViewController : UIImagePickerControllerDelegate, UINaviga
     }
 }
 
+//MARK: - UITableViewDataSource
 extension AddNewRecipeViewController : UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -218,6 +229,10 @@ extension AddNewRecipeViewController : UITableViewDataSource {
             cell.cellTextField.placeholder = "Jedinica mere"
             cell.ingredientTextField.placeholder = "Sastojak"
             
+            [cell.quantityTextField, cell.cellTextField, cell.ingredientTextField].forEach {
+                $0?.delegate = self
+            }
+            
             let record = self.ingrediantsMap[String(indexPath.row)]
             if record != nil {
                 cell.cellTextField.text = record!.measureUnit
@@ -230,6 +245,7 @@ extension AddNewRecipeViewController : UITableViewDataSource {
         else if tableView === self.stepsTableView {
             cell.quantityTextField.isHidden = true
             cell.ingredientTextField.isHidden = true
+            cell.cellTextField.delegate = self
             let record = self.stepsMap[String(indexPath.row)]
             if record != nil {
                 cell.cellTextField.text = record
@@ -243,12 +259,14 @@ extension AddNewRecipeViewController : UITableViewDataSource {
     }
 }
 
+//MARK: - UITableViewDelegate
 extension AddNewRecipeViewController : UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
     }
 }
 
+//MARK: - AddNewRecipeTableViewCellDelegate
 extension AddNewRecipeViewController : AddNewRecipeTableViewCellDelegate {
     func addNewTextField(_ tableViewCell: UITableViewCell, _ tableView: UITableView?) {
         if tableView === self.ingredientsTableView {
@@ -291,6 +309,7 @@ extension AddNewRecipeViewController : AddNewRecipeTableViewCellDelegate {
     }
 }
 
+//MARK: - UIPickerViewDelegate
 extension AddNewRecipeViewController : UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         let category = RecipeCategory(rawValue: row) ?? .snack
@@ -317,10 +336,12 @@ extension AddNewRecipeViewController : UIPickerViewDelegate {
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        self.addNewRecipeButton.isEnabled = true
         self.recipeCategory = RecipeCategory(rawValue: row) ?? .snack
     }
 }
 
+//MARK: - UIPickerViewDataSource
 extension AddNewRecipeViewController : UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -328,5 +349,14 @@ extension AddNewRecipeViewController : UIPickerViewDataSource {
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return RecipeCategory.allCases.count
+    }
+}
+
+//MARK: - UITextFieldDelegate
+extension AddNewRecipeViewController : UITextFieldDelegate {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        if self.existingRecipe != nil || textField === self.recipeNameTextField {
+            self.addNewRecipeButton.isEnabled = true
+        }
     }
 }

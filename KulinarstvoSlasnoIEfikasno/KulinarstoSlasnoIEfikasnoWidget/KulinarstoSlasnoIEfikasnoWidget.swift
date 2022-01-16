@@ -5,12 +5,12 @@ import Intents
 struct Provider: IntentTimelineProvider {
     func placeholder(in context: Context) -> SimpleEntry {
         self.loadDataFile()
-        return SimpleEntry(date: Date(), configuration: ConfigurationIntent(), recipe: Datafeed.shared.favRecipes[0], parameterToShow: "Sastojci")
+        return SimpleEntry(date: Date(), configuration: ConfigurationIntent(), recipe: Datafeed.shared.favRecipes[0], parameterToShow: MainParameter.Sastojci.rawValue)
     }
 
     func getSnapshot(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (SimpleEntry) -> ()) {
         self.loadDataFile()
-        let entry = SimpleEntry(date: Date(), configuration: configuration, recipe: Datafeed.shared.favRecipes[0], parameterToShow: "Sastojci")
+        let entry = SimpleEntry(date: Date(), configuration: configuration, recipe: Datafeed.shared.favRecipes[0], parameterToShow: MainParameter.Sastojci.rawValue)
         completion(entry)
     }
 
@@ -41,11 +41,11 @@ struct Provider: IntentTimelineProvider {
         self.loadDataFile()
         switch configuration.ParameterToShow {
         case .sastojci:
-            return "Sastojci"
+            return MainParameter.Sastojci.rawValue
         case .priprema:
-            return "Priprema"
+            return MainParameter.Priprema.rawValue
         default:
-            return "Sastojci"
+            return MainParameter.Sastojci.rawValue
         }
     }
     
@@ -63,50 +63,44 @@ struct SimpleEntry: TimelineEntry {
     let parameterToShow: String
 }
 
+// Enum for list names and easier collecting of selected parameter
+enum MainParameter : String {
+    case Sastojci, Priprema
+}
+
+// Placeholder view that is presented to user while main view is loading
 struct PlaceholderView : View {
     var body : some View {
-        Kulinarstvo_widgetEntryView(entry: SimpleEntry(date: Date(), configuration: ConfigurationIntent(), recipe: Datafeed.shared.favRecipes[0], parameterToShow: "Sastojci"))
+        Kulinarstvo_widgetEntryView(entry: SimpleEntry(date: Date(), configuration: ConfigurationIntent(), recipe: Datafeed.shared.favRecipes[0], parameterToShow: MainParameter.Sastojci.rawValue))
     }
 }
 
+// Main view that is presented to user relative to selected widget size
 struct Kulinarstvo_widgetEntryView : View {
     var entry: Provider.Entry
     
     @Environment(\.widgetFamily) var widgetFamily
+    @Environment(\.colorScheme) var colorScheme
+    
     @ViewBuilder
     var body: some View {
         switch widgetFamily {
         case .systemSmall:
-            RecipeView(recipe: entry.recipe)
+            ImageRecipeView(recipe: entry.recipe, isSmallView: true)
                 .widgetURL(entry.recipe.url)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(colorScheme == .dark ? Color(AppTheme.backgroundUniversalGreen) : .white)
         case .systemMedium:
-            if entry.parameterToShow == "Sastojci" {
-                Link(destination: entry.recipe.url ?? URL(fileURLWithPath: "")) {
-                    RecipeMediumView(recipe: entry.recipe, ingredients: entry.recipe.ingredients.count > 7 ? Array(entry.recipe.stringIngredients.dropLast(entry.recipe.ingredients.count - 7)) : entry.recipe.stringIngredients, isAllIngredientsPrinted: entry.recipe.ingredients.count <= 7, listName: "Sastojci")
-                }
+            Link(destination: entry.recipe.url ?? URL(fileURLWithPath: "")) {
+                RecipeMediumView(recipe: entry.recipe, listName: entry.parameterToShow)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .background(colorScheme == .dark ? Color(AppTheme.backgroundUniversalGreen) : .white)
             }
-            else {
-                Link(destination: entry.recipe.url ?? URL(fileURLWithPath: "")) {
-                    RecipeMediumView(recipe: entry.recipe, ingredients: entry.recipe.steps.count > 7 ? Array(entry.recipe.steps.dropLast(entry.recipe.steps.count - 7)) : entry.recipe.steps, isAllIngredientsPrinted: entry.recipe.steps.count <= 7, listName: "Priprema")
-                }
-            }
-            
-            
         case .systemLarge:
             Link(destination: entry.recipe.url ?? URL(fileURLWithPath: "")) {
-                RecipeLargeView(
-                    recipe: entry.recipe,
-                    ingredients:
-                        entry.recipe.steps.count >= 7 && entry.recipe.ingredients.count >= 7 ?
-                        Array(entry.recipe.stringIngredients.dropLast(entry.recipe.ingredients.count - 7)) :
-                        entry.recipe.ingredients.count > 18 ?
-                        Array(entry.recipe.stringIngredients.dropLast(entry.recipe.ingredients.count - 18)) :
-                        entry.recipe.stringIngredients,
-                    isAllIngredientsPrinted: (entry.recipe.ingredients.count < 20 || entry.recipe.steps.count <= 7),
-                    steps: entry.recipe.steps.count > 18 ?
-                        Array(entry.recipe.steps.dropLast(entry.recipe.steps.count - 18)) :
-                        entry.recipe.steps,
-                    isAllStepsPrinted: entry.recipe.steps.count <= 18)
+                RecipeLargeView(recipe: entry.recipe, mainParameter: entry.parameterToShow)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .background(colorScheme == .dark ? Color(AppTheme.backgroundUniversalGreen) : .white)
             }
         default:
             Text("")
@@ -114,48 +108,33 @@ struct Kulinarstvo_widgetEntryView : View {
     }
 }
 
-struct RecipeView: View {
-    var recipe: Recipe
-    
-    var body: some View {
-        ZStack {
-            Image(recipe.imageName)
-                .resizable()
-//                .fixedSize(horizontal: true, vertical: true)
-//                .aspectRatio(contentMode: .fit)
-            VStack {
-                Spacer()
-                Text(recipe.name)
-                    .foregroundColor(Color(AppTheme.textUniversalGreen))
-                    .padding(5)
-                    .background(Color(AppTheme.backgroundUniversalGreen).opacity(0.8))
-                    .multilineTextAlignment(.center)
-            }
-        }.padding(5)
-    }
-}
-
+// View that present recipe image and name at the bottom of image
 struct ImageRecipeView: View {
     var recipe: Recipe
+    var isSmallView: Bool
+    @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         ZStack(alignment: .bottom) {
-            Image(recipe.imageName)
-//                .resizable()
-//                .fixedSize(horizontal: true, vertical: true)
-//                .aspectRatio(contentMode: .fit)
+            if isSmallView {
+                Image(recipe.imageName)
+                    .resizable()
+            }
+            else {
+                Image(recipe.imageName)
+            }
             VStack {
-//                Spacer()
                 Text(recipe.name)
-                    .foregroundColor(Color(AppTheme.textUniversalGreen))
+                    .foregroundColor(Color(colorScheme == .light ? AppTheme.textUniversalGreen : AppTheme.backgroundUniversalGreen))
                     .padding(5)
-                    .background(Color(AppTheme.backgroundUniversalGreen).opacity(0.8))
+                    .background(Color(colorScheme == .dark ? AppTheme.textUniversalGreen : AppTheme.backgroundUniversalGreen).opacity(0.75))
                     .multilineTextAlignment(.center)
             }
         }.padding(5)
     }
 }
 
+// View that list all items forwarded to it (ingredients or steps)
 struct ListItemsView: View {
     
     @Environment(\.colorScheme) var colorScheme
@@ -167,11 +146,12 @@ struct ListItemsView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             Text("\(listName): ")
+                .font(.system(size: 18, weight: .heavy))
                 .foregroundColor(Color(colorScheme == .dark ? AppTheme.textUniversalGreen : AppTheme.backgroundUniversalGreen))
             ForEach(items, id: \.self) {item in
                 VStack {
                     Text("- " + item)
-                        .font(.system(size: 10, design: .monospaced))
+                        .font(.system(size: 12, weight: .bold))
                         .frame(width: 175, alignment: .leading)
                         .lineLimit(2)
                         .foregroundColor(Color(colorScheme == .dark ? AppTheme.textUniversalGreen : AppTheme.backgroundUniversalGreen))
@@ -179,65 +159,91 @@ struct ListItemsView: View {
             }
             if !areAllItemsPrinted {
                 Text("   ...")
+                    .foregroundColor(Color(colorScheme == .dark ? AppTheme.textUniversalGreen : AppTheme.backgroundUniversalGreen))
             }
         }
     }
 }
 
-struct RecipeMediumView: View {
+// View that check list lenght and chop it off if needed and then present it via ListItemsView
+struct ListItemsWithOptionalChopingView : View {
+    var itemsArray: [String]
+    var lenghtLimit: Int
+    var listName: String
+    
+    var body: some View {
+        if itemsArray.count > lenghtLimit {
+            let chopedItems = Array(itemsArray.dropLast(itemsArray.count - lenghtLimit))
+            ListItemsView(items: chopedItems, areAllItemsPrinted: false, listName: listName)
+        }
+        else {
+            ListItemsView(items: itemsArray, areAllItemsPrinted: true, listName: listName)
+        }
+    }
+}
+
+// View that represents medium size widget
+struct RecipeMediumView : View {
     let recipe: Recipe
     
-    @State var ingredients: [String]
-    @State var isAllIngredientsPrinted: Bool
     @State var listName: String
     
     @ViewBuilder
     var body: some View {
         HStack {
-            ImageRecipeView(recipe: recipe)
-            ListItemsView(items: ingredients, areAllItemsPrinted: isAllIngredientsPrinted, listName: listName)
+            ImageRecipeView(recipe: recipe, isSmallView: false)
+            ListItemsWithOptionalChopingView(itemsArray: listName == MainParameter.Sastojci.rawValue ? recipe.stringIngredients : recipe.steps, lenghtLimit: 7, listName: listName)
         }
     }
 }
 
+// View that represents large size widget
 struct RecipeLargeView: View {
     var recipe: Recipe
     
-    @State var ingredients: [String]
-    @State var isAllIngredientsPrinted: Bool
+    var mainParameter: String
+    var secondParameter: String
     
-    @State var steps: [String]
-    @State var isAllStepsPrinted: Bool
+    var mainArray: [String]
+    var secondArray: [String]
+    
+    init(recipe: Recipe, mainParameter: String) {
+        self.recipe = recipe
+        self.mainParameter = mainParameter
+        self.secondParameter = self.mainParameter == MainParameter.Sastojci.rawValue ? MainParameter.Priprema.rawValue : MainParameter.Sastojci.rawValue
+        self.mainArray = self.mainParameter == MainParameter.Sastojci.rawValue ? self.recipe.stringIngredients : self.recipe.steps
+        self.secondArray = self.mainParameter == MainParameter.Sastojci.rawValue ? self.recipe.steps : self.recipe.stringIngredients
+    }
     
     @ViewBuilder
     var body: some View {
-        if steps.count > 6 {
+        if self.mainArray.count > 6 {
             HStack(alignment: .top, spacing: 5) {
                 VStack(alignment: .leading, spacing: 10) {
-                    ImageRecipeView(recipe: recipe)
-                    ListItemsView(items: ingredients, areAllItemsPrinted: isAllIngredientsPrinted, listName: "Sastojci")
+                    ImageRecipeView(recipe: recipe, isSmallView: false)
+                    ListItemsWithOptionalChopingView(itemsArray: self.secondArray, lenghtLimit: 7, listName: secondParameter)
                 }
-                ListItemsView(items: steps, areAllItemsPrinted: isAllStepsPrinted, listName: "Priprema")
+                ListItemsWithOptionalChopingView(itemsArray: self.mainArray, lenghtLimit: 18, listName: mainParameter)
             }
             .fixedSize()
         }
-        else if ingredients.count > 6 {
+        else if self.secondArray.count > 6 {
             HStack(alignment: .top, spacing: 5) {
                 VStack(alignment: .leading, spacing: 10) {
-                    ImageRecipeView(recipe: recipe)
-                    ListItemsView(items: steps, areAllItemsPrinted: isAllStepsPrinted, listName: "Priprema")
+                    ImageRecipeView(recipe: recipe, isSmallView: false)
+                    ListItemsView(items: self.mainArray, areAllItemsPrinted: true, listName: mainParameter)
                 }
-                ListItemsView(items: ingredients, areAllItemsPrinted: isAllIngredientsPrinted, listName: "Sastojci")
+                ListItemsWithOptionalChopingView(itemsArray: self.secondArray, lenghtLimit: 18, listName: secondParameter)
             }
             .fixedSize()
         }
         else {
             VStack(spacing: 0) {
-                ImageRecipeView(recipe: recipe)
+                ImageRecipeView(recipe: recipe, isSmallView: false)
                 Spacer()
                 HStack(alignment: .top, spacing: 5) {
-                    ListItemsView(items: ingredients, areAllItemsPrinted: isAllIngredientsPrinted, listName: "Sastojci")
-                    ListItemsView(items: steps, areAllItemsPrinted: isAllStepsPrinted, listName: "Priprema")
+                    ListItemsView(items: self.mainArray, areAllItemsPrinted: true, listName: mainParameter)
+                    ListItemsView(items: self.secondArray, areAllItemsPrinted: true, listName: secondParameter)
                 }
                 Spacer()
             }
@@ -248,6 +254,8 @@ struct RecipeLargeView: View {
 
 @main
 struct Kulinarstvo_widget: Widget {
+    @Environment(\.colorScheme) var colorScheme
+    
     let kind: String = "KulinarstvoSlasnoIEfikasnoWidget"
     
     var body: some WidgetConfiguration {
@@ -259,11 +267,16 @@ struct Kulinarstvo_widget: Widget {
     }
 }
 
+// View for previewing views on right side
 struct Kulinarstvo_widget_Previews: PreviewProvider {
+    
     static var previews: some View {
         Group {
-            Kulinarstvo_widgetEntryView(entry: SimpleEntry(date: Date(), configuration: ConfigurationIntent(), recipe: RecipeModel.testData[0], parameterToShow: "Sastojci"))
+            Kulinarstvo_widgetEntryView(entry: SimpleEntry(date: Date(), configuration: ConfigurationIntent(), recipe: RecipeModel.testData[0], parameterToShow: MainParameter.Sastojci.rawValue))
                 .previewContext(WidgetPreviewContext(family: .systemLarge))
+//                .frame(maxWidth: .infinity, maxHeight: .infinity)
+//                .background(Color(AppTheme.backgroundUniversalGreen))
+//                .preferredColorScheme(.dark)
             
 //            Kulinarstvo_widgetEntryView(entry: SimpleEntry(date: Date(), configuration: ConfigurationIntent(), recipe: RecipeModel.testData[0]))
 //                .previewContext(WidgetPreviewContext(family: .systemMedium))

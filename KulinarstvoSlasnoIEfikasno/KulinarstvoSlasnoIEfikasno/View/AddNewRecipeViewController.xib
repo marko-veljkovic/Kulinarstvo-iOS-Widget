@@ -12,6 +12,7 @@
             <connections>
                 <outlet property="addNewRecipeButton" destination="8iZ-Na-3HV" id="Uuw-uQ-Yan"/>
                 <outlet property="addNewRecipeLabel" destination="bve-wM-n4X" id="Vlf-XK-7aJ"/>
+                <outlet property="categoryLabel" destination="JMQ-Z3-EUz" id="J7Z-yT-gHg"/>
                 <outlet property="categoryPickerView" destination="reG-Ev-ndE" id="maK-yN-0iL"/>
                 <outlet property="chooseImageButton" destination="e9u-V6-9hx" id="KB6-ty-urf"/>
                 <outlet property="ingredientsTableView" destination="Y8V-sC-R2L" id="bnB-yq-lJ0"/>
@@ -115,17 +116,17 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="reG-Ev-ndE">
-                            <rect key="frame" x="0.0" y="219" width="404" height="75"/>
+                            <rect key="frame" x="0.0" y="219" width="404" height="100"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="75" id="WWB-ah-qdB"/>
+                                <constraint firstAttribute="height" constant="100" id="WWB-ah-qdB"/>
                             </constraints>
                         </pickerView>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="35" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Y8V-sC-R2L">
-                            <rect key="frame" x="0.0" y="299" width="404" height="239.5"/>
+                            <rect key="frame" x="0.0" y="324" width="404" height="227"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         </tableView>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="35" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="1DH-mf-Jak">
-                            <rect key="frame" x="0.0" y="543.5" width="404" height="239.5"/>
+                            <rect key="frame" x="0.0" y="556" width="404" height="227"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         </tableView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8iZ-Na-3HV">

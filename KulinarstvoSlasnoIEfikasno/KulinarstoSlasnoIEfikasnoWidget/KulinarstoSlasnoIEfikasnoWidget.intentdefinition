@@ -147,26 +147,6 @@
 							<key>INIntentParameterPromptDialogType</key>
 							<string>Primary</string>
 						</dict>
-						<dict>
-							<key>INIntentParameterPromptDialogCustom</key>
-							<true/>
-							<key>INIntentParameterPromptDialogFormatString</key>
-							<string>There are ${count} options matching ‘${Recipe}’.</string>
-							<key>INIntentParameterPromptDialogFormatStringID</key>
-							<string>T4CBcD</string>
-							<key>INIntentParameterPromptDialogType</key>
-							<string>DisambiguationIntroduction</string>
-						</dict>
-						<dict>
-							<key>INIntentParameterPromptDialogCustom</key>
-							<true/>
-							<key>INIntentParameterPromptDialogFormatString</key>
-							<string>Just to confirm, you wanted ‘${Recipe}’?</string>
-							<key>INIntentParameterPromptDialogFormatStringID</key>
-							<string>ssAL2J</string>
-							<key>INIntentParameterPromptDialogType</key>
-							<string>Confirmation</string>
-						</dict>
 					</array>
 					<key>INIntentParameterSupportsDynamicEnumeration</key>
 					<true/>
@@ -181,7 +161,7 @@
 					<key>INIntentParameterCustomDisambiguation</key>
 					<true/>
 					<key>INIntentParameterDisplayName</key>
-					<string>Koji parametar prikazati za srednji widget</string>
+					<string>Izaberite primarni parametar</string>
 					<key>INIntentParameterDisplayNameID</key>
 					<string>VzU4v2</string>
 					<key>INIntentParameterDisplayPriority</key>

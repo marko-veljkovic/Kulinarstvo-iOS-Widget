@@ -40,6 +40,13 @@ class TabBarViewController: UITabBarController {
         super.viewDidLoad()
         
         self.viewControllers = [generalNavigationController, favoritesNavigationController, myRecipesNavigationController]
+        
+        self.tabBar.tintColor = self.traitCollection.userInterfaceStyle == .dark ? AppTheme.textUniversalGreen : AppTheme.backgroundUniversalGreen
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        self.tabBar.tintColor = self.traitCollection.userInterfaceStyle == .dark ? AppTheme.textUniversalGreen : AppTheme.backgroundUniversalGreen
     }
     
     func generate(vc: UIViewController, title: String, imageName: String) -> UINavigationController {

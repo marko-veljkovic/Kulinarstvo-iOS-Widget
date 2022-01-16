@@ -30,6 +30,7 @@ class AddNewRecipeViewController : UIViewController {
     @IBOutlet weak var chooseImageButton: UIButton!
     @IBOutlet weak var recipeImageView: UIImageView!
     
+    @IBOutlet weak var categoryLabel: UILabel!
     @IBOutlet weak var categoryPickerView: UIPickerView!
     
     var imagePicker = UIImagePickerController()
@@ -94,6 +95,25 @@ class AddNewRecipeViewController : UIViewController {
         
         if self.existingRecipe != nil {
             self.fillFields()
+        }
+        
+        self.setTextColor()
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        self.setTextColor()
+        self.ingredientsTableView.reloadData()
+        self.stepsTableView.reloadData()
+    }
+    
+    func setTextColor() {
+        [self.recipeNameTextField, self.preparationTimeTextField, self.numOfPersonsTextField].forEach {
+            $0?.textColor = AppTheme.setTextColor()
+        }
+        
+        [self.addNewRecipeLabel, self.isFavoritesLabel, self.categoryLabel].forEach {
+            $0?.textColor = AppTheme.setTextColor()
         }
     }
     
@@ -231,6 +251,7 @@ extension AddNewRecipeViewController : UITableViewDataSource {
             
             [cell.quantityTextField, cell.cellTextField, cell.ingredientTextField].forEach {
                 $0?.delegate = self
+                $0?.textColor = AppTheme.setTextColor()
             }
             
             let record = self.ingrediantsMap[String(indexPath.row)]
@@ -249,6 +270,7 @@ extension AddNewRecipeViewController : UITableViewDataSource {
             let record = self.stepsMap[String(indexPath.row)]
             if record != nil {
                 cell.cellTextField.text = record
+                cell.cellTextField.textColor = AppTheme.setTextColor()
             }
             else {
                 cell.cellTextField.placeholder = "Korak"
@@ -261,8 +283,14 @@ extension AddNewRecipeViewController : UITableViewDataSource {
 
 //MARK: - UITableViewDelegate
 extension AddNewRecipeViewController : UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        guard let header = view as? UITableViewHeaderFooterView else {
+            return
+        }
+        header.textLabel?.textColor = AppTheme.setTextColor()
+        header.textLabel?.font = UIFont.boldSystemFont(ofSize: 15)
+        header.textLabel?.frame = header.bounds
+        header.textLabel?.textAlignment = .center
     }
 }
 

@@ -51,6 +51,7 @@ class RecipeDetailViewController: UIViewController {
         super.viewDidLoad()
 
         self.tableView.dataSource = self
+        self.tableView.delegate = self
         
         self.changeRecipeButton.setTitle("Izmeni recept", for: .normal)
         self.changeRecipeButton.isHidden = !(self.recipe.isMyRecipe ?? false)
@@ -85,6 +86,12 @@ class RecipeDetailViewController: UIViewController {
         self.setRecipeData()
     }
     
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        self.setRecipeData()
+        self.tableView.reloadData()
+    }
+    
     func setRecipeData() {
         self.titleLabel?.text = recipe.name
         
@@ -112,6 +119,10 @@ class RecipeDetailViewController: UIViewController {
             }
         }()
         
+        [self.titleLabel, self.numOfPersonsTextLabel].forEach {
+            $0?.textColor = AppTheme.setTextColor()
+        }
+        
         var recipeImage = UIImage(named: recipe.imageName)
         
         if recipeImage == nil, let imageData = UserDefaults(suiteName: Datafeed.shared.kAppGroup)?.object(forKey: recipe.imageName) as? Data {
@@ -126,7 +137,7 @@ class RecipeDetailViewController: UIViewController {
     func setNumberOfPersonsField() {
         self.numOfPersonsTextLabel.text = "Sastojci potrebni za \(self.localNumberOfPersons) " + self.correctFormOFString()
         
-        self.decreaseNumOfPersons.isEnabled = self.localNumberOfPersons != 0
+        self.decreaseNumOfPersons.isEnabled = self.localNumberOfPersons > 1
     }
     
     func correctFormOFString() -> String {
@@ -199,8 +210,21 @@ extension RecipeDetailViewController : UITableViewDataSource {
         
         if indexPath.section != 0 || self.recipe.ingredients[indexPath.row].quantity != 0 {
             cell.textLabel?.text = wantedList[indexPath.row]
+            cell.textLabel?.textColor = AppTheme.setTextColor()
         }
         return cell
+    }
+}
+
+extension RecipeDetailViewController : UITableViewDelegate {
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        guard let header = view as? UITableViewHeaderFooterView else {
+            return
+        }
+        header.textLabel?.textColor = AppTheme.setTextColor()
+        header.textLabel?.font = UIFont.boldSystemFont(ofSize: 18)
+        header.textLabel?.frame = header.bounds
+        header.textLabel?.textAlignment = .center
     }
 }
 

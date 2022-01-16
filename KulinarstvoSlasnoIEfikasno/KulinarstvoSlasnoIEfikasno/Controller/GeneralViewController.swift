@@ -83,6 +83,11 @@ class GeneralViewController: UIViewController {
         self.tableView.reloadData()
     }
     
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        self.tableView.reloadData()
+    }
+    
     @objc
     func refreshTable() {
         self.tableView.reloadData()
@@ -183,6 +188,7 @@ extension GeneralViewController : UITableViewDataSource {
                        //                 Datafeed.shared.recipes[indexPath.row]
         
         cell.title?.text = record.name
+        cell.title?.textColor = AppTheme.setTextColor()
         var recipeImage = UIImage(named: record.imageName)
         
         if recipeImage == nil, let imageData = UserDefaults(suiteName: Datafeed.shared.kAppGroup)?.object(forKey: record.imageName) as? Data {

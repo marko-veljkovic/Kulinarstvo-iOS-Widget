@@ -83,7 +83,7 @@ class RecipeModel {
             Ingredient(quantity: 20, measureUnit: "grama", ingredient: "sira"),
             Ingredient(quantity: 1, measureUnit: "kasicica", ingredient: "persun")
         ], steps: [
-            "Izmutiti jaja sitno i brzo", "Dodati sitno", "Lorem ipsum za proveru duzine i sirine opisa postupka", "Sipati u tiganj i prziti", "Proba", "priprema",
+            "Izmutiti jaja sitno i brzo", "Dodati sitno", "Lorem ipsum za proveru duzine i sirine opisa postupka", "Sipati u tiganj i prziti", "Proba", "priprema", "7 korak po redu",
             "Izmutiti jaja sitno i brzo", "Dodati sitno", "Lorem ipsum za proveru duzine i sirine opisa postupka", "Sipati u tiganj i prziti", "Proba", "priprema", "7 korak po redu",
             "Izmutiti jaja sitno i brzo", "Dodati sitno", "Lorem ipsum za proveru duzine i sirine opisa postupka", "Sipati u tiganj i prziti", "Proba", "priprema", "7 korak po redu"
         ], category: .warmSideDish),
@@ -99,7 +99,10 @@ class RecipeModel {
     ]
 
     static var myTestData = [
-        Recipe(name: "Omlet", prepTime: 15, ingredients: [], steps: [
+        Recipe(name: "Omlet", prepTime: 15, ingredients: [
+            Ingredient(quantity: 3, measureUnit: "komada", ingredient: "jaja"),
+            Ingredient(quantity: 20, measureUnit: "grama", ingredient: "sira")
+        ], steps: [
             "Izmutiti jaja", "Dodati sitno seckan paradajz", "Sipati u tiganj i prziti"
         ], category: .warmSideDish),
         Recipe(name: "Sendvic", prepTime: 5, ingredients: [], steps: [
@@ -244,4 +247,8 @@ extension Datafeed : RecipeModelDelegate {
 class AppTheme {
     static let backgroundUniversalGreen = UIColor(displayP3Red: 4/255, green: 110/255, blue: 75/255, alpha: 1)
     static let textUniversalGreen = UIColor(displayP3Red: 190/255, green: 255/255, blue: 249/255, alpha: 1)
+    
+    static func setTextColor() -> UIColor {
+        return UITraitCollection.current.userInterfaceStyle == .dark ? AppTheme.textUniversalGreen : AppTheme.backgroundUniversalGreen
+    }
 }

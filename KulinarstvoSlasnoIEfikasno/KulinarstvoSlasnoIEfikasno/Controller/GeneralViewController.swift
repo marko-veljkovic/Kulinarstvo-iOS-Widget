@@ -52,14 +52,9 @@ class GeneralViewController: UIViewController {
         
         self.categoryButton.setTitle("Izaberi kategoriju", for: .normal)
         
-        self.categoryButton.backgroundColor = AppTheme.backgroundUniversalGreen
-        self.categoryButton.setTitleColor(AppTheme.textUniversalGreen, for: .normal)
-        
         self.categoryButton.layer.cornerRadius = 10
         self.categoryButton.layer.borderWidth = 2
         self.categoryButton.layer.borderColor = AppTheme.backgroundUniversalGreen.cgColor
-        
-        self.addNewRecipeButton.tintColor = AppTheme.backgroundUniversalGreen
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
@@ -78,13 +73,24 @@ class GeneralViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        self.setColor()
         self.recipes =  self.isFavorites ? Datafeed.shared.favRecipes : self.isMyRecipes ? Datafeed.shared.myRecipes : Datafeed.shared.recipes
         self.unfilteredRecipes = self.recipes
         self.tableView.reloadData()
     }
     
+    func setColor() {
+        self.categoryButton.backgroundColor = AppTheme.setBackgroundColor()
+        self.categoryButton.setTitleColor(AppTheme.setTextColor(), for: .normal)
+        self.addNewRecipeButton.tintColor = AppTheme.setTextColor()
+        self.clearCategoryButton.tintColor = AppTheme.setTextColor()
+        self.navigationController?.navigationBar.tintColor = AppTheme.setTextColor()
+        (self.searchBar?.value(forKey: "cancelButton") as? UIButton)?.tintColor = AppTheme.setTextColor()
+    }
+    
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
+        self.setColor()
         self.tableView.reloadData()
     }
     
@@ -250,8 +256,9 @@ extension GeneralViewController : UISearchBarDelegate {
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         self.searchBar.showsCancelButton = true
-        let searcBarCancelButton = self.searchBar.value(forKey: "cancelButton") as! UIButton
-        searcBarCancelButton.setTitle("Ponisti", for: .normal)
+        let searchBarCancelButton = self.searchBar.value(forKey: "cancelButton") as! UIButton
+        searchBarCancelButton.tintColor = AppTheme.setTextColor()
+        searchBarCancelButton.setTitle("Ponisti", for: .normal)
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {

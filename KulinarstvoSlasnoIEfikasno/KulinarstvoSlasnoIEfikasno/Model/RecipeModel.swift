@@ -251,4 +251,8 @@ class AppTheme {
     static func setTextColor() -> UIColor {
         return UITraitCollection.current.userInterfaceStyle == .dark ? AppTheme.textUniversalGreen : AppTheme.backgroundUniversalGreen
     }
+    
+    static func setBackgroundColor() -> UIColor {
+        return UITraitCollection.current.userInterfaceStyle == .dark ? AppTheme.backgroundUniversalGreen : AppTheme.textUniversalGreen
+    }
 }

@@ -77,8 +77,6 @@ class AddNewRecipeViewController : UIViewController {
         self.categoryPickerView.dataSource = self
         
         [self.addNewRecipeButton, self.chooseImageButton].forEach {
-            $0?.backgroundColor = AppTheme.backgroundUniversalGreen
-            $0?.setTitleColor(AppTheme.textUniversalGreen, for: .normal)
             $0?.setTitleColor(.gray, for: .disabled)
             
             $0?.layer.cornerRadius = 10
@@ -97,17 +95,17 @@ class AddNewRecipeViewController : UIViewController {
             self.fillFields()
         }
         
-        self.setTextColor()
+        self.setColors()
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        self.setTextColor()
+        self.setColors()
         self.ingredientsTableView.reloadData()
         self.stepsTableView.reloadData()
     }
     
-    func setTextColor() {
+    private func setColors() {
         [self.recipeNameTextField, self.preparationTimeTextField, self.numOfPersonsTextField].forEach {
             $0?.textColor = AppTheme.setTextColor()
         }
@@ -115,9 +113,17 @@ class AddNewRecipeViewController : UIViewController {
         [self.addNewRecipeLabel, self.isFavoritesLabel, self.categoryLabel].forEach {
             $0?.textColor = AppTheme.setTextColor()
         }
+        
+        [self.addNewRecipeButton, self.chooseImageButton].forEach {
+            $0?.backgroundColor = AppTheme.setBackgroundColor()
+            $0?.setTitleColor(AppTheme.setTextColor(), for: .normal)
+        }
+        
+        self.isFavoritesSwitch.onTintColor = AppTheme.setTextColor()
+        self.navigationController?.navigationBar.tintColor = AppTheme.setTextColor()
     }
     
-    func fillFields() {
+    private func fillFields() {
         self.recipeNameTextField.text = self.existingRecipe!.name
         self.preparationTimeTextField.text = String(self.existingRecipe!.prepTime)
         self.numOfPersonsTextField.text = String(self.existingRecipe!.numOfPersons)
@@ -241,6 +247,7 @@ extension AddNewRecipeViewController : UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "textFieldCell") as! AddNewRecipeTableViewCell
         cell.addNewTextFieldButton.isHidden = ((tableView === self.ingredientsTableView) ? !(indexPath.row == self.ingrediantsNumber - 1) : !(indexPath.row == self.stepsNumber - 1))
+        cell.addNewTextFieldButton.tintColor = AppTheme.setTextColor()
         cell.delegate = self
         
         if tableView === self.ingredientsTableView {
@@ -333,34 +340,37 @@ extension AddNewRecipeViewController : AddNewRecipeTableViewCellDelegate {
         else if tableView === self.stepsTableView {
             self.stepsMap[String(rowIndex)] = localText
         }
-        
     }
 }
 
 //MARK: - UIPickerViewDelegate
 extension AddNewRecipeViewController : UIPickerViewDelegate {
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
         let category = RecipeCategory(rawValue: row) ?? .snack
-        switch category {
-        case .coldSideDish:
-            return "Hladno predjelo"
-        case .warmSideDish:
-            return "Toplo predjelo"
-        case .mainDish:
-            return "Glavno jelo"
-        case .snack:
-            return "Uzina"
-        case .drink:
-            return "Pice"
-        case .soup:
-            return "Supe i corbe"
-        case .dessert:
-            return "Dezert"
-        case .salad:
-            return "Salata"
-        case .bread:
-            return "Hleba"
-        }
+        let stringToReturn = { () -> String in
+            switch category {
+            case .coldSideDish:
+                return "Hladno predjelo"
+            case .warmSideDish:
+                return "Toplo predjelo"
+            case .mainDish:
+                return "Glavno jelo"
+            case .snack:
+                return "Uzina"
+            case .drink:
+                return "Pice"
+            case .soup:
+                return "Supe i corbe"
+            case .dessert:
+                return "Dezert"
+            case .salad:
+                return "Salata"
+            case .bread:
+                return "Hleba"
+            }
+        }()
+        
+        return NSAttributedString(string: stringToReturn, attributes: [.foregroundColor : AppTheme.setTextColor()])
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {

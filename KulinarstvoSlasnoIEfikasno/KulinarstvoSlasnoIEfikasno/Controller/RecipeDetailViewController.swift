@@ -64,14 +64,12 @@ class RecipeDetailViewController: UIViewController {
         self.deleteRecipeButton.layer.borderColor = UIColor.red.cgColor
         
         [self.increaseNumOfPersons, self.decreaseNumOfPersons, changeRecipeButton].forEach {
-            $0?.backgroundColor = AppTheme.backgroundUniversalGreen
-            $0?.setTitleColor(AppTheme.textUniversalGreen, for: .normal)
-            
             $0?.layer.cornerRadius = 10
             $0?.layer.borderWidth = 2
             $0?.layer.borderColor = AppTheme.backgroundUniversalGreen.cgColor
         }
         self.decreaseNumOfPersons.setTitleColor(UIColor.gray, for: .disabled)
+        self.decreaseNumOfPersons.setTitleShadowColor(.gray, for: .disabled)
         
         self.setRecipeData()
     }
@@ -82,13 +80,23 @@ class RecipeDetailViewController: UIViewController {
         if self.oldRecipeIndex != nil {
             self.recipe = Datafeed.shared.recipes[self.oldRecipeIndex!]
         }
-        
-        self.setRecipeData()
+        self.setColors()
+    }
+    
+    func setColors() {
+        [self.increaseNumOfPersons, self.decreaseNumOfPersons, changeRecipeButton].forEach {
+            $0?.backgroundColor = AppTheme.setBackgroundColor()
+            $0?.setTitleColor(AppTheme.setTextColor(), for: .normal)
+        }
+        [self.titleLabel, self.numOfPersonsTextLabel].forEach {
+            $0?.textColor = AppTheme.setTextColor()
+        }
+        self.navigationController?.navigationBar.tintColor = AppTheme.setTextColor()
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        self.setRecipeData()
+        self.setColors()
         self.tableView.reloadData()
     }
     
@@ -119,10 +127,6 @@ class RecipeDetailViewController: UIViewController {
             }
         }()
         
-        [self.titleLabel, self.numOfPersonsTextLabel].forEach {
-            $0?.textColor = AppTheme.setTextColor()
-        }
-        
         var recipeImage = UIImage(named: recipe.imageName)
         
         if recipeImage == nil, let imageData = UserDefaults(suiteName: Datafeed.shared.kAppGroup)?.object(forKey: recipe.imageName) as? Data {
@@ -138,6 +142,7 @@ class RecipeDetailViewController: UIViewController {
         self.numOfPersonsTextLabel.text = "Sastojci potrebni za \(self.localNumberOfPersons) " + self.correctFormOFString()
         
         self.decreaseNumOfPersons.isEnabled = self.localNumberOfPersons > 1
+        self.decreaseNumOfPersons.alpha = self.localNumberOfPersons > 1 ? 1 : 0.5
     }
     
     func correctFormOFString() -> String {

@@ -24,13 +24,14 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="-2" translatesAutoresizingMaskIntoConstraints="NO" id="zjh-aL-8RO">
-                    <rect key="frame" x="0.0" y="44" width="414" height="83"/>
+                    <rect key="frame" x="0.0" y="44" width="414" height="80"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="Akk-th-FDD">
-                            <rect key="frame" x="8" y="0.0" width="398" height="34"/>
+                            <rect key="frame" x="8" y="0.0" width="398" height="31"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UmV-vL-yB3" userLabel="Category Button">
-                                    <rect key="frame" x="0.0" y="0.0" width="323" height="34"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="323" height="31"/>
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                     <state key="normal" title="Button"/>
                                     <connections>
@@ -38,7 +39,7 @@
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZlG-hh-Kel">
-                                    <rect key="frame" x="323" y="0.0" width="75" height="34"/>
+                                    <rect key="frame" x="323" y="0.0" width="75" height="31"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="75" id="VXI-65-8vp"/>
                                     </constraints>
@@ -51,7 +52,7 @@
                             </subviews>
                         </stackView>
                         <searchBar contentMode="redraw" searchBarStyle="minimal" translatesAutoresizingMaskIntoConstraints="NO" id="vz9-3c-syW">
-                            <rect key="frame" x="8" y="32" width="398" height="51"/>
+                            <rect key="frame" x="8" y="29" width="398" height="51"/>
                             <directionalEdgeInsets key="directionalLayoutMargins" top="0.0" leading="0.0" bottom="0.0" trailing="0.0"/>
                             <textInputTraits key="textInputTraits"/>
                         </searchBar>
@@ -59,7 +60,7 @@
                     <directionalEdgeInsets key="directionalLayoutMargins" top="0.0" leading="8" bottom="0.0" trailing="8"/>
                 </stackView>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="LX9-VR-ktn">
-                    <rect key="frame" x="0.0" y="127" width="414" height="735"/>
+                    <rect key="frame" x="0.0" y="124" width="414" height="738"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </tableView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uei-XV-0Xu" userLabel="Add New Recipe Button">

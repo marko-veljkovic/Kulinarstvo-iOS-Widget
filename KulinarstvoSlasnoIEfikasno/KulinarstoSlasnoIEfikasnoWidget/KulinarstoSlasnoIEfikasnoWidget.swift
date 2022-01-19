@@ -54,6 +54,51 @@ struct Provider: IntentTimelineProvider {
             Datafeed.shared.recipeModel.loadFile()
         }
     }
+    
+    func firstRecipeInSecondWidget(for configuration: ConfigurationIntent) -> Recipe {
+        self.loadDataFile()
+        return Datafeed.shared.favRecipes.first(where: {
+            $0.name == configuration.Recipe?.identifier
+        }) ?? Datafeed.shared.favRecipes[0]
+    }
+}
+
+struct SecondProvider : TimelineProvider {
+    func loadDataFile() {
+        if !Datafeed.shared.recipeModel.isLoaded {
+            Datafeed.shared.recipeModel.loadFile()
+        }
+    }
+    
+    func placeholder(in context: Context) -> SecondEntry {
+        self.loadDataFile()
+        return SecondEntry(date: Date(), firstRecipe: Datafeed.shared.favRecipes[0], secondRecipe: Datafeed.shared.favRecipes[0], thirdRecipe: Datafeed.shared.favRecipes[0], fourthRecipe: Datafeed.shared.favRecipes[0])
+    }
+    
+    func getSnapshot(in context: Context, completion: @escaping (SecondEntry) -> Void) {
+        self.loadDataFile()
+        let entry = SecondEntry(date: Date(), firstRecipe: Datafeed.shared.favRecipes[0], secondRecipe: Datafeed.shared.favRecipes[0], thirdRecipe: Datafeed.shared.favRecipes[0], fourthRecipe: Datafeed.shared.favRecipes[0])
+        completion(entry)
+    }
+    
+    func getTimeline(in context: Context, completion: @escaping (Timeline<SecondEntry>) -> Void) {
+        self.loadDataFile()
+        var entries: [SecondEntry] = []
+        
+        let currentDate = Date()
+        for hourOffset in 0 ..< 5 {
+            let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
+            let firstRandomInt = Int.random(in: 0..<Datafeed.shared.favRecipes.count)
+            let secondRandomInt = Int.random(in: 0..<Datafeed.shared.favRecipes.count)
+            let thirdRandomInt = Int.random(in: 0..<Datafeed.shared.favRecipes.count)
+            let fourthRandomInt = Int.random(in: 0..<Datafeed.shared.favRecipes.count)
+            let entry = SecondEntry(date: entryDate, firstRecipe: Datafeed.shared.favRecipes[firstRandomInt], secondRecipe: Datafeed.shared.favRecipes[secondRandomInt], thirdRecipe: Datafeed.shared.favRecipes[thirdRandomInt], fourthRecipe: Datafeed.shared.favRecipes[fourthRandomInt])
+            entries.append(entry)
+        }
+        
+        let timeline = Timeline(entries: entries, policy: .atEnd)
+        completion(timeline)
+    }
 }
 
 struct SimpleEntry: TimelineEntry {
@@ -61,6 +106,14 @@ struct SimpleEntry: TimelineEntry {
     let configuration: ConfigurationIntent
     let recipe: Recipe
     let parameterToShow: String
+}
+
+struct SecondEntry: TimelineEntry {
+    public let date: Date
+    let firstRecipe: Recipe
+    let secondRecipe: Recipe
+    let thirdRecipe: Recipe
+    let fourthRecipe: Recipe
 }
 
 // Enum for list names and easier collecting of selected parameter
@@ -102,6 +155,26 @@ struct Kulinarstvo_widgetEntryView : View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .background(colorScheme == .dark ? Color(AppTheme.backgroundUniversalGreen) : .white)
             }
+        default:
+            Text("")
+        }
+    }
+}
+
+// Main view that is presented to user relative to selected widget size
+struct KulinarstvoSecondWidgetEntryView : View {
+    var entry: SecondProvider.Entry
+    
+    @Environment(\.widgetFamily) var widgetFamily
+    @Environment(\.colorScheme) var colorScheme
+    
+    @ViewBuilder
+    var body: some View {
+        switch widgetFamily {
+        case .systemLarge:
+            RecipeSecondLargeView(firstRecipe: entry.firstRecipe, secondRecipe: entry.secondRecipe, thirdRecipe: entry.thirdRecipe, fourthRecipe: entry.fourthRecipe)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(colorScheme == .dark ? Color(AppTheme.backgroundUniversalGreen) : .white)
         default:
             Text("")
         }
@@ -252,8 +325,36 @@ struct RecipeLargeView: View {
     }
 }
 
-@main
-struct Kulinarstvo_widget: Widget {
+struct RecipeSecondLargeView: View {
+    var firstRecipe: Recipe
+    var secondRecipe: Recipe
+    var thirdRecipe: Recipe
+    var fourthRecipe: Recipe
+    
+    @ViewBuilder
+    var body: some View {
+        VStack {
+            HStack {
+                Link(destination: firstRecipe.url ?? URL(fileURLWithPath: "")) {
+                    ImageRecipeView(recipe: firstRecipe, isSmallView: true)
+                }
+                Link(destination: secondRecipe.url ?? URL(fileURLWithPath: "")) {
+                    ImageRecipeView(recipe: secondRecipe, isSmallView: true)
+                }
+            }
+            HStack {
+                Link(destination: thirdRecipe.url ?? URL(fileURLWithPath: "")) {
+                    ImageRecipeView(recipe: thirdRecipe, isSmallView: true)
+                }
+                Link(destination: fourthRecipe.url ?? URL(fileURLWithPath: "")) {
+                    ImageRecipeView(recipe: fourthRecipe, isSmallView: true)
+                }
+            }
+        }
+    }
+}
+
+struct KulinarstvoWidget: Widget {
     @Environment(\.colorScheme) var colorScheme
     
     let kind: String = "KulinarstvoSlasnoIEfikasnoWidget"
@@ -267,6 +368,30 @@ struct Kulinarstvo_widget: Widget {
     }
 }
 
+struct KulinarstvoSecondWidget: Widget {
+    @Environment(\.colorScheme) var colorScheme
+    
+    let kind: String = "KulinarstvoSlasnoIEfikasnoSecondWidget"
+    
+    var body: some WidgetConfiguration {
+        StaticConfiguration(kind: kind, provider: SecondProvider()) { entry in
+            KulinarstvoSecondWidgetEntryView(entry: entry)
+        }
+        .configurationDisplayName("Recept na drugi klik")
+        .description("Dodaj svoje omiljene recepte na pocetni ekran")
+        .supportedFamilies([.systemLarge])
+    }
+}
+
+@main
+struct KulinarstvoWidgetBundle : WidgetBundle {
+    @WidgetBundleBuilder
+    var body: some Widget {
+        KulinarstvoWidget()
+        KulinarstvoSecondWidget()
+    }
+}
+
 // View for previewing views on right side
 struct Kulinarstvo_widget_Previews: PreviewProvider {
     
@@ -274,9 +399,11 @@ struct Kulinarstvo_widget_Previews: PreviewProvider {
         Group {
             Kulinarstvo_widgetEntryView(entry: SimpleEntry(date: Date(), configuration: ConfigurationIntent(), recipe: RecipeModel.testData[0], parameterToShow: MainParameter.Sastojci.rawValue))
                 .previewContext(WidgetPreviewContext(family: .systemLarge))
-//                .frame(maxWidth: .infinity, maxHeight: .infinity)
-//                .background(Color(AppTheme.backgroundUniversalGreen))
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
 //                .preferredColorScheme(.dark)
+            
+            KulinarstvoSecondWidgetEntryView(entry: SecondEntry(date: Date(), firstRecipe: RecipeModel.testData[0], secondRecipe: RecipeModel.testData[1], thirdRecipe: RecipeModel.testData[2], fourthRecipe: RecipeModel.testData[3]))
+                .previewContext(WidgetPreviewContext(family: .systemLarge))
             
 //            Kulinarstvo_widgetEntryView(entry: SimpleEntry(date: Date(), configuration: ConfigurationIntent(), recipe: RecipeModel.testData[0]))
 //                .previewContext(WidgetPreviewContext(family: .systemMedium))

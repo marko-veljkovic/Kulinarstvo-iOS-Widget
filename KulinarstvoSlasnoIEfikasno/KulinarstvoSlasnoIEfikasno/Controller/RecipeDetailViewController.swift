@@ -72,7 +72,7 @@ class RecipeDetailViewController: UIViewController {
         self.decreaseNumOfPersons.setTitleColor(UIColor.gray, for: .disabled)
         self.decreaseNumOfPersons.setTitleShadowColor(.gray, for: .disabled)
         
-        self.setRecipeData()
+//        self.setRecipeData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -82,6 +82,7 @@ class RecipeDetailViewController: UIViewController {
             self.recipe = Datafeed.shared.recipes[self.oldRecipeIndex!]
         }
         self.setColors()
+        self.setRecipeData()
     }
     
     func setColors() {
@@ -102,9 +103,9 @@ class RecipeDetailViewController: UIViewController {
     }
     
     func setRecipeData() {
-        self.titleLabel?.text = recipe.name
+        self.titleLabel?.text = self.recipe.name
         
-        let recipeCategory = recipe.category ?? .snack
+        let recipeCategory = self.recipe.category ?? .snack
         self.categoryLabel.text = {
             switch recipeCategory {
             case .coldSideDish:
@@ -128,9 +129,9 @@ class RecipeDetailViewController: UIViewController {
             }
         }()
         
-        var recipeImage = UIImage(named: recipe.imageName)
+        var recipeImage = UIImage(named: self.recipe.imageName)
         
-        if recipeImage == nil, let imageData = UserDefaults(suiteName: Datafeed.shared.kAppGroup)?.object(forKey: recipe.imageName) as? Data {
+        if recipeImage == nil, let imageData = UserDefaults(suiteName: Datafeed.shared.kAppGroup)?.object(forKey: self.recipe.imageName) as? Data {
             recipeImage = UIImage(data: imageData)
         }
 

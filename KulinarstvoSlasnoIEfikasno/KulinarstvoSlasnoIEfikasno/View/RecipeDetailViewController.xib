@@ -16,6 +16,7 @@
                 <outlet property="deleteRecipeButton" destination="ekC-4w-jrb" id="I9b-0p-jXi"/>
                 <outlet property="increaseNumOfPersons" destination="yv8-Xn-Yb8" id="J8w-3q-Pzh"/>
                 <outlet property="numOfPersonsTextLabel" destination="2IL-du-YMM" id="fbw-ze-Ves"/>
+                <outlet property="preparationTimeLabel" destination="YPq-Eh-aLC" id="qlA-dm-cHQ"/>
                 <outlet property="recipeImageView" destination="PLq-eI-ak3" id="qnc-bp-LxH"/>
                 <outlet property="tableView" destination="Ezq-Pc-G5o" id="cJF-hx-8nQ"/>
                 <outlet property="titleLabel" destination="423-bI-Zrv" id="d9d-8O-sHU"/>
@@ -48,8 +49,14 @@
                                 <constraint firstAttribute="height" constant="128" id="o27-AC-Zrn"/>
                             </constraints>
                         </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YPq-Eh-aLC">
+                            <rect key="frame" x="0.0" y="166.5" width="414" height="21.5"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                         <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="CKS-mi-x1Q">
-                            <rect key="frame" x="0.0" y="166.5" width="414" height="50"/>
+                            <rect key="frame" x="0.0" y="188" width="414" height="50"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2IL-du-YMM">
                                     <rect key="frame" x="15" y="8" width="264" height="34"/>
@@ -92,7 +99,7 @@
                             <directionalEdgeInsets key="directionalLayoutMargins" top="8" leading="15" bottom="8" trailing="15"/>
                         </stackView>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Ezq-Pc-G5o">
-                            <rect key="frame" x="0.0" y="216.5" width="414" height="561.5"/>
+                            <rect key="frame" x="0.0" y="238" width="414" height="540"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         </tableView>
                         <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="sda-U1-SHi">

@@ -14,6 +14,7 @@ class RecipeDetailViewController: UIViewController {
     @IBOutlet weak var recipeImageView: UIImageView!
     @IBOutlet weak var tableView: UITableView!
     
+    @IBOutlet weak var preparationTimeLabel: UILabel!
     @IBOutlet weak var numOfPersonsTextLabel: UILabel!
     @IBOutlet weak var decreaseNumOfPersons: UIButton!
     @IBOutlet weak var increaseNumOfPersons: UIButton!
@@ -88,7 +89,7 @@ class RecipeDetailViewController: UIViewController {
             $0?.backgroundColor = AppTheme.setBackgroundColor()
             $0?.setTitleColor(AppTheme.setTextColor(), for: .normal)
         }
-        [self.titleLabel, self.numOfPersonsTextLabel].forEach {
+        [self.titleLabel, self.numOfPersonsTextLabel, self.preparationTimeLabel].forEach {
             $0?.textColor = AppTheme.setTextColor()
         }
         self.navigationController?.navigationBar.tintColor = AppTheme.setTextColor()
@@ -134,6 +135,8 @@ class RecipeDetailViewController: UIViewController {
         }
 
         self.recipeImageView.image = recipeImage
+        
+        self.preparationTimeLabel.text = "Vreme pripreme: \(self.recipe.prepTime) minuta"
         
         self.setNumberOfPersonsField()
     }

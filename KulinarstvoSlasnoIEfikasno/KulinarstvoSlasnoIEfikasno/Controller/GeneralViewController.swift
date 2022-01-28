@@ -7,6 +7,10 @@
 
 import UIKit
 
+enum SortByPrepTime {
+    case Unsorted, Ascending, Descending
+}
+
 class GeneralViewController: UIViewController {
     
     var addNewRecipeViewController: AddNewRecipeViewController?
@@ -22,11 +26,17 @@ class GeneralViewController: UIViewController {
     
     var recipes: [Recipe] = []
     var unfilteredRecipes: [Recipe] = []
+    var unsortedRecipes: [Recipe] = []
     var categoryRecipes: [Recipe] = []
     
     var categoryPicked: RecipeCategory?
     
     var refreshControl: UIRefreshControl?
+    
+    var sortByPrepTime = SortByPrepTime.Unsorted
+    
+    var oldSearchText = ""
+//    var isUserDeletingSearchTerm = false
     
     init(isFavorites: Bool = false, isMyRecipes: Bool = false) {
         self.isFavorites = isFavorites
@@ -59,6 +69,7 @@ class GeneralViewController: UIViewController {
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.tableView.register(UINib(nibName: "RecipeTableViewCell", bundle: nil), forCellReuseIdentifier: "RecipeCell")
+        self.tableView.register(UINib(nibName: "RecipeTableViewHeaderCell", bundle: nil), forHeaderFooterViewReuseIdentifier: "RecipeHeaderCell")
         
         self.refreshControl = UIRefreshControl()
         self.refreshControl!.addTarget(self, action: #selector(self.refreshTable), for: .valueChanged)
@@ -76,6 +87,7 @@ class GeneralViewController: UIViewController {
         self.setColor()
         self.recipes =  self.isFavorites ? Datafeed.shared.favRecipes : self.isMyRecipes ? Datafeed.shared.myRecipes : Datafeed.shared.recipes
         self.unfilteredRecipes = self.recipes
+        self.unsortedRecipes = self.recipes
         self.tableView.reloadData()
     }
     
@@ -123,16 +135,17 @@ class GeneralViewController: UIViewController {
             self.categoryRecipes = self.recipes.filter {
                 $0.category == self.categoryPicked
             }
+            self.unsortedRecipes = self.unfilteredRecipes.filter {
+                $0.category == self.categoryPicked
+            }
             self.recipes = self.categoryRecipes
-            self.tableView.reloadData()
             self.categoryButton.setTitle(self.setCategoryButtonTitle(), for: .normal)
             self.clearCategoryButton.isHidden = false
+            self.searchBar.isHidden = true
+            self.sortData()
         }))
         alert.addAction(UIAlertAction(title: "Ponisti", style: .cancel, handler: {_ in
-            self.categoryPicked = nil
-            self.recipes = self.unfilteredRecipes
-            self.tableView.reloadData()
-            self.categoryButton.setTitle(self.setCategoryButtonTitle(), for: .normal)
+            self.filterByCategoryCanceled()
         }))
         self.categoryPicked = .coldSideDish
         self.present(alert, animated: true, completion: nil)
@@ -164,17 +177,26 @@ class GeneralViewController: UIViewController {
     }
     
     @IBAction func clearCategoryButtonClicked(_ sender: Any) {
-        self.categoryPicked = nil
-        self.recipes = self.unfilteredRecipes
-        self.tableView.reloadData()
-        self.categoryButton.setTitle(self.setCategoryButtonTitle(), for: .normal)
-        self.clearCategoryButton.isHidden = true
+        self.filterByCategoryCanceled()
     }
     
+    func filterByCategoryCanceled() {
+        self.categoryPicked = nil
+        self.recipes = self.unfilteredRecipes
+        self.unsortedRecipes = self.unfilteredRecipes
+        self.categoryButton.setTitle(self.setCategoryButtonTitle(), for: .normal)
+        self.clearCategoryButton.isHidden = true
+        self.searchBar.isHidden = false
+        self.sortData()
+    }
 }
 
 //MARK: - UITableViewDataSource
 extension GeneralViewController : UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let recipesCount = self.recipes.count
@@ -182,31 +204,24 @@ extension GeneralViewController : UITableViewDataSource {
             self.recipes = self.categoryPicked == nil ? self.unfilteredRecipes : self.categoryRecipes
         }
         return recipesCount
-        //self.isFavorites ? Datafeed.shared.favRecipes.count : self.isMyRecipes ? Datafeed.shared.myRecipes.count : Datafeed.shared.recipes.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "RecipeCell") as! RecipeTableViewCell
         
         let record = self.recipes[indexPath.row]
-        //self.isFavorites ? Datafeed.shared.favRecipes[indexPath.row] :
-                     //self.isMyRecipes ? Datafeed.shared.myRecipes[indexPath.row] :
-                       //                 Datafeed.shared.recipes[indexPath.row]
         
-        cell.title?.text = record.name
-        cell.title?.textColor = AppTheme.setTextColor()
+        cell.titleLabel?.text = record.name
+        cell.titleLabel?.textColor = AppTheme.setTextColor()
+        
+        cell.prepTimeLabel.text = "\(record.prepTime)"
+        cell.prepTimeLabel.textColor = AppTheme.setTextColor()
+        
         var recipeImage = UIImage(named: record.imageName)
-        
         if recipeImage == nil, let imageData = UserDefaults(suiteName: Datafeed.shared.kAppGroup)?.object(forKey: record.imageName) as? Data {
             recipeImage = UIImage(data: imageData)
         }
-            
         cell.recipeImageView.image = recipeImage //UIImage(named: record.imageName)
-        
-        // Restart recipes array when user delete one or more characters from search bar
-        if indexPath.row == (self.tableView.numberOfRows(inSection: 0) - 1) {
-            self.recipes = self.categoryPicked == nil ? self.unfilteredRecipes : self.categoryRecipes
-        }
         
         return cell
     }
@@ -219,6 +234,60 @@ extension GeneralViewController : UITableViewDelegate {
         let destination = RecipeDetailViewController(recipe: self.recipes[indexPath.row])
         //RecipeDetailViewController(recipe: self.isFavorites ? Datafeed.shared.favRecipes[indexPath.row] : self.isMyRecipes ? Datafeed.shared.myRecipes[indexPath.row] : Datafeed.shared.recipes[indexPath.row])
         self.navigationController?.pushViewController(destination, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let cell = tableView.dequeueReusableHeaderFooterView(withIdentifier: "RecipeHeaderCell") as! RecipeTableViewHeaderCell
+
+        cell.delegate = self
+        
+        [cell.titleLabel, cell.prepTimeLabel, cell.imageLabel].forEach {
+            $0?.textColor = AppTheme.setTextColor()
+        }
+        
+        cell.sortArrowImage.tintColor = AppTheme.setTextColor()
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 45.0
+    }
+}
+
+//MARK: - RecipeTableViewHeaderCellDelegate
+extension GeneralViewController : RecipeTableViewHeaderCellDelegate {
+    func prepTimeSortClicked(headerCell: RecipeTableViewHeaderCell) {
+        self.sortByPrepTime = {
+            switch self.sortByPrepTime {
+            case .Unsorted:
+                headerCell.sortArrowImage.image = UIImage(systemName: "arrowtriangle.up")
+                return .Ascending
+            case .Ascending:
+                headerCell.sortArrowImage.image = UIImage(systemName: "arrowtriangle.down")
+                return .Descending
+            case .Descending:
+                headerCell.sortArrowImage.image = UIImage(systemName: "arrow.up.and.down.circle")
+                return .Unsorted
+            }
+        }()
+        self.sortData()
+    }
+    
+    func sortData() {
+        switch self.sortByPrepTime {
+        case .Ascending:
+            self.recipes.sort(by: {
+                return $0.prepTime < $1.prepTime
+            })
+        case .Descending:
+            self.recipes.sort(by: {
+                return $0.prepTime > $1.prepTime
+            })
+        case .Unsorted:()
+            self.recipes = self.unsortedRecipes
+        }
+        self.tableView.reloadData()
     }
 }
 
@@ -247,11 +316,21 @@ extension GeneralViewController : DatafeedDelegate {
 //MARK: - UISearchBarDelegate
 extension GeneralViewController : UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if self.oldSearchText.count > searchText.count {
+            self.recipes = self.unfilteredRecipes
+        }
+        self.oldSearchText = searchText
+        
         self.recipes = self.recipes.filter {
             $0.name.prefix(searchText.count) == searchText
         }
+        self.unsortedRecipes = self.unfilteredRecipes.filter {
+            $0.name.prefix(searchText.count) == searchText
+        }
         
-        self.tableView.reloadData()
+        self.categoryButton.isHidden = searchText.count != 0
+        
+        self.sortData()
     }
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
@@ -265,6 +344,10 @@ extension GeneralViewController : UISearchBarDelegate {
         searchBar.showsCancelButton = false
         searchBar.text = ""
         searchBar.resignFirstResponder()
+        self.recipes = self.unfilteredRecipes
+        self.unsortedRecipes = self.unfilteredRecipes
+        self.categoryButton.isHidden = false
+        self.sortData()
     }
 }
 

@@ -111,16 +111,16 @@
 \\ 
 \indent Поред ових основних типова који су наслеђени из \textit{Objective-C}-а, постоје и неколико ново уведених, као што су \textit{Tuples} који омогућују креирање и прослеђивање груписаних вредности и \textit{Optionals} помоћу којих рукујемо \textit{nil} вредношћу на безбедан начин.
 \\
-\indent Константе декларишемо коришћењем кључне речи \textit{let}, након чега следи име константе и затим њена иницијализација. Декларисање променљиве постижемо употребом кључне речи \textit{var}. Када декларишемо променљиво можемо је одмах и иницијализовати или коришћењем анотације јој само доделити тип. Конкретна примена се може видети у примеру \ref{lst:Декларисања променљивих и константи} - \nameref{lst:Декларисања променљивих и константи}.
+\indent Константе се декларишу коришћењем кључне речи \textit{let}, након чега следи име константе и затим њена иницијализација. Декларисање променљиве се постиже употребом кључне речи \textit{var}. Када се декларише променљива може се одмах и иницијализовати или јој може бити додељен тип коришћењем анотације. Конкретна примена се може видети у примеру \ref{lst:Декларисања променљивих и константи} - \nameref{lst:Декларисања променљивих и константи}.
 
 \begin{lstlisting}[caption=\textit{{Декларисања променљивих и константи}}, label={lst:Декларисања променљивих и константи}, language=Swift, frame=single]
 // Deklarisanje konstantne
-let spageteKarbonaraRecept = Recept("Spagete Karbonara")
+let cenaJela = 200
 
 // Deklarisanje promenljive uz inicijalizaciju
 var raspolozivoNovca = 1000
 
-// Deklarisanje promenljive koriscenjem samo anotacije
+// Deklarisanje promenljive koriscenjem anotacije, bez inicijalizacije
 var brojPorcija: Int
 \end{lstlisting}
 
@@ -133,25 +133,32 @@ let oktalniBroj = 0o31        // 25 u oktalnom obliku
 let heksadecimalniBroj = 0x19 // 25 u heksadecimalnom obliku
 \end{lstlisting}
 
-\indent \textit{Tuple} група се користи за груписање променљивих било ког типа. Група може садржати променљиве различитих типова. У примеру \ref{lst:Tuple} - \nameref{lst:Tuple}, могу се видети два начина креирања \textit{Tuple} група и различити начини приступања члановима групе.
+\indent \textit{Tuple} група се користи за груписање променљивих било ког типа. Група може садржати променљиве различитих типова. У примеру \ref{lst:Tuple} - \nameref{lst:Tuple}, могу се видети два начина креирања \textit{Tuple} група и два начина приступања члановима \textit{Tuple}-а (неименованим и именованим члановима).
 
 \begin{lstlisting}[caption=\textit{{Tuple}}, label={lst:Tuple}, language=Swift, frame=single]
 // Definisanje tuple-a (String, Int)
 let namirnicaSaCenom = ("Jaja 10 komada", 100)
 
-// Pristupanje clanovima tuple-a:
+// Pristupanje clanovima tuple-a
 let namirnica = namirnicaSaCenom.0
 let cena = namirnicaSaCenom.1
 
 // Definisanje tuple-a sa imenovanim clanovima
 let urednijaNamirnicaSaCenom = (namirnica: "Jaja 10 komada", cena: 100)
 
-// Pristupanje imenovanim clanovima tuple-a::
+// Pristupanje imenovanim clanovima tuple-a
 let urednijaNamirnica = urednijaNamirnicaSaCenom.namirnica
 let urednijaCena = urednijaNamirnicaSaCenom.cena
 \end{lstlisting}
 
-\indent \textit{Assertions} %TODO
+\indent \textit{Assertions} су провере унутар кода која се дешавају у време извршавања програма. Обично се користе за проверу критичног дела кода и уколико она задовољава услов (вредност израза у \textit{assert}-у је \textit{true}) програм наставља своје извршавање. У супротном, извршавање апликације ће бити прекинуто и дибагер ће означити место у коду у коме је дошло до прекида програма. Пример примене биће приказан у коду \ref{lst:Assertions} - \nameref{lst:Assertions}.
+
+\begin{lstlisting}[caption=\textit{{Assertions}}, label={lst:Assertions}, language=Swift, frame=single]
+var cenaPrvogProizvoda = 100
+var cenaDrugogProizvoda = -100
+assert(cenaPrvogProizvoda >= 0, "Cena proizvoda ne moze biti negativna") //true
+assert(cenaDrugogProizvoda >= 0, "Cena proizvoda ne moze biti negativna") //false
+\end{lstlisting}
 
 \subsection{Оператори}
 
@@ -174,8 +181,10 @@ let urednijaCena = urednijaNamirnicaSaCenom.cena
     \item Оператори поређења, '==', '!=', '<', '>', '<=', '>='
 \end{itemize}
  
-  \item Тернарни \\
-  Једини тернари оператор који постоји у језику је оператор '?:'. Код овог оператора израз са крајње леве стране мора бити типа \textit{Bool}, док израз или променљива која се налази у средини оператора мора бити истог типа као израз или променљива са крајње десне стране, без ограничења типа. Пример примене тернарног оператора, као и приказ блока кода који једна линија са тернарним оператором може заменити приказани су у примеру \ref{lst:Тернарни оператор} - \nameref{lst:Тернарни оператор}.
+  \item Тернарни
+\end{itemize}
+
+  \indent Једини тернари оператор који постоји у језику је оператор '?:'. Код овог оператора израз са крајње леве стране мора бити типа \textit{Bool}, док израз или променљива која се налази у средини оператора мора бити истог типа као израз или променљива са крајње десне стране, без ограничења типа. Пример примене тернарног оператора, као и приказ блока кода који једна линија са тернарним оператором може заменити приказани су у примеру \ref{lst:Тернарни оператор} - \nameref{lst:Тернарни оператор}.
   
 \begin{lstlisting}[caption=\textit{{Тернарни оператор}}, label={lst:Тернарни оператор}, language=Swift, frame=single]
 // Ternarni operator:
@@ -193,24 +202,23 @@ else {
     visinaCelije = 50
 }
 \end{lstlisting}
-\end{itemize}
 
 \indent Поред основних оператора у \textit{Swift}-у постоје и специјалне врсте оператора
 
 \begin{itemize}
     \item Оператор 'nil-сједињавања' ('??'), бинарни оператор који се користи над опционим променљивима. Уколико израз са леве стране оператора садржи вредност (није \textit{nil}), та вредност ће бити резултат оператора, док уколико је лева страна оператора једнака  \textit{nil}, резултат оператора биће израз са десне стране, који мора садржати неку вредност. Пример примене '??' оператора и приказ његовог расписивања помоћу тернарног оператора дат је у наставку \ref{lst:nil-сједињавање} - \nameref{lst:nil-сједињавање}.
     
-    \begin{lstlisting}[caption=\textit{{nil-сједињавање}}, label={lst:nil-сједињавање}, language=Swift, frame=single]
-    var a: Int?
-    if trenutnoVremeUMilisekundama % 2 == 0 {
-        a = 10
-    }
-    // Ukoliko promenljiva 'a' ne sadrzi vrednost, promenljivoj 'b' bice dodeljena vrednost 5
-    let b = a ?? 5
-    
-    // Raspisivanje operator 'nil-sjedinjavanja' koriscenjem ternarnog operatora:
-    let b = (a != nil ? a! : 5)
-    \end{lstlisting}
+\begin{lstlisting}[caption=\textit{{nil-сједињавање}}, label={lst:nil-сједињавање}, language=Swift, frame=single]
+var a: Int?
+let trenutnoVremeUMilisekundama = Int.random(in: 1...100)
+if trenutnoVremeUMilisekundama % 2 == 0 {
+    a = 10
+}
+
+let b = a ?? 5
+// Raspisivanje koriscenjem ternarnog operatora:
+let c = (a != nil ? a! : 5)
+\end{lstlisting}
     
     \item Оператори распона
     
@@ -255,12 +263,109 @@ else {
     // Ispisace 'Zdravo, svete!'
 \end{lstlisting}
 
+\subsection{Контрола тока}
+
+\indent Наредбе контроле тока које се користе у \textit{Swift}-у су: \textit{if}, \textit{guard}, \textit{switch} и петље: \textit{for-in}, \textit{while}. \textit{If} наредба приказана је у примеру \ref{lst:If наредба контроле тока} - \nameref{lst:If наредба контроле тока}.
+
+\begin{lstlisting}[caption=\textit{{If наредбa контроле тока}}, label={lst:If наредба контроле тока}, language=Swift, frame=single]
+    var recept = Recept("Cezar salata")
+    recept.sastojci = ["Zelena salata", "Pilece grudi", "Slanina", "Paradajz", "Hleb", "Cezar premaz"]
+    var brojSastojaka = recept.sastojci.count
+    
+    if brojSastojaka < 6 {
+        print("Nisu svi sastojci nabavljeni")
+    }
+    else if brojSastojaka > 6 {
+        print("Broj sastojaka ne odgovara originalu, ali samo napred eksperimentisi")
+    }
+    else {
+        print("Broj sastojaka je odgovarajuci")
+    }
+\end{lstlisting}
+
+\indent \textit{Switch} наредба је слична као у другим програмским језицима, једна битна разлика је да ће се увек извршити тачно један од случајева унутар наредбе, па није потребно експлицитно навођење \textit{break} наредбе. \textit{Break} наредба се по конвенцији наводи само када је неки од случајева \textit{Switch} наредбе празан, јер сваки случај мора бити извршив (енг. executable). Уколико случајевима \textit{switch} наредбе нису обухаћени све могуће вредност променљиве, на крају се мора навести \textit{default} наредба која ће се извршити уколико се ниједан од случајева не поклапа са вредношћу променљиве.  Наведена правила приказана су у примеру \ref{lst:Switch наредба контроле тока} - \nameref{lst:Switch наредба контроле тока}.
+
+\begin{lstlisting}[caption=\textit{{Switch наредба контроле тока}}, label={lst:Switch наредба контроле тока}, language=Swift, frame=single]
+    enum Zacin {
+        case vegeta, kari, kurkuma, origano, biber
+    }
+    var mojiZacin: Zacin = .vegeta
+    
+    switch mojiZacin {
+        case .vegeta:
+            print("Vegeta")
+        case .biber:
+            print("Nije vegeta, nego biber")
+        default:
+            print("Nije ni vegeta ni biber")
+    }
+\end{lstlisting}
+
+\indent \textit{For-in} је наредба понављања која се користи за пролаз кроз елементе неке колекције (низа, скупа, речника). Променљива која се користи за пролаз кроз колекцију је константа и њену вредност није могуће мењати у телу наредбе. Један од начина на који можемо мењати елементе колекције (уколико је колекција дефинисана као променљива, коришћењем кључне речи \textit{var}) је истовременим пролажењем кроз елементе и њихове индексе колекције и променом елемента колекције на одређеној позицији. Још једна могућност \textit{for-in} петље је пролаз кроз задати интервал бројева. Описани начине употребе петље могу се видети у примеру \ref{lst:For-in наредба контроле тока} - \nameref{lst:For-in наредба контроле тока}.
+\begin{lstlisting}[caption=\textit{{For-in наредбa контроле тока}}, label={lst:For-in наредба контроле тока}, language=Swift, frame=single]
+    let sastojci = ["Jaja", "Pecenica", "Maslinovo ulje", "Persun"]
+    // For-in naredba
+    for sastojak in sastojci {
+        print("Potreban sastojak: \(sastojak)")
+    }
+    // For-in naredba nad intervalom
+    for i in 0..<sastojci.count() {
+        print("Potreban sastojak: \(sastojci[i])")
+    }
+    
+    let sastojciSaKolicinom = ["Jaja": "3 komada", "Pecenica": "50 grama", "Maslinovo ulje": "Koliko je potrebno da pokrije tiganj", "Persun": "Prstohvat"]
+    // For-in naredba za prolaz kroz recnik
+    for (sastojak, kolicina) in sastojciSaKolicinom {
+        print("Potreban sastojak: \(sastojak), u kolicini: \(kolicina)")
+    }
+    
+    var promenljiviElementi = ["Jaja", "Pecenica", "Maslinovo ulje", "Persun"]
+    // For-in naredba sa indeksiranjem
+    for (indeks, element) in promenljiviElementi.enumerated() {
+        if element == "Persun" {
+            promenljiviElementi[indeks] = "Origano"
+        }
+    } 
+\end{lstlisting}
+
+\indent Постоје два типа наредбе понављања \textit{while}. Наредба \textit{while} прво проверава да ли је задати услов испуњен и онда извршава једну итерацију тела петље и наредба \textit{repeat-while} која прво извршава једну итерацију тела наредбе након чега проверава услов и уколико је он задовољен наставља са следећом итерацијом. Употреба је приказана у примеру \ref{lst:While наредба контроле тока} - \nameref{lst:While наредба контроле тока}. 
+
+\begin{lstlisting}[caption=\textit{{While наредбa контроле тока}}, label={lst:While наредба контроле тока}, language=Swift, frame=single]
+    let nasumicniBrojevi = [3, 12, 5, 18, 11, 99]
+    var i = 0
+    
+    while i < nasumicniBrojevi.count, nasumicniBrojevi[i] < 15 {
+        print("Broj \(nasumicniBrojevi[i] je manji od 15")
+        i += 1
+    }
+    
+    let nasumicniBroj = nasumicniBrojevi[2] // 5
+    
+    repeat {
+        print("Zdravo, svete!")
+    } while nasumicniBroj != 5 // Uvek netacno
+\end{lstlisting}
+
+\indent Поред наведених основних наредба контроле тока, постоје додатне помоћне наредбе које се користе заједно са основним наредбама и тиме њихову употреби чине лакшом. Наредба \textit{continue} се користи за прескакање једне итерације унутар петље. \textit{Break} је наредба која прекида извршавање наредбе унутар које се налази, а може се користити унутар \textit{switch} случајева и унутар тела петље. Пример употребе ових наредби приказан је у делу \ref{lst:Додаци наредба контроле тока} - \nameref{lst:Додаци наредба контроле тока}.
+
+\begin{lstlisting}[caption=\textit{{Додаци наредбa контроле тока}}, label={lst:Додаци наредба контроле тока}, language=Swift, frame=single]
+    let nizBrojeva = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    print("Parni brojevi iz niza manji od 7:")
+    for broj in nizBrojeva {
+        if broj % 2 != 0 {
+            continue
+        }
+        if broj > 7 {
+            break
+        }
+        print(broj)
+    }
+\end{lstlisting}
 
 \subsection{Колекције}
 \label{subsec:Колекције}
 
 \indent \textit{Swift} дефинише три примарна типа колекција: низове, скупове и речнике. Сва три типа су дефинисана као генеричке\footnote{Генерички код омогућава писање флексибилних и поновно искористивих функција и типова; помоћу њих се избегава непотребно дуплирање кода} колекције. Уколико се дефинисана колекција додели променљивој, она се може мењати (додавање, брисање и измена чланова у њој); међутим уколико се она додели некој константи, манипулација њеним члановима неће бити могућа. \\
-
 \indent Низови се користе за уређено чување елемената истог типа. Један елемент се може појавити у низу више пута, на различитим индексима. Конкретан пример дефинисања, иницијализације и управљањем података низа може се видети у коду \ref{lst:Рад са низовима} - \nameref{lst:Рад са низовима}.
 
 \begin{lstlisting}[caption=\textit{{Рад са низовима}}, label={lst:Рад са низовима}, language=Swift, frame=single]
@@ -362,102 +467,12 @@ else {
     }
 \end{lstlisting}
 
-\subsection{Контрола тока}
-
-\indent Наредбе контроле тока које се користе у \textit{Swift}-у су: \textit{if}, \textit{guard}, \textit{switch} и петље: \textit{for-in}, \textit{while}. \textit{If} наредба приказана је у примеру \ref{lst:If наредба контроле тока} - \nameref{lst:If наредба контроле тока}.
-
-\begin{lstlisting}[caption=\textit{{If наредбa контроле тока}}, label={lst:If наредба контроле тока}, language=Swift, frame=single]
-    var recept = Recept("Cezar salata")
-    recept.sastojci = ["Zelena salata", "Pilece grudi", "Slanina", "Paradajz", "Hleb", "Cezar premaz"]
-    // If naredba kondtrole toka
-    var brojSastojaka = recept.sastojci.count
-    if brojSastojaka < 6 {
-        print("Neki sastojak nedostaje")
-    }
-    else if brojSastojaka > 6 {
-        print("Broj sastojaka ne odgovara originalu, ali samo napred, eksperimentisi")
-    }
-    else {
-        print("Broj sastojaka je odgovarajuci")
-    }
-\end{lstlisting}
-
-\indent \textit{Switch} наредба је слична као у другим програмским језицима, једна битна разлика је да ће се увек извршити тачно један од случајева унутар наредбе, па није потребно експлицитно навођење \textit{break} наредбе. \textit{Break} наредба се по конвенцији наводи само када је неки од случајева \textit{Switch} наредбе празан, јер сваки случај мора бити извршив (енг. executable). Наведене ствари приказане су у примеру \ref{lst:Switch наредба контроле тока} - \nameref{lst:Switch наредба контроле тока}.
-
-\begin{lstlisting}[caption=\textit{{Switch наредба контроле тока}}, label={lst:Switch наредба контроле тока}, language=Swift, frame=single]
-    enum Zacin {
-        case vegeta, kari, kurkuma, origano, biber
-    }
-    
-    var mojiZacin: Zacin = .vegeta
-    
-    // Switch naredba
-    switch mojiZacin {
-        case .vegeta:
-            print("Vegeta")
-        case .biber:
-            print("Nije vegeta, nego biber")
-        default:
-            print("Nije vegeta ni biber")
-    }
-    
-    // Ukoliko ne navedemo sve slucajeve, moramo dodati slucaj 'default' slucaj
-    switch mojiZacin {
-        case .origano:
-            print("Moze i to")
-        default:
-            break
-    }
-\end{lstlisting}
-
-\indent \textit{For-in} је наредба понављања која се користи за пролаз кроз елементе неке колекције (низа, скупа, речника). Променљива која се користи за пролаз кроз колекцију је увек константа и није је могуће мењати у телу наредбе. Један од начина на који можемо мењати елементе колекције (уколико је колекција дефинисана као променљива, коришћењем кључне речи \textit{var}) је истовременим пролажењем кроз елементе и њихове индексе колекције и променом елемента колекције на одређеној позицији. Описани начине употребе петље могу се видети у примеру \ref{lst:For-in наредба контроле тока} - \nameref{lst:For-in наредба контроле тока}.
-\begin{lstlisting}[caption=\textit{{For-in наредбa контроле тока}}, label={lst:For-in наредба контроле тока}, language=Swift, frame=single]
-    let sastojci = ["Jaja", "Pecenica", "Maslinovo ulje", "Persun"]
-    // For-in naredba
-    for sastojak in sastojci {
-        print("Potreban sastojak: \(sastojak)")
-    }
-    
-    let sastojciSaKolicinom = ["Jaja": "3 komada", "Pecenica": "50 grama", "Maslinovo ulje": "Koliko je potrebno da pokrije tiganj", "Persun": "Prstohvat"]
-    // For-in naredba za prolaz kroz recnik
-    for (sastojak, kolicina) in sastojciSaKolicinom {
-        print("Potreban sastojak: \(sastojak), u kolicini: \(kolicina)")
-    }
-    
-    var promenljiviElementi = ["Jaja", "Pecenica", "Maslinovo ulje", "Persun"]
-    // For-in naredba sa indeksiranjem
-    for (indeks, element) in promenljiviElementi.enumerated() {
-        if element == "Persun" {
-            promenljiviElementi[indeks] = "Origano"
-        }
-    } 
-\end{lstlisting}
-
-\indent Постоје два типа \textit{while} наредбе понављања. \textit{While} наредба која прво проверава да ли је задати услов испуњен и онда извршава тело петље и \textit{repeat-while} наредба која прво извршава тело наредбе након чега проверава услов и уколико је он задовољен наставља са следећом итерацијом. Употреба је приказана у примеру \ref{lst:While наредба контроле тока} - \nameref{lst:While наредба контроле тока}. 
-
-\begin{lstlisting}[caption=\textit{{While наредбa контроле тока}}, label={lst:While наредба контроле тока}, language=Swift, frame=single]
-    let nasumicniBrojevi = [3, 12, 5, 18, 11, 99]
-    var i = 0
-    // While naredba
-    while i < nasumicniBrojevi.count, nasumicniBrojevi[i] < 15 {
-        print("Broj \(nasumicniBrojevi[i] je manji od 15")
-        i += 1
-    }
-    
-    let nasumicniBroj = nasumicniBrojevi[2] // 5
-    // Repeat-while petlja
-    repeat {
-        print("Zdravo, svete!")
-    } while nasumicniBroj != 5 // Uvek netacno
-\end{lstlisting}
-
-\begin{lstlisting}[caption=\textit{{Додаци наредбa контроле тока}}, label={lst:Додаци наредба контроле тока}, language=Swift, frame=single]
-    //TODO: continue, break, fallthrough, return, throw
-\end{lstlisting}
-
 \subsection{Функције и затворења}
 
-\indent Фунцкије су делови кода, који обично имају само једну, специфичну намену. Свака функција је идентификована својим именом које се користи да би се конкретна функција позивала у коду. Поред имена, функција може имати повратну вредност (уколико није дефинисана, подразумевана повратна вредност је \textit{Void}) и пареметре (именоване или неименоване). %TODO: prepraviti primere
+\indent Фунцкије су делови кода, који обично имају само једну специфичну намену. Свака функција је идентификована својим именом које се користи да би се конкретна функција позивала у коду. Поред имена, функција може имати тип повратне вредности (уколико није дефинисан, подразумевани тип повратне вредности је \textit{Void}) и пареметре (именоване или неименоване). Општи потпис дефиниције функције је:\\ \textit{func} име\_функције(параметри\_функције) \{-> тип\_повратне\_вредности\}\\ док се параметри могу представити на следећи начин: \\
+\{лабела\_параметра\} име\_параметра: тип\_параметра \{= подразумевана\_вредност\}
+\\
+\indent Као што је већ наведено, параметри фунцкије могу бити именовани и неименовани. Приликом позивања функције са именованим параметром потребно је навести лабелу тог параметра уз конкретну вредност. Приликом дефинисања функије лабела параметра се наводи пре имена параметра, или се наводи карактер '\_' за неименоване параметре. Уколико лабела параметра није експлицитно наведена сматраће се да име параметра представља и лабелу. Пример дефинисања и позивања функције са именованим параметром и без повратног типа представљен је у коду \ref{lst:Дефинисање и позивање функције са параметром} - \nameref{lst:Дефинисање и позивање функције са параметром}, док пример \ref{lst:Дефинисање и позивање функције са повратном вредношћу} - \nameref{lst:Дефинисање и позивање функције са повратном вредношћу} показује дефинисање и позивање функције са неименованим параметром и повратним типом \textit{Int}.
 
 \begin{lstlisting}[caption=\textit{{Дефинисање и позивање функције са параметром}}, label={lst:Дефинисање и позивање функције са параметром}, language=Swift, frame=single]
     // Definisanje fukncije
@@ -468,12 +483,11 @@ else {
     }
     
     let sastojci = ["Jaja", "Sira"]
-    // Pozivanje f-je 'ispisiSastojke'
+    // Pozivanje f-je
     ispisiSastojke(sastojci: sastojci)
 \end{lstlisting}
 
-\begin{lstlisting}[caption=\textit{{Дефинисање и позивање функције са повратном вредношћу}}, label={lst:Дефинисање и позивање функције са повратном вредношћу}, language=Swift, frame=single]    
-    // Definisanje funkcije koja ima povratnu vrednost 'Int' i jedan neimenovani parametar
+\begin{lstlisting}[caption=\textit{{Дефинисање и позивање функције са повратном вредношћу}}, label={lst:Дефинисање и позивање функције са повратном вредношћу}, language=Swift, frame=single]
     func izracunajCenu(_ proizvodi[String: Int]) -> Int {
         int ukupnno = 0
         for (proizvod, cena) in proizvodi {
@@ -483,13 +497,13 @@ else {
     }
     
     let proizvodi = ["Jaja": 10, "Sira": 200]
-    // Kada f-ja ima neimenovane parametre, njihova imena(labele) ne navodimo prilikom pozivanja te funkcije
     let ukupnaCena = izracunajCenu(proizvodi)
 \end{lstlisting}
     
+\indent Поред лабеле уз параметар може стојати и подразумевана вредност параметра, која ће представљати вредност параметра приликом извршавања тела функције, уколико приликом позива функције наведени параметар није прослеђен. Пример је приказан у коду \ref{lst:Дефинисање и позивање функције са параметрима са подразумеваним вредностима} - \nameref{lst:Дефинисање и позивање функције са параметрима са подразумеваним вредностима}.
+    
 \begin{lstlisting}[caption=\textit{{Дефинисање и позивање функције са параметрима са подразумеваним вредностима}}, label={lst:Дефинисање и позивање функције са параметрима са подразумеваним вредностима}, language=Swift, frame=single]
-    // Definisanje fukncije koja nema povratnu vrednost, jedan imenovani parametar i jedan imenovani parametar (cija se labela razlikuje od imena promenljive) sa podrazumevanom vrednoscu
-    func func ispisiSastojkeSaDvaparametra(sastojci: [String], ispisati ispisatiCeloIme: Bool = true) {
+    func ispisiSastojkeSaDvaparametra(sastojci: [String], ispisati ispisatiCeloIme: Bool = true) {
         for sastojak in sastojci {
             if ispisatiCeloIme {
                 print(sastojak)
@@ -499,125 +513,96 @@ else {
             }
         }
     }
-    
-    // Iskoristicemo primer niza sastojaka kao za f-ju 'ispisiSastojke'
-    // Pozivanje f-je 'ispisiSastojkeSaDvaparametra' prosledjivanjem oba paremetra
-    // Ovde mozemo videti da se prilikom poziva f-je, ukoliko je neki parametar imenovan, navodi njegova labela
+    let sastojci = ["Jaja", "Sira"]
     ispisiSastojkeSaDvaparametra(sastojci: sastojci, ispisati: false)
-    ispisiSastojkeSaDvaparametra(sastojci: sastojci, ispisati: true)
-    
-    // Ukoliko ne navedemo drugi parametar 'ispisati', on ce u f-ji imati podrazumevanu vrednost, u ovom slucaju 'true'
     ispisiSastojkeSaDvaparametra(sastojci: sastojci)
-\end{lstlisting}
-\begin{lstlisting}[caption=\textit{{Дефинисање и позивање функције са повратном вредношћу}}, label={lst:Дефинисање и позивање функције са повратном вредношћу}, language=Swift, frame=single]    
-    // Definisanje funkcije koja ima povratnu vrednost 'Int' i jedan neimenovani parametar
-    func izracunajCenu(_ proizvodi[String: Int]) -> Int {
-        int ukupnno = 0
-        for (proizvod, cena) in proizvodi {
-            ukupno += cena
-        }
-        return ukupno
-    }
-    
-    let proizvodi = ["Jaja": 10, "Sira": 200]
-    // Kada f-ja ima neimenovane parametre, njihova imena(labele) ne navodimo prilikom pozivanja te funkcije
-    let ukupnaCena = izracunajCenu(proizvodi)
-    
+    // Parametar 'ispisati' ce imati vrednost 'true'
 \end{lstlisting}
 
+\indent Као и други објектно оријентисани програмски језици и \textit{Swift} пружа могућност дефинисања генеричких функција\footnote{Генеричка функција је функција са генеричким параметрима или генеричким повратним вредностима. Генерички тип може представљати више различитих типова одједном који задовољавају одређене услове дефинисане од стране програмера} које се могу користити над различитим конкретним типовима. Поред овога функције у \textit{Swift}-у омогућавају дефинисање функција са две или више повратне вредности. Конкретан пример генеричке функције са две повратне вредности приказан је у коду \ref{lst:Дефинисање и позивање функције са више повратних вредности} - \nameref{lst:Дефинисање и позивање функције са више повратних вредности}. 
+
 \begin{lstlisting}[caption=\textit{{Дефинисање и позивање функције са више повратних вредности}}, label={lst:Дефинисање и позивање функције са више повратних вредности}, language=Swift, frame=single]
-    // Definisanje genericke funkcije koja vraca 2 vrednosti
+    // Definisanje genericke funkcije sa dvema povratnim vrednostima
     func minMax<T>(niz: [T]) -> (min: T, max: T)? {
         guard !niz.isEmpty else {
             return nil
         }
-        trenutniMin = niz[0]
-        trenutniMax = niz[0]
+        let minimum = niz.min()
+        let maksimum = niz.max()
         
-        for element in niz[1..<niz.count] {
-            if element < trenutniMin {
-                trenutniMin = element
-            }
-            else if element > trenutniMax {
-                trenutniMax = element
-            }
-        } 
-        
-        return (trenutniMin, trenutniMax)
+        return (minimum, maksimum)
     }
     
     let nizBrojeva = [5, 12, -4, 19, -99]
     let minimumIMaksimum = minMax(niz: nizBrojeva)
-    // Pristupamo povratnim vrednostima po labelama koje se nalaze u deklaraciji f-je
-    // Odnosno za minimum: minimumIMaksimum?.min, za maksimum: minimumIMaksimum?.max
+    let minimum = minimumIMaksimum?.min
+    let maksimum = minimumIMaksimum?.max
 \end{lstlisting}
 
+\indent Прослеђени параметри унутар функција су константе и њихова вредност се не може мењати у телу функције. Да би се омогућило заобилажење овог правила, \textit{Swift} је увео кључну реч '\textit{inout}' која се наводи приликом дефинисања функције, а пре типа сваког од параметра за који ће бити омогућена промена вредности у телу функције. Још једна промена коју је потребно применити је употреба карактера '\&' приликом прослеђивања променљиве у позиву функције. Употреба овако прослеђених параметара приказана је на примеру генеричке функције која замењује вредности два прослеђена параметра \ref{lst:Дефинисање и позивање функције са променљивим параметрима} - \nameref{lst:Дефинисање и позивање функције са променљивим параметрима}. 
+
 \begin{lstlisting}[caption=\textit{{Дефинисање и позивање функције са променљивим параметрима}}, label={lst:Дефинисање и позивање функције са променљивим параметрима}, language=Swift, frame=single]
-    // Definisanje genericke funkcije koja prima 2 parametra i zamenjuje njihove vrednosti
-    // Osnovna stvar kod definisanja f-je je dodavanje kljucne reci 'inout' pre tipa parametra za koji zelimo da omogucimo menjanje njegove vrednosti u f-ji
     func zameniDvaParametra<T>(prvi: inout T, drugi: inout T) {
         var pomocna = prvi
         prvi = drugi
         drugi = pomocna
     }
     
-    // Moramo proslediti promenljive kao parametre, konstane (let) se ne mogu menjati
+    // Prosledjeni parametri moraju biti promenljive
     var prviString = "Ja sam prvi"
     var drugiString = "Ja sam drugi"
     
     print(prviString + ", " + drugiString)
-    // Bice ispisano: Ja sam prvi, Ja sam drugi
+    // Ja sam prvi, Ja sam drugi
     
-    // Navodimo '&' pre imena promenljive, da naznacimo da njihove vrednosti mogu biti promenjene u telu f-je
     zameniDvaParametra(prvi: &prviString, drugi: &drugiString)
-    
     print(prviString + ", " + drugiString)
-    // Bice ispisano: Ja sam drugi, Ja sam prvi
+    // Ja sam drugi, Ja sam prvi
     
 \end{lstlisting}
 
 \indent Затворења су самостални блокови кода који се могу прослеђивати и користити у коду. Слични су ламбда изразима у другим модерним језицима. \\
-\indent Изрази затворења представљају начин за писање затворења у једној линији (енг. inline), притом пружајући неколико синтаксних оптимизација, у виду кратке форме, разумљивости и изражајности. 
-Показаћемо на примеру \textit{Swift} метода \textit{'sorted'}, како се једно затворење може написати на неколико начина, од целе ф-је, па све до само једног карактера.
+\indent Изрази затворења представљају начин за писање затворења у једној линији (енг. inline), притом пружајући неколико синтаксних оптимизација у виду кратке форме, разумљивости и изражајности. Синтакса израза затворења приказана је у примеру \ref{lst:Синтакса израза затворења} - \nameref{lst:Синтакса израза затворења}. На примеру \ref{lst:Израз затворења за сортирање} - \nameref{lst:Израз затворења за сортирање} показана је \textit{Swift} метода '\textit{sorted}' и како се једно затворење може написати на неколико начина, од целе функције па све до само једног карактера.
 
-\begin{lstlisting}[caption=\textit{{Затворење кроз ф-ју}}, label={lst:Затворење кроз ф-ју}, language=Swift, frame=single]
+\begin{lstlisting}[caption=\textit{{Синтакса израза затворења}}, label={lst:Синтакса израза затворења}, language=Swift, frame=single]
+    (parametri) -> tip_povratne_vrednosti in
+        naredbe
+\end{lstlisting}
+
+\begin{lstlisting}[caption=\textit{{Израз затворења за сортирање}}, label={lst:Израз затворења за сортирање}, language=Swift, frame=single]
     func sortirajBrojeve(_ broj1: Int, _ broj2: Int) -> Bool {
         return broj1 < broj2
     }
     
     let nasumicniBrojevi = [2, 10, 5, 18, 100, -11, -25, 55, 72]
+    // Prosledjivanjem funkcije
+    var sortiraniBrojevi = nasumicniBrojevi.sorted(by: sortirajBrojeve)
     
-    var sortiraniBrojevi = nasumicniBrojevi.sorted(by: sortirajBrojeve
-\end{lstlisting}
-
-\indent Синтаксу израза затворења можемо генерално представити као:
-\begin{lstlisting}[language=Swift, frame=single]
-{ (parametri) -> tip povratne vrednosti in
-    naredbe
-}
-\end{lstlisting}
-
-\indent На основу овога, пример са сортирањем бројева можемо написати и овако:
-\begin{lstlisting}[caption=\textit{{Израз затворења за сортирање}}, label={lst:Израз затворења за сортирање}, language=Swift, frame=single]
+    // Koriscenjem zatvorenja
     sortiraniBrojevi = nasumicniBrojevi.sorted(by: { (broj1: Int, broj2: Int) -> Bool in
         return broj1 < broj2
     })
     
-    // Tipovi promenljivih u zatvorenju nemoraju biti eksplicitno navedeni, zato sto se odredjuju na osnovu tipa elemenata niza nad kojim se radi
-    sortiraniBrojevi = nasumicniBrojevi.sorted(by: {broj1, broj2 in return broj1 <  broj2})
+    // Bez eksplicitnog navodjenja tipa parametra
+    sortiraniBrojevi = nasumicniBrojevi.sorted(by: {broj1, broj2 in 
+        return broj1 <  broj2
+    })
     
     // Kada u zatvorenju postoji samo jedna naredba, nije potrebno navodjenje kljucne reci 'return', povratna vrednost bice vrednost izvrsenja te naredbe
-    sortiraniBrojevi = nasumicniBrojevi.sorted(by: {broj1, broj2 in broj1 < broj2})
+    sortiraniBrojevi = nasumicniBrojevi.sorted(by: {broj1, broj2 in 
+        broj1 < broj2
+    })
     
     // Swift omogucava i kratka imena parametara, za pruzanje izrazajnije sintakse
-    // Imena su oznacena kao $0, $1... u zavisnosti od broja parametra u f-ji
-    sortiraniBrojevi = nasumicniBrojevi.sorted(by: { $0 < $1 })
+    sortiraniBrojevi = nasumicniBrojevi.sorted(by: { 
+        $0 < $1
+    })
     
     // Kada koristimo tipove za koje je vec definisano ponasanje prilikom poredjenja, mozemo proslediti samo kako zelimo da sortiramo clanove niza
     sortiraniBrojevi = nasumicniBrojevi.sorted(by: <)
 \end{lstlisting}
 
-\indent Затворења се могу проследити и као параметри ф-је. Једино ограничење је да затворење мора ићи као последњи параметар ф-је. Најчешћи разлог за овакву употребу затворења је, да би били сигурни да ће се наредбе у затворењу извршити након што се заврши извршавање ф-је. Оваква врста затворења, назива се затворење трага (енг. Trailing closures). 
+\indent Затворења се могу проследити и као параметри ф-је. Једино ограничење је да затворење мора ићи као последњи параметар ф-је. Најчешћи разлог за овакву употребу затворења је сигурност да ће се наредбе у затворењу извршити након што се заврши извршавање функције. Оваква врста затворења назива се затворење трага (енг. trailing closures), пример у коду \ref{lst:Затворење трага} - \nameref{lst:Затворење трага}.
 
 \begin{lstlisting}[caption=\textit{{Затворење трага}}, label={lst:Затворење трага}, language=Swift, frame=single]
     func ucitajSliku(sa url: URL, completition: (Image?) -> Void) {
@@ -641,7 +626,7 @@ else {
 
 \subsection{Класе и структуре}
 
-\indent Класе и структуре су конструкције опште намене које имају своја својства и методе. За разлику од већине других програмских језика, класе и структуре у \textit{Swift}-у су много сличније што се функционалности тиче, па се често за инстанцу класе, као и структуре, користи назив инстанца, уместо уобичајеног, објекат. 
+\indent Класе и структуре су конструкције опште намене које имају своја својства и методе. За разлику од већине других програмских језика, класе и структуре у \textit{Swift}-у су много сличније што се функционалности тиче па се често за инстанцу класе као и структуре користи назив инстанца уместо уобичајеног, објекат. 
 \\
 \indent У поређењу класа и структура, ствари које се могу радити са обе: дефинисање својстава, дефинисање метода, дефинисање иницијализатора, могу се надограђивати коришћењем проширења (енг. extensions), имплементирати протоколе. 
 Оно у чему се разликују, односно функционалности које поседују само класе су: наслеђивање друге класе, провера типа инстанце у времену извршавања програма, деиницијализација.
@@ -651,7 +636,7 @@ else {
     \item Део иницијализације ако је константно 
     \item Део иницијализације или бити опционог типа ако је променљиво 
 \end{itemize}
-\indent Дефинисање класе и структуре, инстанцирање као и пруступање својствима и методама коришћењем тачка синтаксе (eng. dot syntax) може се видети у примеру \ref{lst:Дефинисање класе и структуре} - \nameref{lst:Дефинисање класе и структуре}.
+Дефинисање класе и структуре, инстанцирање као и пруступање својствима и методама коришћењем тачка синтаксе (eng. dot syntax) може се видети у примеру \ref{lst:Дефинисање класе и структуре} - \nameref{lst:Дефинисање класе и структуре}.
 
 \begin{lstlisting}[caption=\textit{{Дефинисање класе и структуре}}, label={lst:Дефинисање класе и структуре}, language=Swift, frame=single]
     // Definisanje strukture
@@ -684,7 +669,7 @@ else {
 \indent Уколико унутар класе имамо инстанцу неке друге класе, али не желимо да се инстанцирање обави одмах на почетку, већ непосредно пре употребе те инстанце, инстанци можемо додати лењо својство (енг. lazy propertie). Лења својства можемо користити када инстанцирање класе зависи од других параметара који нису познати у тренутку иницијализације главне класе или када инстанцирање може узети много времена и добро је одложити га док не буде апсолутно неопходно (можда у неким случајевима не буде уопште искоришћено). Пример употребе лењог својства налази се у примеру \ref{lst:Лења својства} - \nameref{lst:Лења својства}.
 
 \begin{lstlisting}[caption=\textit{{Лења својства}}, label={lst:Лења својства}, language=Swift, frame=single]
-    class UcitavanjeFajla {
+    struct UcitavanjeFajla {
         var imeFajla = "recepti.txt"
     }
     
@@ -696,15 +681,71 @@ else {
     var menadzer = MenadzerPodataka()
     menadzer.podaci.append("Prvi podatak")
     menadzer.podaci.append("Drugi podatak")
-    // U ovom trenutku klasa 'UcitavanjeFajla' i dalje nije instancirana
     
     // Pre izvrsenja f-je 'print', instancira se klasa 'UcitavanjeFajla'
     print(menadzer.ucitavanje.imeFajla)
 \end{lstlisting}
 
-% TODO: Dodati computed properties, get, set, willSet, didSet
+\indent За разлику од својстава и лењих својстава који у себи чувају одређене вредности, рачунајућа својства (енг. computed properties) не чувају вредности, већ садрже блок дохватача (енг. getter) (који је обавезан) и опционо блок постављача (енг. setter) којима се дохватају и постављају вредности других променљивих. Приликом дефинисања рачунајућег својства уколико својство садржи и дохватач и постављач потребно је експлицитно навести блокове за оба параметра \textit{get} и \textit{set}, док у случају да садржи само дохватач може се дефинисати само један блок за који ће компајлер знати да је блок дохватања. У примеру \ref{lst:Рачунајућа својства} - \nameref{lst:Рачунајућа својства} приказано је рачунајуће својство '\textit{centar}' које садржи и дохватач и постављач, као и рачунајуће својство '\textit{povrsina}' које има само блок дохватача.
 
-\indent Методе су функције које су везане за одређени тип, било класе, структуре или набрајања (енг. enumerations). Методе инстанце су функције које припадају одређеној инстанци и подржавају функционалности те инстанце. Креирање и коришћење метода инстанце приказано је у примеру \ref{lst:Методе} - \nameref{lst:Методе}.
+\begin{lstlisting}[caption=\textit{{Рачунајућа својства}}, label={lst:Рачунајућа својства}, language=Swift, frame=single]
+    struct Tacka {
+        var x = 0.0
+        var y = 0.0
+    }
+    struct Dimenzije {
+        var stranica = 0.0
+    }
+    struct Kvadrat {
+        var pocetak = Tacka()
+        var dimenzije = Dimenzije()
+        var centar: Tacka {
+            get {
+                let centarX = pocetak.x + dimenzije.stranica/2
+                let centarY = pocetak.y + dimenzije.stranica/2
+                return Taska(x: centarX, y: centarY)
+            }
+            set(noviCentar) {
+                pocetak.x = noviCentar.x - dimenzije.stranica/2
+                pocetak.y = noviCentar.y - dimenzije.stranica/2
+            }
+        }
+        var povrsina: Double {
+            return pow(dimenzija.stranica, 2)
+        }
+    }
+    var kvadrat = Kvadrat(pocetak: Tacka(), dimenzije: Dimenzije(stranica: 10.0))
+    let inicijalniCentar = kvadrat.centar // Tacka(5.0, 5.0)
+    kvadrat.centar = Tacka(x: 15.0, y: 15.0)
+    print("Novi pocetak: \(kvadrat.pocetak.x) \(kvadrat.pocetak.y)")
+    // Novi pocetak: 10.0 10.0
+    print("Povrsina kvadrata: \(kvadrat.povrsina)")
+    // Povrsina kvadrata: 100.0
+\end{lstlisting}
+
+\indent Посматрачи својстава посматрају и реагују на промену вредности својства унутар кога су имплементирани. Посматрачи реагују увек када је нова вредност додељена својсту, чак иако је нова вредност једнака старој. Могу се користити унутар кориснички дефинисаних својстава, наслеђених својстава и наслеђених рачунајућих својстава. Посматрачи својстава који се могу дефинисати унутар својства су \textit{willSet} - које се позива пре постављања нове вредности и \textit{didSet} које се позива након постављања нове вредности својства. Функцији \textit{willSet} се аутоматски прослеђује параметар у којој је смештена нова вредност својства и уколико програмер не наведе екплицитно име парематера, оно ће бити \textit{newValue}. Исто важи и за функцију \textit{didSet}, којој се прослеђује параметар старе врености својства са називом \textit{oldValue}. Пример употребе посматрача приказан је у делу \ref{lst:Посматрачи својства} - \nameref{lst:Посматрачи својства}.
+
+\begin{lstlisting}[caption=\textit{{Посматрачи својства}}, label={lst:Посматрачи својства}, language=Swift, frame=single]
+    struct Namirnica {
+        var ime: String
+        var cena: Double {
+            willSet {
+                print("Nova cena: \(newValue)")
+            }
+            didSet(staraCena) {
+                if cena < staraCena {
+                    print("Popust na namirnici: \(ime)")
+                }
+            }
+        }
+    }
+    var mleko = Namirnica(ime: "Mleko", cena: 105.0)
+    mleko.cena = 98
+    // Nova cena: 98
+    // Popust na namirnici: Mleko
+\end{lstlisting}
+
+\indent Методе су функције које су везане за одређени тип, било класе, структуре или набрајања (енг. enumerations). Методе инстанце су функције које припадају одређеној инстанци и подржавају функционалности те инстанце. Дефинисање метода класе и позивање тих метода над конкретном инстанцом класе приказано је у примеру \ref{lst:Методе} - \nameref{lst:Методе}.
 
 \begin{lstlisting}[caption=\textit{{Методе}}, label={lst:Методе}, language=Swift, frame=single]
     class Recept {
@@ -827,13 +868,37 @@ else {
 \label{sec:Модеран}
 
 \indent \textit{Swift} је настао као резултат најновијих истраживања програмских језика.
-Именовани параметри су изражајни, у једноставној синтакси, што код чини лаким за читање и разумевање. Као и у свим модерним језицима, употреба знака тачка-зарез на крају наредби није неопходна и по установљеној конвенцији се не пише. Претпостављање типова променљивих, чини код чистијим и отпорнијим на грешке. Меморијом се управља аутоматски, коришћењем аутоматског бројача референци (енг. Automatic Reference Counting, ARC). %ТОДО: Направити поглавље са АРЦ-ом и детаљно објаснити како функционише
-% резултујући минималним коришћењем меморије.
+Именовани параметри су изражајни, у једноставној синтакси што код чини лаким за читање и разумевање. Као и у свим модерним језицима употреба знака тачка-зарез на крају наредби није неопходна и по установљеној конвенцији се не пише. Претпостављање типова променљивих чини код чистијим и отпорнијим на грешке. Меморијом се управља аутоматски, коришћењем аутоматског бројача референци (енг. Automatic Reference Counting, ARC).
 
-%\begin{lstlisting}[caption=\textit{{Декларација нове структуре, уз приказ иницијализације без навођења конкретног типа}}, label={lst:Декларација}, language=Swift, frame=single]
+\indent \textit{ARC} се користи за праћење и управљање меморије коју апликација користи, тако што аутоматски ослобађа меморију коју је користила инстанца која више није потребна. Бројач референци води рачуна само о инстанцама класе, док инстанце структуре и набрајања игнорише јер оне представљају тип вредности, а не референтни тип. Сваки пут када се креира нова инстанца класе \textit{ARC} одвоји део меморије потребан за смештање информација о инстанци. За сваку инстанцу \textit{ARC} води рачуна о броју својстава, константи и променљивих које реферишу на посматрану инстанцу. \textit{ARC} ће деалоцирати део меморије у којој је смештена инстанца тек када све јаке (енг. strong) референце ка њој нестану. Када се инстанца класе додели својству, константи или променљивој уколико се екплицитно не наведе другачије, аутоматски ће бити креирана јака референца ка инстанци. \\
+\indent Ретка ситуација где програмер мора водити рачуна о управљању меморијом је избегавање креирања две инстанце неких класа које међусобно држе јаке референце једна ка другој јер у овој ситуацији долази до формирања циклуса јаких референци (енг. strong reference cycle) што онемогућује \textit{ARC} да деалоцира меморију у којој се налазе ове две инстанце (увек ће једна ка другој имати јаку референцу) и долази до цурења меморије. Циклус јаких референци се може спречити употребом \textit{weak} или \textit{unowned} референци које \textit{ARC} не узима у обзир. Пример употребе слабе (енг. weak) референце приказан је у коду \ref{lst:Слаба референца} - \nameref{lst:Слаба референца}.
 
-
-%\end{lstlisting}
+\begin{lstlisting}[caption=\textit{{Слаба референца}}, label={lst:Слаба референца}, language=Swift, frame=single]
+    protocol NoviReceptDelegate : AnyObject {
+        func receptJeKreiran(_ viewController: NoviReceptController, _ recept: Recept)
+    }
+    
+    class NoviReceptController() : UIViewController {
+        weak delegate: NoviReceptDelegate?
+        ...
+        func sacuvajRecept(_ recept: Recept) {
+            ...
+            self.delegate.receptJeKreiran(self, recept)
+        }
+    }
+    class ReceptController : UIViewController {
+        var novRecept = NoviReceptController()
+        override viewDidLoad() {
+            ...
+            self.novRecept.delegate = self
+        }
+        ...
+    }
+    extension ReceptController : NoviReceptDelegate {
+        func receptJeKreiran(_ viewController: NoviReceptController, _ recept: Recept) {
+        }
+    }
+\end{lstlisting}
 
 \indent Приликом дефинисања класе конвенција у \textit{Swift}-у је да се за једноставније структуре користи кључна реч \textit{Struct}, а не кључна реч \textit{Class}. Надоградња типа се користи да наше типове одвојимо у смислене целине, на пример наслеђивање неке надкласе или имплементација интерфејса, што се може видети у примеру \ref{lst:Надоградња} - \nameref{lst:Надоградња}, док истовремено можемо надоградити већ постојеће типове и имплементирати неке наше функције да не бисмо морали имплементирати исту логику више пута у коду приказано у примеру \ref{lst:Надоградња Swift класе} - \nameref{lst:Надоградња Swift класе}. Ограничење код екстензије је да не можемо додавати нова поља и променљиве унутар типа који надограђујемо.
 
@@ -858,7 +923,6 @@ extension Recept {
 }
 
 self.recept.dodajSastojak("2 jaja")
-
 \end{lstlisting}
 
 \begin{lstlisting}[caption=\textit{{Надоградња Swift класе}}, label={lst:Надоградња Swift класе}, language=Swift, frame=single]
@@ -875,7 +939,6 @@ extension UIImage {
 }
 
 self.recept.slika = UIImage.slikaRecepta(self.recept.ime)
-
 \end{lstlisting}
 
 \indent Многе могућности које нису поменуте у овом делу чине \textit{Swift} тако моћним и модерним језиком, као што су: трансформације коришћењем затворења (енг. closures), моћни генерички типови који се лако користе, функције као грађани првог реда, брза итерација кроз распон или колекцију, \textit{tuple} и вишеструке повратне вредности функција, енуми, функционално програмирање, уграђене функције за рад са изузецима и многе друге.
@@ -921,13 +984,32 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
 \textit{Swift} је дизајниран тако да може бити свачији први програмски језик. У циљу подучавања, \textit{Apple} је направио бесплатан наставни план и програм који може свако користити \cite{Swift_Education}. Најбоља апликација за почетнике је \textit{Swift Playgrounds} \cite{Swift_Playground}, апликација намењена уређајима \textit{iPad}, развијена од стране \textit{Apple}-а. 
 
 \subsection{Отвореног кода}
-% TODO
+\indent Крајем 2015. године програмски језик \textit{Swift} је под лиценцом \textit{Apache} 2.0 постао пројекат отвореног кода. Заједно са пројектом језика отвореног кода су постале и пратеће библиотеке, дебагер и менаџер пакета. Изворни код се налази на \textit{GitHub}-у где је свакоме лако доступан за преузимање и евентуалну дораду и допуну. Пројекат \textit{Swift} се састоји од неколико засебних пројеката: 
+\begin{itemize}
+    \item \textit{Swift} компајлер
+    \item Стандардна библиотека
+    \item \textit{Core} библиотека
+    \item \textit{LLDB} дебагер
+    \item \textit{Swift} менаџер података
+    \item \textit{Xcode} подршка за \textit{playground}
+\end{itemize}
 
+\subsection{\textit{Swift Playgrounds}}
+\indent Попут апликације \textit{Swift Playgrounds iPad} чији је један од пројеката намењен почетницима призан на слици \ref{slika:swift_playground_ipad}, однедавно постоји апликација \textit{Swift Playgrounds} за оперативни систем \textit{macOS} која је одлична за почетнике, али и за искусније програмере који желе да испробају део кода или се само мало забаве. Резултат извршавања ће бити одмах приказан, као што се може видети на слици \ref{slika:swift_playground_macos}. Када пролази кроз петљу за сваки израз који утиче на рад програма биће исписано колико пута се извршио. Поред променљивих је видљив њихов конретан тип, а уколико је променљива иницијализована и њена вредност.
 
-\subsection{\textit{Playground}}
-% TODO: Izmeniti odeljak, playground je zasebna aplikacija
-\indent Попут апликације \textit{Swift Playground iPad}, однедавно постоји апликација \textit{Playground} за оперативни систем \textit{macOS} која је одлична за почетнике, али и за искусније програмере који желе да испробају део кода или се само мало забаве. Резултат извршавања ће бити одмах приказан; резултати извршавања могу бити приказани графички, унутар листе резултата или помоћу графа током времена. 
-% TODO: ubaciti sliku iz Playground-a
+\begin{figure}[H]
+\includegraphics[width=1\textwidth]{images/Swift_Playground_iPad.jpeg}
+\centering
+\caption{\textit{Приказ апликације Swift Playgrounds на iPad-у}}
+\label{slika:swift_playground_ipad}
+\end{figure}
+
+\begin{figure}[H]
+\includegraphics[width=1\textwidth]{images/Swift_Playground_macOS.png}
+\centering
+\caption{\textit{Приказ апликације Swift Playgrounds на macOS-у}}
+\label{slika:swift_playground_macos}
+\end{figure}
 
 \subsection{\textit{Package manager}}
 
@@ -935,8 +1017,7 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
 
 \subsection{Компатибилан са \textit{Objective-C}-ом}
 
-Цела апликација може бити написана у Swift-у, или се може користити за додавање нових функционалности у већ постојећи програм. Swift и Objective-C могу узајамно постојати у апликацији, и корисник без проблема може користити делове кода написаног у једном језику унутар другог и обратно, уз само мало додатног подешавања пројекта. \cite{Apple_Developer}
-% TODO: Dodati objasnjenje/sliku koja su to podesavanja
+Цела апликација може бити написана у Swift-у, или се може користити за додавање нових функционалности у већ постојећи програм. Swift и Objective-C могу узајамно постојати у апликацији, и корисник без проблема може користити делове кода написаног у једном језику унутар другог и обратно, уз само мало додатног подешавања пројекта које се може пронаћи на \textit{Apple}-вом сајту посвећеном развијаоцима софтвера (енг. developers) \cite{Apple_Developer}, конкретно на адресама \href{https://developer.apple.com/documentation/swift/imported_c_and_objective-c_apis/importing_objective-c_into_swift}{\textit{Importing Ojective-C into Swift}} и \href{https://developer.apple.com/documentation/swift/imported_c_and_objective-c_apis/importing_swift_into_objective-c}{\textit{Importing Swift into Objective-C}}.
 
 \section{Xcode}
 \label{sec:Xcode}
@@ -945,18 +1026,29 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
 
 \subsection{Основно}
 
-\indent ИРО \textit{Xcode} се користи за равој софтвера намењених оперативним системима \textit{iOS}, \textit{iPadOS}, \textit{watchOS}, \textit{tvOS} и \textit{macOS}. Прва верзија \textit{Xcode}-а, објављена је 2003. године, а последња стабилна верзија је \textit{Xcode13}. \textit{Xcode} укључује алат командне линије (енг. Command Line Tools, CLT) који омогућава \textit{UNIX} стил развоја софтвера помоћу терминала. 
-% Ikonica (logo)
-\\
-\indent Овај ИРО се састоји од неколико алата који помажу програмеру приликом развоја апликација за \textit{Apple} платформе, од креирања апликације, преко тестирања и оптимизације, до прослеђивања на \textit{App Store}-у. Најзначанији алати који су део \textit{Xcode}-а су симулатор и инструменти.
+\indent ИРО \textit{Xcode} се користи за равој софтвера намењених оперативним системима \textit{iOS}, \textit{iPadOS}, \textit{watchOS}, \textit{tvOS} и \textit{macOS}. Прва верзија \textit{Xcode}-а, објављена је 2003. године, а последња стабилна верзија је \textit{Xcode}13. \textit{Xcode} укључује алат командне линије (енг. Command Line Tools, CLT) који омогућава \textit{UNIX} стил развоја софтвера помоћу терминала. На слици \ref{slika:xcode13_logo} може се видети званични лого ИРО-а \textit{Xcode}13.
+
+\begin{figure}[H]
+\includegraphics[width=1\textwidth]{images/Xcode_logo.jpg}
+\centering
+\caption{\textit{Званични лого ИРО-а Xcode13}}
+\label{slika:xcode13_logo}
+\end{figure}
+
+\indent \textit{Xcode} се састоји од неколико алата који помажу програмеру приликом развоја апликација за \textit{Apple} платформе, од креирања апликације, преко тестирања и оптимизације, до прослеђивања на \textit{App Store}-у. Најзначанији алати који су део \textit{Xcode}-а су симулатор и инструменти.
 
 \subsection{Симулатор}
 \indent Симулатор се користи за тестирање апликације у току развоја, уколико не постоји могућност употребе физичког уређаја. Тестирање на симулатору у неким ситуацијама може бити и боље, јер пружа могућност тестирања апликације на више различитих уређаја (симулатора) одједном (на пример, различите генерације телефона \textit{iPhone}, као и различите верзије оперативног система). 
 \\
 \indent Као што је већ истакнуто, симулатор је део \textit{Xcode}-а; инсталира се уз њега, а покреће се и понаша као обична апликација оперативног система \textit{macOS} и омогућава симулацију свих уређаја са \textit{Apple} платформе (\textit{iPhone}, \textit{iPad}, \textit{Apple Watch}, \textit{Apple TV}). Приликом тестирања могуће је и покретање више симулатора за различите платформе да би се тестирала њихова компатибилност, као на пример сарадња апликације на \textit{iPhone}-у и \textit{Apple Watch}-у. 
-Поред овога, још неке погодности које пружа симулатор су: интеракција са апликацијама коришћењем миша и тастатуре, одстрањивање неисправности у апликацији, оптимизација графичког приказа.
+Поред овога, још неке погодности које пружа симулатор су: интеракција са апликацијама коришћењем миша и тастатуре, одстрањивање неисправности у апликацији, оптимизација графичког приказа. На слици \ref{slika:simulatori} може се видети истовремена употреба симулатора телефона \textit{iPhone 13 Pro Max} са оперативним системом \textit{iOS} 15.0 и подешеном тамном бојом приказивања (енг. dark appearance), телефона \textit{iPhone SE - 2nd generation} такође са оперативним системом \textit{iOS} 15.0, али светлом бојом приказивања, таблета \textit{iPad Pro (9.7-inch)} са оперативним системом \textit{iOS} 12.0 и паметног сата \textit{Series 7 - 45mm} са оперативним системом \textit{watchOS} 8.0.
 
-% Слика симулатора
+\begin{figure}[H]
+\includegraphics[width=1\textwidth]{images/Simulators.png}
+\centering
+\caption{\textit{Приказ неколико симулатора}}
+\label{slika:simulatori}
+\end{figure}
 
 \subsection{Инструменти}
 
@@ -1036,7 +1128,7 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
 \indent У зависности од конкретне потребе у тренутној ситуацији, постоји више начина за остваривање јединог извора истине:
 
 \begin{itemize}
-    \item \textit{State} - Омогућава локално управљање стањем корисничког интерфејса, пример \ref{lst:Омотачи података - State} - \nameref{lst:Омотачи података - State}
+    \item \textit{State} - Омогућава локално управљање стањем корисничког интерфејса, пример \ref{lst:Омотачи података - State} - \nameref{lst:Омотачи података - State}. Када је променљива означена као \textit{State} другом погледу се мора проследити са префиксом '\$' уколико се жели омогућити промена њене вредности
     \item \textit{BindableObject} - Користећи \textit{ObservedObject} омотач својства, може се приступити спољашној референци на модел података који имплементира \textit{ObservableObject} протокол. Уколико је променљива смештена у спољашње окружење, може јој се приступити користећи \textit{EnvironmentObject} омотач својства. Инстанцирање посматрајућег (енг. observable) објекта директно у погледу, постиже се коришћењем \textit{StateObject}
     \item \textit{Binding} - Користи се за дељење референце на једини извор истине, пример \ref{lst:Омотачи података - Binding} - \nameref{lst:Омотачи података - Binding}
     \item \textit{Environment} - Подаци сачувани у \textit{Environment-у} се могу делити кроз целу апликацију, пример \ref{lst:Омотачи података - Environment} - \nameref{lst:Омотачи података - Environment}
@@ -1053,7 +1145,6 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
 \label{slika:data_flow_primitives}
 \end{figure}
 
-% Dodati kod koji bolje objasnjava omotace podataka
 \begin{lstlisting}[caption=\textit{{Омотачи података - State}}, label={lst:Омотачи података - State}, language=Swift, frame=single]
     struct Recept: View {
         var recept: ReceptPodatak
@@ -1062,8 +1153,7 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
         var body: some View {
             VStack {
                 Text(recept.ime)
-                // 'OmiljenRecept' je pogled koji sadrzi zvezdicu koja oznacava da li je recept medju omiljenima (puna zvezdica - jeste, prazna - nije) 
-                // Prosledjivanjem promenljive 'daLiJeOmiljen' uz prefiks '$' omogucava se promena promenljive 'daLiJeOmiljen' u pogledu 'OmiljenRecept'
+                // 'OmiljenRecept' je pogled koji sadrzi zvezdicu koja oznacava da li je recept medju omiljenima (puna zvezdica - jeste, prazna - nije)
                 OmiljenRecept(daLiJe: $daLiJeOmiljen)
             }
         }
@@ -1072,8 +1162,8 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
 
 \begin{lstlisting}[caption=\textit{{Омотачи података - Binding}}, label={lst:Омотачи података - Binding}, language=Swift, frame=single]
     struct Recept: View {
-    // Promenljiva 'isPlaying' je definisana u jednom pogledu, a moze se menjati u drugom
     var recept: ReceptPodatak
+    // Promenljiva 'daLiJeOmiljen' je definisana u jednom pogledu, a moze se menjati u drugom
     @Binding var daLiJeOmiljen: Bool
 
     var body: some View {
@@ -1092,12 +1182,12 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
     struct Kulinarstvo_widgetEntryView : View {
     var entry: Provider.Entry
     
-    // Citamo podatke za 'widgetFamily' iz okruzenja aplikacije (eng. Environment) i smestamo ih u promenljivu 'widgetFamily'
+    // Cita podatke za 'widgetFamily' iz okruzenja aplikacije i smesta ih u promenljivu 'widgetFamily'
     @Environment(\.widgetFamily) var widgetFamily
     
     @ViewBuilder
     var body: some View {
-        // U zavisnosti od promenljive 'widgetFamily' prikazujemo odgovarajuci widget
+        // U zavisnosti od promenljive 'widgetFamily' prikazuje se odgovarajuci widget
         switch widgetFamily {
         case .systemSmall:
             RecipeView(recipe: entry.recipe)
@@ -1117,7 +1207,7 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
 \indent \textit{UIKit} и \textit{SwiftUI} су радна окружења развијена од стране \textit{Apple}-а, а која помажу приликом израде корисничког интерфејса апликације. Генерално, највећа разлика између ова два радна окружења је у начину размишљања, како доћи до решења и како то решење касније имплементирати. Ову разлику ће најбоље бити показана на једном конкретном примеру; Форма за пријављивање на одређени сајт, креирање вертикалног скупа елемената, хоризонтално и вертикално центрираних у том скупу, док се скуп састоји од два текстуална поља(корисничко име и лозинка) и дугмета(са акцијом провере података).
 \\
 \indent Са \textit{UIKit}-ом мора се водити рачуна о свим ситним детаљима као што су: креирање вертикалног скупа елемената, његово додавање у главни поглед, креирање текстуалног поља, додавање текстуалног поља у скуп елемената, додавање аутоматског ограничења распореда како би се центрирало текстуално поље, понављање поступка за друго текстуално поље и поновно понављање поступка за дугме. 
-\\ % можда кораке прабацити у листу, због прегледности
+\\
 \indent За разлику од тога, као што је напоменуто, \textit{SwiftUI} се базира на декларативном начину програмирања, и овде је довољно да навести груписање два текстуална поља и дугмета у вертиклани скуп елемената и у ком погледу ће се приказати. Све ситне детаље ће радно окружење одрадити уместо нас онако како је то уобичајено дефинисано. Наравно не мора се придржавати свих детаља које окружење одради, већ се могу по потреби променити.
 \\
 \indent Креирање корисничког интерфејса у \textit{UIKit}-у коришћењем само \textit{Swift} кода је веома компликовано, и за веће пројекте готово немогуће, јер се мора водити рачуна о сваком детаљу. Најчешћи начин израде корисничког интерфејса је коришћењем \textit{Storyboards-а} i \textit{Interface Builder-а}, помоћу којих програмер креира кориснички интерфејс превлачењем, спустањем и конфигурацијом елемената. У \textit{SwiftUI}-у се кориснички интерфејс изграђује помоћу \textit{Swift} кода. Једноставно се изјасни шта ће бити креирано и радно окружење то уради. Да би процес креирања био бржи и приступачнији, од верзије \textit{Xcode}-а 11, која је изашла у исто време када је представљен \textit{SwiftUI}, постоји могућност прегледа уживо сваког појединачног погледа који је креиран или скупа више погледа одједном. О овоме ће бити више речи у поглављу \ref{subsec:Xcode - преглед уживо} - \nameref{subsec:Xcode - преглед уживо}.
@@ -1129,8 +1219,22 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
 
 \indent Са представљањем \textit{SwiftUI}-a, \textit{Apple} је представио и нову верзију њиховог ИРО-а, \textit{Xcode11}, у коме је додато својство рада у новом радном окружењу као и могућност прегледа уживо сваког погледа. Предност оваквог начина писања кода је пре свега у могућности брзог прегледа измена и то без поновног обнављања (енг. rebuilding) апликације, поготово уколико се ради на додавању или измени погледа који се налази дубоко у навигацији апликације и за који је потребно више кликова и/или превлачења да би се до њега дошло. 
 \\
-\indent Преглед уживо помаже да се и у \textit{SwiftUI}-у користи метод превлачења и пуштања за креирање корисничког интерфејса, који се разликује од претходног који је коришћен унутар \textit{Storyboard}-а, јер сваки елемент се превлачи у део где се пише код и када се испусти тај елемент постаје део кода. 
-% Слика превлачења и пуштања за SwiftUI 
+\indent Преглед уживо помаже да се и у \textit{SwiftUI}-у користи метод превлачења и пуштања за креирање корисничког интерфејса, који се разликује од претходног који је коришћен унутар \textit{Storyboard}-а, јер сваки елемент се превлачи у део где се пише код и када се испусти тај елемент постаје део кода. Избор графичких елемената може се видети на слици \ref{slika:d&d1}, док је код програма и приказ уживо након испуштања елемента '\textit{Text}' приказан на слици \ref{slika:d&d2}.
+
+\begin{figure}[H]
+\includegraphics[width=1\textwidth]{images/Drag_and_drop_1.png}
+\centering
+\caption{\textit{Приказ графичких елемената}}
+\label{slika:d&d1}
+\end{figure}
+
+\begin{figure}[H]
+\includegraphics[width=1\textwidth]{images/Drag_and_drop_2.png}
+\centering
+\caption{\textit{Код програма након испуштања елемента}}
+\label{slika:d&d2}
+\end{figure}
+
 Да би се омогућило коришћење приказа уживо, инстанца жељеног погледа се смешта унутар тела структуре која имплементира протокол \textit{PreviewProvider}, а која служи за живи приказ погледа или групе погледа. Пример употребе структуре која имплементира протокол \textit{PreviewProvider} може се видети у делу \ref{lst:Xcode - преглед уживо} - \nameref{lst:Xcode - преглед уживо}.
 
 \begin{lstlisting}[caption=\textit{{Xcode - преглед уживо}}, label={lst:Xcode - преглед уживо}, language=Swift, frame=single]
@@ -1161,8 +1265,6 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
 
 \indent Након сваке измене која се направи у коду који је везан за поглед(е) који се налази у прегледу уживо, \textit{Xcode} ће изнова направити нову верзију и покренути је у прозору за преглед уживо. Као што је виђено у примеру кода изнад, преглед уживо не мора приказивати само један поглед, већ се могу груписати различити погледи и све бити приказати одједном. Предност оваквог приступа је могућност истовременог прегледа старог и новог изгледа погледа, више величина \textit{widget}-а, истих погледа са светлом и тамном бојом позадине, погледа на различитим језицима...
 
-% Слика преглед уживо
-
 \indent За оне који желе да истраже више о овој теми, препорука је да одгледају два одлична клипа са \textit{Apple}-ове конференције за програмере из 2019. и 2020. године респективно. Клипови су: \href{https://developer.apple.com/videos/play/wwdc2019/233/}{\textit{'Mastering Xcode Previews'}} и \href{https://developer.apple.com/videos/play/wwdc2020/10149/}{\textit{'Structure your app for SwiftUI previews'}}.
 
 \chapter{Улога и развој Widget-a}
@@ -1192,15 +1294,15 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
 \indent Кораци за креирање \textit{widget} додатка:
 \begin{enumerate}
     \item Отворити пројекат у \textit{Xcode}-у и изабрати \textit{File -> New -> Target}
-    % slika
+    
     \item Из групе \textit{Application Extension}, изабрати \textit{Widget Extension} и кликнути \textit{Next}
-    % slika
-    \item Унети име додатка
-    % slika
-    \item Уколико ће \textit{widget} подржавати конфигурацију од стране корисника, штиклирати поље \textit{Include Configuration Intent}
-    % slika
+    
+    \item Унети име додатка и изабрати тим који ради на пројекту
+    
+    \item Уколико \textit{widget} подржава конфигурацију од стране корисника, штиклирати поље \textit{Include Configuration Intent}
+    
     \item Кликнути на \textit{Finish}
-    % slika
+    
 \end{enumerate}
 
 \subsection{Додавање детаља конфигурације}
@@ -1215,17 +1317,49 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
     \item Затворење садржаја (енг. Content Closure), затворење које садржи поглед \textit{SwiftUI} и које \textit{WidgetKit} позива када дође време за поновно рендеровање садржаја \textit{widget-а}
     \item Прилагођена сврха (енг. Custom Intent), фајл који дефинише параметре које корисник може мењати и прилагођавати себи, више о овоме у делу: \ref{subsec:Intent} - \nameref{subsec:Intent}
 \end{itemize}
-% Kod za pocetnu konfiguraciju widget-a, uz dodatne parametre, ime za prikaz, opis, velicine widget-a, boja pozadine widget-a
+Пример почетне статичке конфигурације \textit{widget}-а може се видети у коду \ref{lst:Widget - почетна конфигурација} - \nameref{lst:Widget - почетна конфигурација}. Да би се подесила боја шеме прослеђује се променљива \textit{colorScheme} којом се боја \textit{widget}-а усклађује са системском бојом уређаја. Променљива \textit{kind} служи за јединствену идентификацију типа \textit{widget}-а. 
+
+\begin{lstlisting}[caption=\textit{{Widget - почетна конфигурација}}, label={lst:Widget - почетна конфигурација}, language=Swift, frame=single]
+    struct KulinarstvoSecondWidget: Widget {
+        @Environment(\.colorScheme) var colorScheme
+        
+        let kind: String = "KulinarstvoSlasnoIEfikasnoSecondWidget"
+        
+        var body: some WidgetConfiguration {
+            StaticConfiguration(kind: kind, provider: SecondProvider()) { entry in
+                KulinarstvoSecondWidgetEntryView(entry: entry)
+            }
+            .configurationDisplayName("Recept na klik")
+            .description("Dodaj svoje omiljene recepte na pocetni ekran")
+            .supportedFamilies([.systemLarge])
+        }
+    }
+\end{lstlisting}
 
 \subsection{Временска линија}
 \label{subsec:Временска линија}
 \indent Снабдевач временске линије генерише временску линију која се састоји од уноса (енг. entries), а сваки унос садржи датум и време када је потребно ажурирати садржај \textit{widget}-а. Када се датум и време из уноса подударе са реалним временом, \textit{WidgetKit} позива затворење садржаја које потом приказује ажуриране податке. 
 \\
-\indent Да би \textit{widget} био приказан у \textit{widget} галерији, \textit{WidgetKit} захтева од снабдевача, преглед снимка (енг. Preview snapshot). Дохватање прегледа снимка се разрешава провером променљиве \textit{isPreview} којом се проверава да ли снабдевач прегледа снимка шаље тренутни снимак за приказ у галерији или за приказ \textit{widget}-а на почетном екрану (или \textit{Today} погледу, или центру за обавештења). Када је параметар \textit{isPreview} тачан, \textit{widget} се приказује у галерији. Уколико за приказ \textit{widget}-а треба да буду приказани и одређени подаци, а подаци нису пристигли са серверске стране, постоје два решења. Можемо приказати подразумеване, унапред одређене податке, или можемо користити податке које чувају место правим подацима (енг. placeholder). 
-% Слика са placeholder podacima i objasnjenje kroz komentare
-\\
+\indent Да би \textit{widget} био приказан у \textit{widget} галерији, \textit{WidgetKit} захтева од снабдевача, преглед снимка (енг. Preview snapshot). Дохватање прегледа снимка се разрешава коришћењем променљиве \textit{isPreview} којом се проверава да ли снабдевач прегледа снимка шаље тренутни снимак за приказ у галерији или за приказ \textit{widget}-а на почетном екрану (или \textit{Today} погледу, или центру за обавештења). Када је параметар \textit{isPreview} тачан, \textit{widget} се приказује у галерији. Уколико за приказ \textit{widget}-а треба да буду приказани и одређени подаци, а подаци нису пристигли са серверске стране, постоје два решења. Могу се приказати подразумевани, унапред одређени подаци, или се могу користити подаци који чувају место правим подацима (енг. placeholder). У примеру \ref{lst:Widget - placeholder} - \nameref{lst:Widget - placeholder} може се видети креирање погледа чувара места (енг. placeholder view) коришћењем статичких података који су увек доступни, и конкретан приказ тог чувара места у прегледу уживо са сакривеним подацима (енг. redacted data) - приказ како ће корисник видети \textit{widget} док не пристигну конкретни подаци у неким ситуацијама.
+
+\begin{lstlisting}[caption=\textit{{Widget - placeholder}}, label={lst:Widget - placeholder}, language=Swift, frame=single]
+    struct PlaceholderView : View {
+        var body : some View {
+            Kulinarstvo_widgetEntryView(
+                entry: SimpleEntry(date: Date(), configuration: ConfigurationIntent(), recipe: Datafeed.shared.favRecipes[0], parameterToShow: MainParameter.Sastojci.rawValue))
+        }
+    }
+    
+    struct Kulinarstvo_widget_Previews: PreviewProvider {
+        static var previews: some View {
+             PlaceholderView()
+                .previewContext(WidgetPreviewContext(family: .systemLarge))
+                .redacted(reason: .placeholder)
+        }
+    }
+\end{lstlisting}
+
 \indent Када пристигну подаци са сервера, снабдевач добија обавештење, сакупља реалне податке и приказује \textit{widget} са њима. Након што корисник дода \textit{widget} на почетни екран и буде приказан иницијални снимак изгледа \textit{widget-а}, \textit{WidgetKit} позива функцију \textit{getTimeline} из провајдера, чиме захтева временску линију.
-% Primer sa ovom funkcijom iz koda
 
 \subsection{\textit{Intent}}
 \label{subsec:Intent}
@@ -1237,24 +1371,53 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
     \item Коришћење протокола \textit{IntentTimelineProvider} уместо протокола \textit{TimelineProvider} као провајдера временске линије, да би конфигурација параметара од стране корисника била сачувана у уносима временске линије
     \item Уколико параметри зависе од динамичких података потребно је имплементирати екстензију \textit{intent}-а
 \end{itemize}
-% Слике додавања intent-a и његова конфигурација, примери кода и приказ конфигурације параметара у симулатору
+На слици \ref{slika:widget_configuration} се може видети како изгледа конфигурација \textit{widget}-а са два параметра, први за избор рецепта који ће у \textit{widget}-у бити приказан и избор примарног параметра уз опис рецепта (састојци или припрема).
+
+\begin{figure}[H]
+\includegraphics[width=0.5\textwidth]{images/Widget_configuration.png}
+\centering
+\caption{\textit{Конфигурација widget-а}}
+\label{slika:widget_configuration}
+\end{figure}
 
 \subsection{Везе унутар \textit{widget}-а}
 \indent Једини начин директне комуникације између корисника и \textit{widget}-а остварена је везама (енг. links) унутар \textit{widget}-а. Када корисник кликне на \textit{widget} отвара се апликација којој тај \textit{widget} припада, и може се конфигурисати који део апликације ће бити приказан кориснику у зависности од елемента унутар \textit{widget}-а на који је кликнуо. Свим величинама \textit{widget}-а може бити додат модификатор \textit{widgetURL(\_:)}, којим се одређује у који део апликације ће корисник бити одведен када кликне на \textit{widget}.
 \\
-\indent За све величине \textit{widget}-а, осим малих, могу се користити и везе које су додате једном елементу унутар \textit{widget}-а и којим је одређено место у апликацији које ће бити отворено (на пример, један \textit{widget} средње величине који садржи листу са 3 рецепата, сваки елемент листе има везу која води ка детаљној страни о рецепту који тај елемент представља). Иако \textit{widget} користи везе унутар својих елемената, може користити и модигикатор \textit{widgetURL(\_:)} из претходног примера. Овај модификатор ће бити активиран уколико корисник кликне на елеменат у \textit{widget}-у који нема дефинисану везу. 
-% Примери кода
+\indent За све величине \textit{widget}-а, осим малих, могу се користити и везе (енг. Link) које су додате једном елементу унутар \textit{widget}-а и којим је одређено место у апликацији које ће бити отворено (на пример, један \textit{widget} средње величине који садржи листу са 3 рецепата, сваки елемент листе има везу која води ка детаљној страни о рецепту који тај елемент представља). Иако \textit{widget} користи везе унутар својих елемената, може користити и модификатор \textit{widgetURL(\_:)} из претходног примера. Овај модификатор ће бити активиран уколико корисник кликне на елеменат у \textit{widget}-у који нема дефинисану везу. У примеру кода \ref{lst:Везе унутар widget-а} - \nameref{lst:Везе унутар widget-а} приказана је употреба модификатора \textit{widgetURL(\_:)} за мале \textit{widget}-е, као и употреба веза за средње и велике \textit{widget}-е.
+
+\begin{lstlisting}[caption=\textit{{Везе унутар widget-а}}, label={lst:Везе унутар widget-а}, language=Swift, frame=single]
+    struct Kulinarstvo_widgetEntryView : View {
+        var entry: Provider.Entry
+        @Environment(\.widgetFamily) var widgetFamily
+        
+        @ViewBuilder
+        var body: some View {
+            switch widgetFamily {
+            case .systemSmall:
+                ImageRecipeView(recipe: entry.recipe, isSmallView: true)
+                    .widgetURL(entry.recipe.url)
+            case .systemMedium:
+                Link(destination: entry.recipe.url ?? URL(fileURLWithPath: "")) {
+                    RecipeMediumView(recipe: entry.recipe, listName: entry.parameterToShow)
+                }
+            case .systemLarge:
+                Link(destination: entry.recipe.url ?? URL(fileURLWithPath: "")) {
+                    RecipeLargeView(recipe: entry.recipe, mainParameter: entry.parameterToShow)
+                }
+            default:
+                Text("")
+            }
+        }
+    }
+\end{lstlisting}
 
 \subsection{Више \textit{widget}-а у једном проширењу}
 \indent Уколико желимо да користимо више различитих типова \textit{widget}-а у једном проширењу, то можемо лако урадити уз само пар измена главног дела проширења, означеног атрибутом \textit{@main}. Уместо протокола \textit{Widget} главна структура мора имплементирати протокол \textit{WidgetBundle}. Тело структуре сада имплементира протокол \textit{Widget} и додата му је анотација \textit{@WidgetBundleBuilder}. Приказ употребе више типова у једном проширењу може се видети у примеру \ref{lst:Више widget-а у једном проширењу} - \nameref{lst:Више widget-а у једном проширењу}.
 
 \begin{lstlisting}[caption=\textit{{Више widget-а у једном проширењу}}, label={lst:Више widget-а у једном проширењу}, language=Swift, frame=single]
     @main
-    // Umesto protokola 'Widget', koristimo 'WidgetBundle'
-    struct ReceptiWidgets: WidgetBundle {
-        // Definisemo atribut '@WidgetBundlerBuilder'
+    struct ReceptiWidgets: WidgetBundle {=
         @WidgetBundleBuilder
-        // Definisemo telo, koje ovog puta implementira protokol 'Widget'
         var body: some Widget {
             DetaljanPrikazReceptaWidget()
             ListaRecepataWidget()

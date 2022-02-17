@@ -251,13 +251,11 @@ extension AddNewRecipeViewController : UITableViewDataSource {
         cell.delegate = self
         
         if tableView === self.ingredientsTableView {
-            
             cell.quantityTextField.placeholder = "Kolicina"
             cell.cellTextField.placeholder = "Jedinica mere"
             cell.ingredientTextField.placeholder = "Sastojak"
             
             [cell.quantityTextField, cell.cellTextField, cell.ingredientTextField].forEach {
-                $0?.delegate = self
                 $0?.textColor = AppTheme.setTextColor()
             }
             
@@ -273,9 +271,8 @@ extension AddNewRecipeViewController : UITableViewDataSource {
         else if tableView === self.stepsTableView {
             cell.quantityTextField.isHidden = true
             cell.ingredientTextField.isHidden = true
-            cell.cellTextField.delegate = self
             let record = self.stepsMap[String(indexPath.row)]
-            if record != nil {
+            if record != nil, !record!.isEmpty {
                 cell.cellTextField.text = record
                 cell.cellTextField.textColor = AppTheme.setTextColor()
             }

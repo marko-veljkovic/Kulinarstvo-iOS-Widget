@@ -11,14 +11,14 @@
             "numOfPersons": 1
         },
         {
-            "name": "Spagete karbonare",
+            "name": "Spagete karbonara",
             "prepTime": 45,
-            "ingredients": [],
-            "steps": [],
+            "ingredients": ["200_grama_slanina", "400_grama_pilece belo", "400_grama_testenina", "250_ml_pavlaka za kuvanje"],
+            "steps": ["Iseci slaninu i piletinu na kockice", "Isprziti slaninu u zagrejanom tiganju", "Dodati piletinu", "U medjuvremenu u drugoj posudi skuvati testeninu po izboru", "Ocediti testeninu", "Kada se piletina isprzi, dodati pavlaku za kuvanje i smanjiti vatru", "Dodati spagete u tiganj i sve promesati", "Zaciniti po izboru"],
             "isFavorite": true,
-            "isMyRecipe": false,
-            "category": 1,
-            "numOfPersons": 2
+            "isMyRecipe": true,
+            "category": 2,
+            "numOfPersons": 4
         },
         {
             "name": "Pirinac",

@@ -17,13 +17,16 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YWp-F5-SER">
-                        <rect key="frame" x="5" y="12" width="42" height="20.5"/>
+                        <rect key="frame" x="5" y="12" width="200" height="20.5"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="200" id="VOJ-tp-CCP"/>
+                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P6m-44-J99" userLabel="Prep Time Label">
-                        <rect key="frame" x="123" y="11.5" width="41.5" height="21"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P6m-44-J99" userLabel="Prep Time Label">
+                        <rect key="frame" x="138" y="11.5" width="41.5" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -38,12 +41,11 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="YWp-F5-SER" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="5" id="8yi-ss-u8o"/>
-                    <constraint firstItem="P6m-44-J99" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="YWp-F5-SER" secondAttribute="trailing" constant="5" id="9OP-ya-dD5"/>
                     <constraint firstItem="YWp-F5-SER" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="HGW-QF-QeE"/>
                     <constraint firstItem="P6m-44-J99" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="SlV-EH-GuN"/>
                     <constraint firstItem="qta-qU-mvP" firstAttribute="centerY" secondItem="P6m-44-J99" secondAttribute="centerY" id="Yys-GV-ny0"/>
                     <constraint firstAttribute="trailing" secondItem="qta-qU-mvP" secondAttribute="trailing" constant="5" id="dFL-gM-nIC"/>
-                    <constraint firstItem="qta-qU-mvP" firstAttribute="leading" secondItem="P6m-44-J99" secondAttribute="trailing" constant="85" id="mnr-mm-TGt"/>
+                    <constraint firstItem="qta-qU-mvP" firstAttribute="leading" secondItem="P6m-44-J99" secondAttribute="trailing" constant="70" id="mnr-mm-TGt"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>

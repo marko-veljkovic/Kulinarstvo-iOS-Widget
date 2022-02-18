@@ -28,7 +28,7 @@ class RecipeDetailViewController: UIViewController {
     var localStringIngredients: [String] {
         var stringIngredients: [String] = []
         for ingredient in self.localArrayOfIngredients {
-            let tmp = ingredient.quantity.truncatingRemainder(dividingBy: 1) == 0 ? String(format: "%.0f", ingredient.quantity) : String(ingredient.quantity)
+            let tmp = ingredient.quantity.truncatingRemainder(dividingBy: 1) == 0 ? String(ingredient.quantity) : String(format: "%.2f", ingredient.quantity)
             let stringIngredient = tmp + " \(ingredient.measureUnit) \(ingredient.ingredient)"
             stringIngredients.append(stringIngredient)
         }

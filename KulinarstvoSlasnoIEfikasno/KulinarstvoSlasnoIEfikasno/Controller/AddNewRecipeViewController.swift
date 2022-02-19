@@ -21,9 +21,6 @@ class AddNewRecipeViewController : UIViewController {
     @IBOutlet weak var numOfPersonsTextField: UITextField!
     @IBOutlet weak var isFavoritesLabel: UILabel!
     
-    @IBOutlet weak var ingredientsTableView: UITableView!
-    @IBOutlet weak var stepsTableView: UITableView!
-    
     @IBOutlet weak var addNewRecipeButton: UIButton!
     @IBOutlet weak var isFavoritesSwitch: UISwitch!
     
@@ -33,15 +30,15 @@ class AddNewRecipeViewController : UIViewController {
     @IBOutlet weak var categoryLabel: UILabel!
     @IBOutlet weak var categoryPickerView: UIPickerView!
     
+    @IBOutlet weak var addIngrediantsButton: UIButton!
+    @IBOutlet weak var addStepsButton: UIButton!
+    
     var imagePicker = UIImagePickerController()
     
     weak var delegate: NewRecipeViewControllerDelegate?
     
-    var ingrediantsNumber = 3
-    var stepsNumber = 3
-    
-    var ingrediantsMap: [String : Ingredient] = ["0":Ingredient(quantity: 0, measureUnit: "", ingredient: ""), "1":Ingredient(quantity: 0, measureUnit: "", ingredient: ""), "2":Ingredient(quantity: 0, measureUnit: "", ingredient: "")]
-    var stepsMap: [String : String] = ["0":"", "1":"", "2":""]
+    var ingrediantsMap: [String : Ingredient]? // ["0":Ingredient(quantity: 0, measureUnit: "", ingredient: ""), "1":Ingredient(quantity: 0, measureUnit: "", ingredient: ""), "2":Ingredient(quantity: 0, measureUnit: "", ingredient: "")]
+    var stepsMap: [String : String]? // ["0":"", "1":"", "2":""]
     
     var isCurrentFavorites = true
     
@@ -61,22 +58,14 @@ class AddNewRecipeViewController : UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.addNewRecipeLabel.text = "Dodaj novi recept"
+        self.addNewRecipeLabel.text = self.existingRecipe != nil ? "Izmeni recept" : "Dodaj novi recept"
         self.isFavoritesLabel.text = "Dodati u omiljene?"
         self.chooseImageButton.setTitle("Izaberi sliku jela", for: .normal)
-        
-        self.ingredientsTableView.dataSource = self
-        self.stepsTableView.dataSource = self
-        self.ingredientsTableView.delegate = self
-        self.stepsTableView.delegate = self
-        
-        self.ingredientsTableView.register(UINib(nibName: "AddNewRecipeTableViewCell", bundle: nil), forCellReuseIdentifier: "textFieldCell")
-        self.stepsTableView.register(UINib(nibName: "AddNewRecipeTableViewCell", bundle: nil), forCellReuseIdentifier: "textFieldCell")
         
         self.categoryPickerView.delegate = self
         self.categoryPickerView.dataSource = self
         
-        [self.addNewRecipeButton, self.chooseImageButton].forEach {
+        [self.addNewRecipeButton, self.chooseImageButton, self.addIngrediantsButton, self.addStepsButton].forEach {
             $0?.setTitleColor(.gray, for: .disabled)
             
             $0?.layer.cornerRadius = 10
@@ -98,11 +87,14 @@ class AddNewRecipeViewController : UIViewController {
         self.setColors()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        self.addIngrediantsButton.setTitle(self.ingrediantsMap != nil ? "Izmeni sastojke" : "Dodaj sastojke", for: .normal)
+        self.addStepsButton.setTitle(self.stepsMap != nil ? "Izmeni korake" : "Dodaj korake", for: .normal)
+    }
+    
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         self.setColors()
-        self.ingredientsTableView.reloadData()
-        self.stepsTableView.reloadData()
     }
     
     private func setColors() {
@@ -114,7 +106,7 @@ class AddNewRecipeViewController : UIViewController {
             $0?.textColor = AppTheme.setTextColor()
         }
         
-        [self.addNewRecipeButton, self.chooseImageButton].forEach {
+        [self.addNewRecipeButton, self.chooseImageButton, self.addIngrediantsButton, self.addStepsButton].forEach {
             $0?.backgroundColor = AppTheme.setBackgroundColor()
             $0?.setTitleColor(AppTheme.setTextColor(), for: .normal)
         }
@@ -133,9 +125,6 @@ class AddNewRecipeViewController : UIViewController {
         
         let selectedCategoryIndex = self.existingRecipe!.category?.rawValue ?? 0
         self.categoryPickerView.selectRow(selectedCategoryIndex, inComponent: 0, animated: true)
-        
-        self.ingrediantsNumber = self.existingRecipe!.ingredients.count != 0 ? self.existingRecipe!.ingredients.count : 1
-        self.stepsNumber = self.existingRecipe!.steps.count != 0 ? self.existingRecipe!.steps.count : 1
         
         var localIngredientMap: [String:Ingredient] = [:]
         for (ingredientIndex, ingredient) in self.existingRecipe!.ingredients.enumerated() {
@@ -161,24 +150,23 @@ class AddNewRecipeViewController : UIViewController {
     }
 
     @IBAction func addNewRecipeButtonClicked(_ sender: Any) {
-        self.recipeNameTextField.becomeFirstResponder() // Added this line so that eventualy current selected text field in table view will lose focus and its value will be saved in map and sent further
         let recipeName = self.recipeNameTextField.text ?? ""
         let recipePrepTime = self.preparationTimeTextField.text ?? ""
         let recipeNumOfPersons = self.numOfPersonsTextField.text ?? ""
         
         self.saveImage(recipeName: recipeName)
         
-        let sortedIngrediants = self.ingrediantsMap.sorted(by: {Int($0.key) ?? 0 < Int($1.key) ?? 0})
-        let sortedSteps = self.stepsMap.sorted(by: {Int($0.key) ?? 0 < Int($1.key) ?? 0})
+        let sortedIngrediants = self.ingrediantsMap?.sorted(by: {Int($0.key) ?? 0 < Int($1.key) ?? 0})
+        let sortedSteps = self.stepsMap?.sorted(by: {Int($0.key) ?? 0 < Int($1.key) ?? 0})
         
         var ingrediantsArray: [Ingredient] = []
         var stepsArray: [String] = []
         
-        for ingrediant in sortedIngrediants where ingrediant.value.quantity != 0 {
+        for ingrediant in sortedIngrediants ?? [] where ingrediant.value.quantity != 0 {
             ingrediantsArray.append(Ingredient(quantity: ingrediant.value.quantity, measureUnit: ingrediant.value.measureUnit, ingredient: ingrediant.value.ingredient))
         }
         
-        for step in sortedSteps where step.value != "" {
+        for step in sortedSteps ?? [] where step.value != "" {
             stepsArray.append(step.value)
         }
         
@@ -209,6 +197,40 @@ class AddNewRecipeViewController : UIViewController {
         
         self.present(self.imagePicker, animated: true, completion: nil)
     }
+    
+    @IBAction func addIngredientsButtonClicked(_ sender: Any) {
+        self.openItemsTableView(itemType: .ingredients)
+    }
+    
+    @IBAction func addStepsButtonClicked(_ sender: Any) {
+        self.openItemsTableView(itemType: .steps)
+    }
+    
+    func openItemsTableView(itemType: TableViewType) {
+        let ingrediantsStepsViewController = IngrediantsStepsViewController(type: itemType)
+        ingrediantsStepsViewController.delegate = self
+        
+        if ingrediantsMap != nil {
+            ingrediantsStepsViewController.ingrediantsMap = self.ingrediantsMap!
+        }
+        if stepsMap != nil {
+            ingrediantsStepsViewController.stepsMap = self.stepsMap!
+        }
+        
+        self.navigationController?.pushViewController(ingrediantsStepsViewController, animated: true)
+    }
+}
+
+//MARK: - IngrediantsStepsViewControllerDelegate
+extension AddNewRecipeViewController : IngrediantsStepsViewControllerDelegate {
+    func itemsDidSave(_ controller: IngrediantsStepsViewController, _ ingredients: [String : Ingredient]?, _ steps: [String : String]?) {
+        if ingredients != nil {
+            self.ingrediantsMap = ingredients!
+        }
+        else if steps != nil {
+            self.stepsMap = steps!
+        }
+    }
 }
 
 //MARK: - UIImagePickerControllerDelegate, UINavigationControllerDelegate
@@ -226,117 +248,6 @@ extension AddNewRecipeViewController : UIImagePickerControllerDelegate, UINaviga
         
         let data = UIImage.pngData(image)
         UserDefaults(suiteName: Datafeed.shared.kAppGroup)?.set(data(), forKey: recipeName)
-    }
-}
-
-//MARK: - UITableViewDataSource
-extension AddNewRecipeViewController : UITableViewDataSource {
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return tableView === self.ingredientsTableView ? "Sastojci:" : "Koraci pripreme:"
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tableView === self.ingredientsTableView ? self.ingrediantsNumber : self.stepsNumber
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "textFieldCell") as! AddNewRecipeTableViewCell
-        cell.addNewTextFieldButton.isHidden = ((tableView === self.ingredientsTableView) ? !(indexPath.row == self.ingrediantsNumber - 1) : !(indexPath.row == self.stepsNumber - 1))
-        cell.addNewTextFieldButton.tintColor = AppTheme.setTextColor()
-        cell.delegate = self
-        
-        if tableView === self.ingredientsTableView {
-            cell.quantityTextField.placeholder = "Kolicina"
-            cell.cellTextField.placeholder = "Jedinica mere"
-            cell.ingredientTextField.placeholder = "Sastojak"
-            
-            [cell.quantityTextField, cell.cellTextField, cell.ingredientTextField].forEach {
-                $0?.textColor = AppTheme.setTextColor()
-            }
-            
-            let record = self.ingrediantsMap[String(indexPath.row)]
-            if record != nil {
-                cell.cellTextField.text = record!.measureUnit
-                cell.ingredientTextField.text = record!.ingredient
-                if record?.quantity != 0 {
-                    cell.quantityTextField.text = String(record!.quantity)
-                }
-            }
-        }
-        else if tableView === self.stepsTableView {
-            cell.quantityTextField.isHidden = true
-            cell.ingredientTextField.isHidden = true
-            let record = self.stepsMap[String(indexPath.row)]
-            if record != nil, !record!.isEmpty {
-                cell.cellTextField.text = record
-                cell.cellTextField.textColor = AppTheme.setTextColor()
-            }
-            else {
-                cell.cellTextField.placeholder = "Korak"
-            }
-        }
-        
-        return cell
-    }
-}
-
-//MARK: - UITableViewDelegate
-extension AddNewRecipeViewController : UITableViewDelegate {
-    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        guard let header = view as? UITableViewHeaderFooterView else {
-            return
-        }
-        header.textLabel?.textColor = AppTheme.setTextColor()
-        header.textLabel?.font = UIFont.boldSystemFont(ofSize: 15)
-        header.textLabel?.frame = header.bounds
-        header.textLabel?.textAlignment = .center
-    }
-}
-
-//MARK: - AddNewRecipeTableViewCellDelegate
-extension AddNewRecipeViewController : AddNewRecipeTableViewCellDelegate {
-    func addNewTextField(_ tableViewCell: UITableViewCell, _ tableView: UITableView?) {
-        if tableView === self.ingredientsTableView {
-            self.ingrediantsNumber += 1
-            self.ingredientsTableView.reloadData()
-        }
-        else if tableView === self.stepsTableView {
-            self.stepsNumber += 1
-            self.stepsTableView.reloadData()
-        }
-    }
-    
-    func textFieldDidEndEditingInCell(_ tableViewCell: UITableViewCell, _ tableView: UITableView?, _ text: String?, _ textField: UITextField, isMeasure: Bool, isIngredient: Bool) {
-        
-        guard let localText = text, localText != "" else {
-            return
-        }
-        
-        //Hacky way of getting indexPath, get textfield superview (cell content) and then it super view (cell)
-        guard let index = tableView?.indexPathForRow(at: textField.superview?.superview?.superview?.frame.origin ?? CGPoint(x: 0, y: 0)) else {
-            return
-        }
-        let rowIndex = index.row
-        
-        if tableView === self.ingredientsTableView {
-            if isMeasure {
-                self.ingrediantsMap[String(rowIndex)]?.measureUnit = localText
-            }
-            else if isIngredient {
-                self.ingrediantsMap[String(rowIndex)]?.ingredient = localText
-            }
-            else {
-                self.ingrediantsMap[String(rowIndex)]?.quantity = Double(localText) ?? 0
-            }
-        }
-        else if tableView === self.stepsTableView {
-            self.stepsMap[String(rowIndex)] = localText
-        }
     }
 }
 

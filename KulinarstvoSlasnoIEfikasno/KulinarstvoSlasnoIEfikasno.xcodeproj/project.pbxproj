@@ -43,6 +43,8 @@
 		559AF16827778ABD00DCDC51 /* KulinarstoSlasnoIEfikasnoWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 559363E1272F05DC0071A10D /* KulinarstoSlasnoIEfikasnoWidget.intentdefinition */; };
 		559AF1692777AB0100DCDC51 /* RecipeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559363CE272EF89C0071A10D /* RecipeModel.swift */; };
 		559AF16C2778F95800DCDC51 /* RecipesData.json in Resources */ = {isa = PBXBuildFile; fileRef = 550C716D2731C0890021D689 /* RecipesData.json */; };
+		55D6172227C17E6F00FBF8B3 /* IngrediantsStepsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D6172027C17E6F00FBF8B3 /* IngrediantsStepsViewController.swift */; };
+		55D6172327C17E6F00FBF8B3 /* IngrediantsStepsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55D6172127C17E6F00FBF8B3 /* IngrediantsStepsViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -112,6 +114,8 @@
 		559AF15F2777876700DCDC51 /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
 		559AF1612777876700DCDC51 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		559AF16D27791C1F00DCDC51 /* KulinarstvoSlasnoIEfikasno.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = KulinarstvoSlasnoIEfikasno.entitlements; sourceTree = "<group>"; };
+		55D6172027C17E6F00FBF8B3 /* IngrediantsStepsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngrediantsStepsViewController.swift; sourceTree = "<group>"; };
+		55D6172127C17E6F00FBF8B3 /* IngrediantsStepsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IngrediantsStepsViewController.xib; sourceTree = "<group>"; };
 		55FB9D7E277E227900B536F7 /* KulinarstoSlasnoIEfikasnoWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = KulinarstoSlasnoIEfikasnoWidgetExtension.entitlements; sourceTree = "<group>"; };
 		55FB9D7F277E22A500B536F7 /* IntentHandler.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = IntentHandler.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -192,6 +196,7 @@
 				559363CB272EE8EC0071A10D /* RecipeTableViewCell.xib */,
 				559363D1272EFC440071A10D /* RecipeDetailViewController.xib */,
 				559363F1272F3FC10071A10D /* AddNewRecipeViewController.xib */,
+				55D6172127C17E6F00FBF8B3 /* IngrediantsStepsViewController.xib */,
 				559363F4272F4A1E0071A10D /* AddNewRecipeTableViewCell.swift */,
 				559363F5272F4A1E0071A10D /* AddNewRecipeTableViewCell.xib */,
 				556D903F27A307A400FCB3D3 /* RecipeTableViewHeaderCell.swift */,
@@ -207,6 +212,7 @@
 				559363C6272EE26B0071A10D /* GeneralViewController.swift */,
 				559363D0272EFC440071A10D /* RecipeDetailViewController.swift */,
 				559363F0272F3FC10071A10D /* AddNewRecipeViewController.swift */,
+				55D6172027C17E6F00FBF8B3 /* IngrediantsStepsViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -361,6 +367,7 @@
 				550C716E2731C0890021D689 /* RecipesData.json in Resources */,
 				559363BE272ED7E20071A10D /* TabBarViewController.xib in Resources */,
 				559363B1272EBF760071A10D /* Assets.xcassets in Resources */,
+				55D6172327C17E6F00FBF8B3 /* IngrediantsStepsViewController.xib in Resources */,
 				556D904227A307A400FCB3D3 /* RecipeTableViewHeaderCell.xib in Resources */,
 				559363CD272EE8EC0071A10D /* RecipeTableViewCell.xib in Resources */,
 			);
@@ -396,6 +403,7 @@
 				556D904127A307A400FCB3D3 /* RecipeTableViewHeaderCell.swift in Sources */,
 				559363BD272ED7E20071A10D /* TabBarViewController.swift in Sources */,
 				559363D2272EFC440071A10D /* RecipeDetailViewController.swift in Sources */,
+				55D6172227C17E6F00FBF8B3 /* IngrediantsStepsViewController.swift in Sources */,
 				559363A8272EBF740071A10D /* AppDelegate.swift in Sources */,
 				559363C8272EE26B0071A10D /* GeneralViewController.swift in Sources */,
 				559363CC272EE8EC0071A10D /* RecipeTableViewCell.swift in Sources */,

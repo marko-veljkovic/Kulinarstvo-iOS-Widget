@@ -95,7 +95,11 @@ class RecipeModel {
                              Ingredient(quantity: 400, measureUnit: "mililitra", ingredient: "voda")],
                steps: [ "Oprati pirinac", "Dodati vodu", "Dodati zejtin", "Dodati so", "Kuvati 20ak minuta"], category: .warmSideDish),
         Recipe(name: "Mesano povrce", prepTime: 25, ingredients: [], steps: [], category: .warmSideDish),
-        Recipe(name: "Sendvic", prepTime: 5, ingredients: [], steps: [], category: .bread)
+        Recipe(name: "Sendvic", prepTime: 5, ingredients: [], steps: [], category: .bread),
+        Recipe(name: "Cezar salata", prepTime: 75,
+               ingredients: [Ingredient(quantity: 400, measureUnit: "grama", ingredient: "slanina"), Ingredient(quantity: 1, measureUnit: "kilogram", ingredient: "pilece belo"), Ingredient(quantity: 2, measureUnit: "glavice", ingredient: "zelena salata"), Ingredient(quantity: 400, measureUnit: "grama", ingredient: "cheri paradajz"), Ingredient(quantity: 6, measureUnit: "kriski", ingredient: "hleba"), Ingredient(quantity: 600, measureUnit: "grama", ingredient: "cezar preliv")],
+               steps: ["Iseckati slaninu na kockice", "Proprziti slaninu", "Iseckati pilece belo na kockice", "Proprziti pilece belo", "Iseckati hleba na kockice", "Umedjuvremenu nacepkati listove zelene salate u ciniju", "Naseci cheri paradajz i dodati u ciniju", "Kada hleb zapece skloniti sa ringle i sve dodati u ciniju", "Dodati cezar preliv", "Promesati sve i uzivati"],
+               isFavorite: true, isMyRecipe: true, category: .salad, numOfPersons: 6)
     ]
 
     static var myTestData = [

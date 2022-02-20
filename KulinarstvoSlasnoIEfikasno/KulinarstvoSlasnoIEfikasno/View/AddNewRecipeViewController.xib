@@ -123,14 +123,11 @@
                         <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="reG-Ev-ndE">
                             <rect key="frame" x="0.0" y="380" width="404" height="348"/>
                         </pickerView>
-                        <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="RUh-UM-5vZ">
+                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="RUh-UM-5vZ">
                             <rect key="frame" x="0.0" y="738" width="404" height="35"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9wy-Vm-cWt">
-                                    <rect key="frame" x="0.0" y="0.0" width="180" height="35"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" constant="180" id="eci-eE-QAm"/>
-                                    </constraints>
+                                    <rect key="frame" x="0.0" y="0.0" width="197" height="35"/>
                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                     <state key="normal" title="Dodaj sastojke"/>
                                     <connections>
@@ -138,10 +135,7 @@
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ifH-jQ-T0X">
-                                    <rect key="frame" x="190" y="0.0" width="214" height="35"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" constant="180" id="hlk-eO-LzR"/>
-                                    </constraints>
+                                    <rect key="frame" x="207" y="0.0" width="197" height="35"/>
                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                     <state key="normal" title="Dodaj korake"/>
                                     <connections>

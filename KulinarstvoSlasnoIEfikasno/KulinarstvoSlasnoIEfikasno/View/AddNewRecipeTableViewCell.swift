@@ -23,6 +23,10 @@ class AddNewRecipeTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        [self.cellTextField, self.quantityTextField, self.ingredientTextField].forEach {
+            $0?.delegate = self
+            $0?.autocorrectionType = .no
+        }
         self.cellTextField.delegate = self
         self.quantityTextField.delegate = self
         self.ingredientTextField.delegate = self

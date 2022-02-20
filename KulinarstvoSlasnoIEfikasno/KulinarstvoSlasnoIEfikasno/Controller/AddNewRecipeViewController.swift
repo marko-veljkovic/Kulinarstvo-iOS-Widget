@@ -78,6 +78,7 @@ class AddNewRecipeViewController : UIViewController {
         
         [self.recipeNameTextField, self.preparationTimeTextField, self.numOfPersonsTextField].forEach {
             $0?.delegate = self
+            $0?.autocorrectionType = .no
         }
         
         if self.existingRecipe != nil {
@@ -199,10 +200,12 @@ class AddNewRecipeViewController : UIViewController {
     }
     
     @IBAction func addIngredientsButtonClicked(_ sender: Any) {
+        self.addNewRecipeButton.isEnabled = true
         self.openItemsTableView(itemType: .ingredients)
     }
     
     @IBAction func addStepsButtonClicked(_ sender: Any) {
+        self.addNewRecipeButton.isEnabled = true
         self.openItemsTableView(itemType: .steps)
     }
     

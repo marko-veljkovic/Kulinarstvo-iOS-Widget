@@ -186,6 +186,7 @@ struct ImageRecipeView: View {
     var recipe: Recipe
     var isSmallView: Bool
     @Environment(\.colorScheme) var colorScheme
+    var screenSize = UIScreen.main.bounds.size
     
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -195,6 +196,8 @@ struct ImageRecipeView: View {
             }
             else {
                 Image(recipe.imageName)
+                    .resizable()
+                    .frame(width: screenSize.width/2.7, height: screenSize.width/2.7, alignment: .center)
             }
             VStack {
                 Text(recipe.name)
@@ -216,6 +219,8 @@ struct ListItemsView: View {
     @State var areAllItemsPrinted: Bool
     @State var listName: String
     
+    var screenSize = UIScreen.main.bounds.size
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             Text("\(listName): ")
@@ -225,7 +230,7 @@ struct ListItemsView: View {
                 VStack {
                     Text("- " + item)
                         .font(.system(size: 12, weight: .bold))
-                        .frame(width: 175, alignment: .leading)
+                        .frame(width: screenSize.width/2.5, alignment: .leading)
                         .lineLimit(2)
                         .foregroundColor(Color(colorScheme == .dark ? AppTheme.textUniversalGreen : AppTheme.backgroundUniversalGreen))
                 }
@@ -298,7 +303,7 @@ struct RecipeLargeView: View {
                 }
                 ListItemsWithOptionalChopingView(itemsArray: self.mainArray, lenghtLimit: 18, listName: mainParameter)
             }
-            .fixedSize()
+//            .fixedSize()
         }
         else if self.secondArray.count > 6 {
             HStack(alignment: .top, spacing: 5) {
@@ -308,7 +313,7 @@ struct RecipeLargeView: View {
                 }
                 ListItemsWithOptionalChopingView(itemsArray: self.secondArray, lenghtLimit: 18, listName: secondParameter)
             }
-            .fixedSize()
+//            .fixedSize()
         }
         else {
             VStack(spacing: 0) {
@@ -397,13 +402,13 @@ struct Kulinarstvo_widget_Previews: PreviewProvider {
     
     static var previews: some View {
         Group {
-            Kulinarstvo_widgetEntryView(entry: SimpleEntry(date: Date(), configuration: ConfigurationIntent(), recipe: RecipeModel.testData[0], parameterToShow: MainParameter.Sastojci.rawValue))
+            Kulinarstvo_widgetEntryView(entry: SimpleEntry(date: Date(), configuration: ConfigurationIntent(), recipe: RecipeModel.testData[5], parameterToShow: MainParameter.Priprema.rawValue))
                 .previewContext(WidgetPreviewContext(family: .systemLarge))
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
 //                .preferredColorScheme(.dark)
             
-            KulinarstvoSecondWidgetEntryView(entry: SecondEntry(date: Date(), firstRecipe: RecipeModel.testData[0], secondRecipe: RecipeModel.testData[1], thirdRecipe: RecipeModel.testData[2], fourthRecipe: RecipeModel.testData[3]))
-                .previewContext(WidgetPreviewContext(family: .systemLarge))
+//            KulinarstvoSecondWidgetEntryView(entry: SecondEntry(date: Date(), firstRecipe: RecipeModel.testData[0], secondRecipe: RecipeModel.testData[1], thirdRecipe: RecipeModel.testData[2], fourthRecipe: RecipeModel.testData[3]))
+//                .previewContext(WidgetPreviewContext(family: .systemLarge))
             
 //            Kulinarstvo_widgetEntryView(entry: SimpleEntry(date: Date(), configuration: ConfigurationIntent(), recipe: RecipeModel.testData[0]))
 //                .previewContext(WidgetPreviewContext(family: .systemMedium))

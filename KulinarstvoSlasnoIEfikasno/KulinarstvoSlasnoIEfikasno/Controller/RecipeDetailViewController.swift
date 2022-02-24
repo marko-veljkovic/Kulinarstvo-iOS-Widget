@@ -28,7 +28,7 @@ class RecipeDetailViewController: UIViewController {
     var localStringIngredients: [String] {
         var stringIngredients: [String] = []
         for ingredient in self.localArrayOfIngredients {
-            let tmp = ingredient.quantity.truncatingRemainder(dividingBy: 1) == 0 ? String(format: "%.0f", ingredient.quantity) : String(ingredient.quantity)
+            let tmp = ingredient.quantity.truncatingRemainder(dividingBy: 1) == 0 ? String(format: "%.0f", ingredient.quantity) : String(format: "%.2f", ingredient.quantity)
             let stringIngredient = tmp + " \(ingredient.measureUnit) \(ingredient.ingredient)"
             stringIngredients.append(stringIngredient)
         }
@@ -39,8 +39,6 @@ class RecipeDetailViewController: UIViewController {
     
     init(recipe: Recipe) {
         self.recipe = recipe
-        self.localNumberOfPersons = self.recipe.numOfPersons
-        self.localArrayOfIngredients = self.recipe.ingredients
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -103,6 +101,9 @@ class RecipeDetailViewController: UIViewController {
     }
     
     func setRecipeData() {
+        self.localNumberOfPersons = self.recipe.numOfPersons
+        self.localArrayOfIngredients = self.recipe.ingredients
+        
         self.titleLabel?.text = self.recipe.name
         
         let recipeCategory = self.recipe.category ?? .snack
@@ -136,10 +137,9 @@ class RecipeDetailViewController: UIViewController {
         }
 
         self.recipeImageView.image = recipeImage
-        
         self.preparationTimeLabel.text = "Vreme pripreme: \(self.recipe.prepTime) minuta"
-        
-        self.setNumberOfPersonsField()
+        self.setNumberOfPersonsField()        
+        self.tableView.reloadData()
     }
     
     func setNumberOfPersonsField() {
@@ -214,6 +214,8 @@ extension RecipeDetailViewController : UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
+        
+        cell.textLabel?.numberOfLines = 0
         
         let wantedList = indexPath.section == 0 ? self.localStringIngredients : self.recipe.steps
         

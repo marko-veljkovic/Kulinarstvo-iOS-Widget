@@ -2,32 +2,32 @@
     "recipes": [
         {
             "name": "Omlet",
-            "prepTime": 15,
+            "prepTime": 20,
             "ingredients": ["3_komada_jaja", "1.5_komad_paradajz"],
             "steps": ["Izmutiti jaja sitno i brzo", "Dodati sitno", "Sipati u tiganj i prziti"],
             "isFavorite": true,
-            "isMyRecipe": false,
-            "category": 0,
+            "isMyRecipe": true,
+            "category": 1,
             "numOfPersons": 1
         },
         {
-            "name": "Spagete karbonare",
-            "prepTime": 45,
-            "ingredients": [],
-            "steps": [],
-            "isFavorite": true,
+            "name": "Spagete karbonara",
+            "prepTime": 60,
+            "ingredients": ["200_grama_slanina", "400_grama_pilece belo", "400_grama_testenina", "250_ml_pavlaka za kuvanje"],
+            "steps": ["Iseci slaninu i piletinu na kockice", "Isprziti slaninu u zagrejanom tiganju", "Dodati piletinu", "U medjuvremenu u drugoj posudi skuvati testeninu po izboru", "Ocediti testeninu", "Kada se piletina isprzi, dodati pavlaku za kuvanje i smanjiti vatru", "Dodati spagete u tiganj i sve promesati", "Zaciniti po izboru"],
+            "isFavorite": false,
             "isMyRecipe": false,
-            "category": 1,
-            "numOfPersons": 2
+            "category": 2,
+            "numOfPersons": 4
         },
         {
             "name": "Pirinac",
-            "prepTime": 25,
+            "prepTime": 15,
             "ingredients": ["200_grama_Pirinac"],
             "steps": ["Dodati pirinac", "Dodati pirinac", "Dodati pirinac", "Dodati pirinac", "Dodati pirinac", "Dodati pirinac", "Dodati pirinac", "Dodati pirinac", "Dodati pirinac", "Dodati pirinac"],
             "isFavorite": false,
             "isMyRecipe": false,
-            "category": 2,
+            "category": 1,
             "numOfPersons": 4
         },
         {
@@ -37,18 +37,108 @@
             "steps": [],
             "isFavorite": false,
             "isMyRecipe": true,
-            "category": 3,
+            "category": 1,
+            "numOfPersons": 4
+        },
+        {
+            "name": "Sendvic sa pecenicom",
+            "prepTime": 10,
+            "ingredients": [],
+            "steps": [],
+            "isFavorite": false,
+            "isMyRecipe": false,
+            "category": 8,
             "numOfPersons": 1
         },
         {
-            "name": "Sendvic",
-            "prepTime": 5,
+            "name": "Cezar salata",
+            "prepTime": 75,
+            "ingredients": ["400_grama_slanina", "1_kilogram_pilece belo", "2_glavice_zelena salata", "400_grama_cheri paradajz", "6_kriski_hleba", "600_grama_cezar preliva"],
+            "steps": ["Iseckati slaninu na kockice", "Proprziti slaninu", "Iseckati pilece belo na kockice", "Proprziti pilece belo", "Iseckati hleba na kockice", "Umedjuvremenu nacepkati listove zelene salate u ciniju", "Naseci cheri paradajz i dodati u ciniju", "Kada hleb zapece skloniti sa ringle i sve dodati u ciniju", "Dodati cezar preliv", "Promesati sve i uzivati"],
+            "isFavorite": true,
+            "isMyRecipe": true,
+            "category": 7,
+            "numOfPersons": 6
+        },
+        {
+            "name": "Peceni krompir",
+            "prepTime": 60,
+            "ingredients": [],
+            "steps": [],
+            "isFavorite": false,
+            "isMyRecipe": false,
+            "category": 1,
+            "numOfPersons": 4
+        },
+        {
+            "name": "Pomfrit",
+            "prepTime": 45,
+            "ingredients": [],
+            "steps": [],
+            "isFavorite": false,
+            "isMyRecipe": true,
+            "category": 1,
+            "numOfPersons": 3
+        },
+        {
+            "name": "Popaj pasta",
+            "prepTime": 55,
             "ingredients": [],
             "steps": [],
             "isFavorite": true,
+            "isMyRecipe": true,
+            "category": 2,
+            "numOfPersons": 4
+        },
+        {
+            "name": "Plazma kocke sa kikiriki puterom",
+            "prepTime": 25,
+            "ingredients": [],
+            "steps": [],
+            "isFavorite": true,
+            "isMyRecipe": true,
+            "category": 6,
+            "numOfPersons": 10
+        },
+        {
+            "name": "Rizoto sa sampinjonima",
+            "prepTime": 35,
+            "ingredients": [],
+            "steps": [],
+            "isFavorite": false,
             "isMyRecipe": false,
-            "category": 5,
-            "numOfPersons": 1
+            "category": 2,
+            "numOfPersons": 5
+        },
+        {
+            "name": "Musaka",
+            "prepTime": 120,
+            "ingredients": [],
+            "steps": [],
+            "isFavorite": false,
+            "isMyRecipe": false,
+            "category": 2,
+            "numOfPersons": 8
+        },
+        {
+            "name": "Rizoto sa piletinom i cetiri vrste sira",
+            "prepTime": 70,
+            "ingredients": [],
+            "steps": [],
+            "isFavorite": false,
+            "isMyRecipe": false,
+            "category": 2,
+            "numOfPersons": 6
+        },
+        {
+            "name": "Kokice",
+            "prepTime": 10,
+            "ingredients": [],
+            "steps": [],
+            "isFavorite": true,
+            "isMyRecipe": true,
+            "category": 3,
+            "numOfPersons": 2
         },
     ]
 }

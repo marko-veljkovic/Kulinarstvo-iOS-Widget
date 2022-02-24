@@ -88,7 +88,7 @@ class GeneralViewController: UIViewController {
         self.recipes =  self.isFavorites ? Datafeed.shared.favRecipes : self.isMyRecipes ? Datafeed.shared.myRecipes : Datafeed.shared.recipes
         self.unfilteredRecipes = self.recipes
         self.unsortedRecipes = self.recipes
-        self.tableView.reloadData()
+        self.sortData()
     }
     
     func setColor() {

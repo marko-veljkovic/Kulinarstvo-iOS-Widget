@@ -19,6 +19,7 @@ class RecipeDetailViewController: UIViewController {
     @IBOutlet weak var numOfPersonsTextLabel: UILabel!
     @IBOutlet weak var decreaseNumOfPersons: UIButton!
     @IBOutlet weak var increaseNumOfPersons: UIButton!
+    @IBOutlet weak var isFavoritesSwitch: UISwitch!
     @IBOutlet weak var changeRecipeButton: UIButton!
     @IBOutlet weak var deleteRecipeButton: UIButton!
     
@@ -144,6 +145,8 @@ class RecipeDetailViewController: UIViewController {
         self.setNumberOfPersonsField()
         self.setPrepAndCookTime()
         self.tableView.reloadData()
+        
+        self.isFavoritesSwitch.isOn = self.recipe.isFavorite ?? false
     }
     
     func setNumberOfPersonsField() {
@@ -234,6 +237,17 @@ class RecipeDetailViewController: UIViewController {
             }
         }
         self.setPrepAndCookTime()
+    }
+    
+    @IBAction func isFavoritedRecipeSwitched(_ sender: Any) {
+        let newRecipe = self.recipe
+        newRecipe.isFavorite = !(newRecipe.isFavorite ?? true)
+        guard let oldRecipeIndex = Datafeed.shared.recipes.firstIndex(where: {
+            $0.name == self.recipe.name
+        }) else {
+            return
+        }
+        Datafeed.shared.recipes[oldRecipeIndex] = newRecipe
     }
 }
 

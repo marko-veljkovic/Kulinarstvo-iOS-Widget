@@ -18,6 +18,7 @@ class AddNewRecipeViewController : UIViewController {
     @IBOutlet weak var addNewRecipeLabel: UILabel!
     @IBOutlet weak var recipeNameTextField: UITextField!
     @IBOutlet weak var preparationTimeTextField: UITextField!
+    @IBOutlet weak var cookingTimeTextField: UITextField!
     @IBOutlet weak var numOfPersonsTextField: UITextField!
     @IBOutlet weak var isFavoritesLabel: UILabel!
     
@@ -76,7 +77,7 @@ class AddNewRecipeViewController : UIViewController {
         self.addNewRecipeButton.setTitle(self.existingRecipe != nil ? "Sacuvaj" : "Dodaj recept", for: .normal)
         self.addNewRecipeButton.isEnabled = false
         
-        [self.recipeNameTextField, self.preparationTimeTextField, self.numOfPersonsTextField].forEach {
+        [self.recipeNameTextField, self.preparationTimeTextField, self.cookingTimeTextField, self.numOfPersonsTextField].forEach {
             $0?.delegate = self
             $0?.autocorrectionType = .no
         }
@@ -99,7 +100,7 @@ class AddNewRecipeViewController : UIViewController {
     }
     
     private func setColors() {
-        [self.recipeNameTextField, self.preparationTimeTextField, self.numOfPersonsTextField].forEach {
+        [self.recipeNameTextField, self.preparationTimeTextField, self.cookingTimeTextField, self.numOfPersonsTextField].forEach {
             $0?.textColor = AppTheme.setTextColor()
         }
         
@@ -119,6 +120,7 @@ class AddNewRecipeViewController : UIViewController {
     private func fillFields() {
         self.recipeNameTextField.text = self.existingRecipe!.name
         self.preparationTimeTextField.text = String(self.existingRecipe!.prepTime)
+        self.cookingTimeTextField.text = String(self.existingRecipe!.cookTime)
         self.numOfPersonsTextField.text = String(self.existingRecipe!.numOfPersons)
         self.isCurrentFavorites = self.existingRecipe!.isFavorite ?? false
         self.isFavoritesSwitch.isOn = self.existingRecipe!.isFavorite ?? false
@@ -153,6 +155,7 @@ class AddNewRecipeViewController : UIViewController {
     @IBAction func addNewRecipeButtonClicked(_ sender: Any) {
         let recipeName = self.recipeNameTextField.text ?? ""
         let recipePrepTime = self.preparationTimeTextField.text ?? ""
+        let recipeCookTime = self.cookingTimeTextField.text ?? ""
         let recipeNumOfPersons = self.numOfPersonsTextField.text ?? ""
         
         self.saveImage(recipeName: recipeName)
@@ -171,7 +174,7 @@ class AddNewRecipeViewController : UIViewController {
             stepsArray.append(step.value)
         }
         
-        let newRecipe = Recipe(name: recipeName, prepTime: Int(recipePrepTime) ?? 0, ingredients: ingrediantsArray, steps: stepsArray, isFavorite: self.isCurrentFavorites, isMyRecipe: true, category: self.recipeCategory, numOfPersons: Int(recipeNumOfPersons) ?? 0)
+        let newRecipe = Recipe(name: recipeName, prepTime: Int(recipePrepTime) ?? 0, cookTime: Int(recipeCookTime) ?? 0, ingredients: ingrediantsArray, steps: stepsArray, isFavorite: self.isCurrentFavorites, isMyRecipe: true, category: self.recipeCategory, numOfPersons: Int(recipeNumOfPersons) ?? 0)
         
         if self.existingRecipe != nil {
             self.delegate?.didEditRecipe(self, oldRecipe: self.existingRecipe!, newRecipe: newRecipe)

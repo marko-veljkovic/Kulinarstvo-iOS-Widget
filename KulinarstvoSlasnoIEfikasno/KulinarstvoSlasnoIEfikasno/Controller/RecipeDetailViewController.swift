@@ -15,6 +15,7 @@ class RecipeDetailViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     @IBOutlet weak var preparationTimeLabel: UILabel!
+    @IBOutlet weak var cookingTimeLabel: UILabel!
     @IBOutlet weak var numOfPersonsTextLabel: UILabel!
     @IBOutlet weak var decreaseNumOfPersons: UIButton!
     @IBOutlet weak var increaseNumOfPersons: UIButton!
@@ -22,6 +23,9 @@ class RecipeDetailViewController: UIViewController {
     @IBOutlet weak var deleteRecipeButton: UIButton!
     
     var localNumberOfPersons: Int = 0
+    var localPrepTime: Int = 0
+    var localCookTime: Int = 0
+    var localPrepTimeFactor: Double = 0.25
     var localArrayOfIngredients: [Ingredient] = []
     var oldRecipeIndex: Int?
     
@@ -69,8 +73,6 @@ class RecipeDetailViewController: UIViewController {
         }
         self.decreaseNumOfPersons.setTitleColor(UIColor.gray, for: .disabled)
         self.decreaseNumOfPersons.setTitleShadowColor(.gray, for: .disabled)
-        
-//        self.setRecipeData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -88,7 +90,7 @@ class RecipeDetailViewController: UIViewController {
             $0?.backgroundColor = AppTheme.setBackgroundColor()
             $0?.setTitleColor(AppTheme.setTextColor(), for: .normal)
         }
-        [self.titleLabel, self.numOfPersonsTextLabel, self.preparationTimeLabel].forEach {
+        [self.titleLabel, self.numOfPersonsTextLabel, self.preparationTimeLabel, self.cookingTimeLabel].forEach {
             $0?.textColor = AppTheme.setTextColor()
         }
         self.navigationController?.navigationBar.tintColor = AppTheme.setTextColor()
@@ -102,6 +104,8 @@ class RecipeDetailViewController: UIViewController {
     
     func setRecipeData() {
         self.localNumberOfPersons = self.recipe.numOfPersons
+        self.localPrepTime = self.recipe.prepTime
+        self.localCookTime = self.recipe.cookTime
         self.localArrayOfIngredients = self.recipe.ingredients
         
         self.titleLabel?.text = self.recipe.name
@@ -137,8 +141,8 @@ class RecipeDetailViewController: UIViewController {
         }
 
         self.recipeImageView.image = recipeImage
-        self.preparationTimeLabel.text = "Vreme pripreme: \(self.recipe.prepTime) minuta"
-        self.setNumberOfPersonsField()        
+        self.setNumberOfPersonsField()
+        self.setPrepAndCookTime()
         self.tableView.reloadData()
     }
     
@@ -160,15 +164,22 @@ class RecipeDetailViewController: UIViewController {
         }
     }
     
+    func setPrepAndCookTime() {
+        self.preparationTimeLabel.text = "Vreme pripreme: \(self.localPrepTime) minuta"
+        self.cookingTimeLabel.text = "Vreme spremanja: \(self.localCookTime) minuta"
+    }
+    
     @IBAction func decreaseNumOfPersonsButtonClicked(_ sender: Any) {
         self.localNumberOfPersons -= 1
         self.updateIngredientsQuantity()
+        self.updatePrepAndCookTime(isDecrease: true)
         self.setNumberOfPersonsField()
     }
     
     @IBAction func increaseNumOfPersonsButtonClicked(_ sender: Any) {
         self.localNumberOfPersons += 1
         self.updateIngredientsQuantity()
+        self.updatePrepAndCookTime()
         self.setNumberOfPersonsField()
     }
     
@@ -195,6 +206,34 @@ class RecipeDetailViewController: UIViewController {
             self.localArrayOfIngredients[indexList].quantity = ingredient.quantity * forDelt
         }
         self.tableView.reloadData()
+    }
+    
+    func updatePrepAndCookTime(isDecrease: Bool = false) {
+        if isDecrease {
+            self.localPrepTime = self.localPrepTime - Int(Double(self.recipe.prepTime) * self.localPrepTimeFactor)
+            if self.localPrepTimeFactor > 0.025 {
+                self.localPrepTimeFactor -= 0.025
+            }
+            if localNumberOfPersons == 6 {
+                self.localCookTime -= Int(Double(self.recipe.cookTime) * 0.25)
+            }
+            if localNumberOfPersons == 14 {
+                self.localCookTime -= Int(Double(self.recipe.cookTime) * 0.5)
+            }
+        }
+        else {
+            self.localPrepTime = self.localPrepTime + Int(Double(self.recipe.prepTime) * self.localPrepTimeFactor)
+            if self.localPrepTimeFactor > 0.025 {
+                self.localPrepTimeFactor -= 0.025
+            }
+            if localNumberOfPersons == 7 {
+                self.localCookTime += Int(Double(self.recipe.cookTime) * 0.25)
+            }
+            if localNumberOfPersons == 15 {
+                self.localCookTime += Int(Double(self.recipe.cookTime) * 0.5)
+            }
+        }
+        self.setPrepAndCookTime()
     }
 }
 

@@ -214,7 +214,7 @@ extension GeneralViewController : UITableViewDataSource {
         cell.titleLabel?.text = record.name
         cell.titleLabel?.textColor = AppTheme.setTextColor()
         
-        cell.prepTimeLabel.text = "\(record.prepTime)"
+        cell.prepTimeLabel.text = "\(record.prepTime + record.cookTime)"
         cell.prepTimeLabel.textColor = AppTheme.setTextColor()
         
         var recipeImage = UIImage(named: record.imageName)

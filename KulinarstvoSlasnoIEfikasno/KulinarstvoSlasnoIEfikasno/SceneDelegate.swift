@@ -97,6 +97,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             var recipeDict: [String : Any] = [:]
             recipeDict["name"] = recipe.name
             recipeDict["prepTime"] = recipe.prepTime
+            recipeDict["cookTime"] = recipe.cookTime
             
             // Ingredients are displayed with three fields, but are saved in json file as 1 string, for simplicity, at least for now
             var stringIngredients: [String] = []

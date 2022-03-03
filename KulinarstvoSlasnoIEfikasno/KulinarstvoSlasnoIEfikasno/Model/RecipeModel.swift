@@ -12,6 +12,7 @@ public class Recipe : Codable {
     
     var name: String
     var prepTime: Int // In minutes
+    var cookTime: Int // In minutes
     
     var ingredients: [Ingredient]
     var steps: [String]
@@ -41,9 +42,10 @@ public class Recipe : Codable {
         return name
     }
     
-    init(name: String, prepTime: Int, ingredients: [Ingredient], steps: [String], isFavorite: Bool? = false, isMyRecipe: Bool? = false, category: RecipeCategory, numOfPersons: Int = 0) {
+    init(name: String, prepTime: Int, cookTime: Int, ingredients: [Ingredient], steps: [String], isFavorite: Bool? = false, isMyRecipe: Bool? = false, category: RecipeCategory, numOfPersons: Int = 0) {
         self.name = name
         self.prepTime = prepTime
+        self.cookTime = cookTime
         self.ingredients = ingredients
         self.steps = steps
         self.isFavorite = isFavorite
@@ -78,7 +80,7 @@ class RecipeModel {
     weak var delegate: RecipeModelDelegate?
 
     static let testData = [
-        Recipe(name: "Omlet", prepTime: 15, ingredients: [
+        Recipe(name: "Omlet", prepTime: 15, cookTime: 15, ingredients: [
             Ingredient(quantity: 3, measureUnit: "komada", ingredient: "jaja"),
             Ingredient(quantity: 20, measureUnit: "grama", ingredient: "sira"),
             Ingredient(quantity: 1, measureUnit: "kasicica", ingredient: "persun")
@@ -87,29 +89,29 @@ class RecipeModel {
             "Izmutiti jaja sitno i brzo", "Dodati sitno", "Lorem ipsum za proveru duzine i sirine opisa postupka", "Sipati u tiganj i prziti", "Proba", "priprema", "7 korak po redu",
             "Izmutiti jaja sitno i brzo", "Dodati sitno", "Lorem ipsum za proveru duzine i sirine opisa postupka", "Sipati u tiganj i prziti", "Proba", "priprema", "7 korak po redu"
         ], category: .warmSideDish),
-        Recipe(name: "Spagete karbonara", prepTime: 45, ingredients: [], steps: [], category: .mainDish),
-        Recipe(name: "Pirinac", prepTime: 20,
+        Recipe(name: "Spagete karbonara", prepTime: 45, cookTime: 15, ingredients: [], steps: [], category: .mainDish),
+        Recipe(name: "Pirinac", prepTime: 20, cookTime: 15,
                ingredients: [Ingredient(quantity: 200, measureUnit: "grama", ingredient: "pirinac"),
                              Ingredient(quantity: 2, measureUnit: "kasike", ingredient: "zejtin"),
                              Ingredient(quantity: 1, measureUnit: "prstohvat", ingredient: "soli"),
                              Ingredient(quantity: 400, measureUnit: "mililitra", ingredient: "voda")],
                steps: [ "Oprati pirinac", "Dodati vodu", "Dodati zejtin", "Dodati so", "Kuvati 20ak minuta"], category: .warmSideDish),
-        Recipe(name: "Mesano povrce", prepTime: 25, ingredients: [], steps: [], category: .warmSideDish),
-        Recipe(name: "Sendvic", prepTime: 5, ingredients: [], steps: [], category: .bread),
-        Recipe(name: "Cezar salata", prepTime: 75,
+        Recipe(name: "Mesano povrce", prepTime: 25, cookTime: 15, ingredients: [], steps: [], category: .warmSideDish),
+        Recipe(name: "Sendvic", prepTime: 5, cookTime: 15, ingredients: [], steps: [], category: .bread),
+        Recipe(name: "Cezar salata", prepTime: 75, cookTime: 15,
                ingredients: [Ingredient(quantity: 400, measureUnit: "grama", ingredient: "slanina"), Ingredient(quantity: 1, measureUnit: "kilogram", ingredient: "pilece belo"), Ingredient(quantity: 2, measureUnit: "glavice", ingredient: "zelena salata"), Ingredient(quantity: 400, measureUnit: "grama", ingredient: "cheri paradajz"), Ingredient(quantity: 6, measureUnit: "kriski", ingredient: "hleba"), Ingredient(quantity: 600, measureUnit: "grama", ingredient: "cezar preliv")],
                steps: ["Iseckati slaninu na kockice", "Proprziti slaninu", "Iseckati pilece belo na kockice", "Proprziti pilece belo", "Iseckati hleba na kockice", "Umedjuvremenu nacepkati listove zelene salate u ciniju", "Naseci cheri paradajz i dodati u ciniju", "Kada hleb zapece skloniti sa ringle i sve dodati u ciniju", "Dodati cezar preliv", "Promesati sve i uzivati"],
                isFavorite: true, isMyRecipe: true, category: .salad, numOfPersons: 6)
     ]
 
     static var myTestData = [
-        Recipe(name: "Omlet", prepTime: 15, ingredients: [
+        Recipe(name: "Omlet", prepTime: 15, cookTime: 15, ingredients: [
             Ingredient(quantity: 3, measureUnit: "komada", ingredient: "jaja"),
             Ingredient(quantity: 20, measureUnit: "grama", ingredient: "sira")
         ], steps: [
             "Izmutiti jaja", "Dodati sitno seckan paradajz", "Sipati u tiganj i prziti"
         ], category: .warmSideDish),
-        Recipe(name: "Sendvic", prepTime: 5, ingredients: [], steps: [
+        Recipe(name: "Sendvic", prepTime: 5, cookTime: 15, ingredients: [], steps: [
             "Uzeti jedno parce hleba", "Staviti pecenicu na njega", "Staviti kackavalj preko", "Staviti drugo parce hleba"
         ], category: .snack)
     ]
@@ -152,16 +154,18 @@ class RecipeModel {
     
     func parseRecipe(recipe: Any) -> Recipe {
         guard let r = recipe as? [String:Any] else {
-            return Recipe(name: "", prepTime: 0, ingredients: [], steps: [], isFavorite: false, category: .snack)
+            return Recipe(name: "", prepTime: 0, cookTime: 0, ingredients: [], steps: [], isFavorite: false, category: .snack)
         }
         
-        let rec = Recipe(name: "", prepTime: 0, ingredients: [], steps: [], isFavorite: false, category: .snack)
+        let rec = Recipe(name: "", prepTime: 0, cookTime: 0, ingredients: [], steps: [], isFavorite: false, category: .snack)
         for recipeKey in r.keys {
             switch recipeKey {
             case "name":
                 rec.name = (r["name"] as? String ?? "")
             case "prepTime":
                 rec.prepTime = (r["prepTime"] as? Int ?? 0)
+            case "cookTime":
+                rec.cookTime = (r["cookTime"] as? Int ?? 0)
             case "ingredients":
                 let stringIngredients = (r["ingredients"] as? [String] ?? [])
                 var ingredients: [Ingredient] = []

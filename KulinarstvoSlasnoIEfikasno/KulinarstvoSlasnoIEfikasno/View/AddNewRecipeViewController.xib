@@ -17,6 +17,7 @@
                 <outlet property="categoryLabel" destination="JMQ-Z3-EUz" id="J7Z-yT-gHg"/>
                 <outlet property="categoryPickerView" destination="reG-Ev-ndE" id="maK-yN-0iL"/>
                 <outlet property="chooseImageButton" destination="e9u-V6-9hx" id="KB6-ty-urf"/>
+                <outlet property="cookingTimeTextField" destination="H6u-ue-bXU" id="Pd7-fF-8ZL"/>
                 <outlet property="isFavoritesLabel" destination="faV-FX-0C9" id="woW-Z9-S1w"/>
                 <outlet property="isFavoritesSwitch" destination="ua4-Dt-iZ0" id="Djh-w1-pNd"/>
                 <outlet property="numOfPersonsTextField" destination="8HA-Kk-bUr" id="vVt-63-jxz"/>
@@ -54,14 +55,19 @@
                         <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="t4O-dE-T9c">
                             <rect key="frame" x="0.0" y="85" width="404" height="30"/>
                             <subviews>
-                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Vreme pripreme (u minutima)" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ymK-a8-3HD">
-                                    <rect key="frame" x="0.0" y="0.0" width="262.5" height="30"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Vreme pripreme" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ymK-a8-3HD">
+                                    <rect key="frame" x="0.0" y="0.0" width="138" height="30"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                    <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                </textField>
+                                <textField opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Vreme spremanja" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="H6u-ue-bXU">
+                                    <rect key="frame" x="143" y="0.0" width="147.5" height="30"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                     <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                 </textField>
                                 <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Broj osoba" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8HA-Kk-bUr">
-                                    <rect key="frame" x="267.5" y="0.0" width="136.5" height="30"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                    <rect key="frame" x="295.5" y="0.0" width="108.5" height="30"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                     <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                 </textField>
                             </subviews>

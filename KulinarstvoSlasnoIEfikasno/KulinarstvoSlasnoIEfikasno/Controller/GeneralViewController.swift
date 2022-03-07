@@ -278,11 +278,11 @@ extension GeneralViewController : RecipeTableViewHeaderCellDelegate {
         switch self.sortByPrepTime {
         case .Ascending:
             self.recipes.sort(by: {
-                return $0.prepTime < $1.prepTime
+                return ($0.prepTime + $0.cookTime) < ($1.prepTime + $1.cookTime)
             })
         case .Descending:
             self.recipes.sort(by: {
-                return $0.prepTime > $1.prepTime
+                return ($0.prepTime + $0.cookTime) > ($1.prepTime + $1.cookTime)
             })
         case .Unsorted:()
             self.recipes = self.unsortedRecipes
@@ -321,14 +321,19 @@ extension GeneralViewController : UISearchBarDelegate {
         }
         self.oldSearchText = searchText
         
-        self.recipes = self.recipes.filter {
-            $0.name.prefix(searchText.count) == searchText
-        }
-        self.unsortedRecipes = self.unfilteredRecipes.filter {
-            $0.name.prefix(searchText.count) == searchText
+        guard searchText.count != 0 else {
+            self.categoryButton.isHidden = false
+            self.unsortedRecipes = self.unfilteredRecipes
+            self.sortData()
+            return
         }
         
-        self.categoryButton.isHidden = searchText.count != 0
+        self.recipes = self.recipes.filter {
+            $0.name.lowercased().contains(searchText.lowercased())
+        }
+        self.unsortedRecipes = self.unfilteredRecipes.filter {
+            $0.name.lowercased().contains(searchText.lowercased())
+        }
         
         self.sortData()
     }

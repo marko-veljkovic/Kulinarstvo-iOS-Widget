@@ -8,7 +8,7 @@
 import UIKit
 
 protocol AddNewRecipeTableViewCellDelegate : AnyObject {
-    func addNewTextField(_ tableViewCell: UITableViewCell, _ tableView: UITableView?)
+    func removeTextField(_ tableViewCell: UITableViewCell, cellIndex: Int)
     func textFieldDidEndEditingInCell(_ tableViewCell: UITableViewCell, _ tableView: UITableView?, _ text: String?, _ textField: UITextField, isMeasure: Bool, isIngredient: Bool)
 }
 
@@ -17,9 +17,11 @@ class AddNewRecipeTableViewCell: UITableViewCell {
     weak var delegate: AddNewRecipeTableViewCellDelegate?
     
     @IBOutlet weak var cellTextField: UITextField!
-    @IBOutlet weak var addNewTextFieldButton: UIButton!
+    @IBOutlet weak var removeTextFieldButton: UIButton!
     @IBOutlet weak var quantityTextField: UITextField!
     @IBOutlet weak var ingredientTextField: UITextField!
+    
+    var cellIndex = -1
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -27,18 +29,18 @@ class AddNewRecipeTableViewCell: UITableViewCell {
             $0?.delegate = self
             $0?.autocorrectionType = .no
         }
-        self.cellTextField.delegate = self
-        self.quantityTextField.delegate = self
-        self.ingredientTextField.delegate = self
-        self.addNewTextFieldButton.tintColor = AppTheme.backgroundUniversalGreen
+//        self.cellTextField.delegate = self
+//        self.quantityTextField.delegate = self
+//        self.ingredientTextField.delegate = self
+        self.removeTextFieldButton.tintColor = .red
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
     
-    @IBAction func addNewTextFieldButtonClicked(_ sender: Any) {
-        self.delegate?.addNewTextField(self, self.superview as? UITableView)
+    @IBAction func removeTextFieldButtonClicked(_ sender: Any) {
+        self.delegate?.removeTextField(self, cellIndex: self.cellIndex)
     }
 }
 

@@ -10,6 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="IngrediantsStepsViewController" customModule="KulinarstvoSlasnoIEfikasno" customModuleProvider="target">
             <connections>
+                <outlet property="addNewButton" destination="wyF-LJ-bTN" id="Vsd-5C-y6N"/>
                 <outlet property="itemsTableView" destination="COc-yU-pTm" id="eZd-7h-cRi"/>
                 <outlet property="nameLabel" destination="Cs5-tY-aMK" id="Vi2-Xv-eEW"/>
                 <outlet property="saveButton" destination="ByN-KZ-mDg" id="beg-3D-Z4B"/>
@@ -34,9 +35,18 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="COc-yU-pTm">
-                            <rect key="frame" x="0.0" y="45" width="414" height="728"/>
+                            <rect key="frame" x="0.0" y="45" width="414" height="684"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         </tableView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wyF-LJ-bTN">
+                            <rect key="frame" x="0.0" y="739" width="414" height="34"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" title="Dodaj ..."/>
+                            <connections>
+                                <action selector="addNewButtonClicked:" destination="-1" eventType="touchUpInside" id="Qu8-eP-c8z"/>
+                            </connections>
+                        </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ByN-KZ-mDg">
                             <rect key="frame" x="0.0" y="783" width="414" height="35"/>
                             <constraints>

@@ -19,6 +19,7 @@ class IngrediantsStepsViewController: UIViewController {
 
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var itemsTableView: UITableView!
+    @IBOutlet weak var addNewButton: UIButton!
     @IBOutlet weak var saveButton: UIButton!
     
     weak var delegate: IngrediantsStepsViewControllerDelegate?
@@ -49,10 +50,15 @@ class IngrediantsStepsViewController: UIViewController {
         
         self.nameLabel.text = self.type == .ingredients ? "Sastojci" : "Koraci pripreme"
         
+        self.addNewButton.setTitle(self.type == .ingredients ? "Dodaj novi sastojak" : "Dodaj novi korak", for: .normal)
+        
         self.saveButton.setTitleColor(.gray, for: .disabled)
-        self.saveButton.layer.cornerRadius = 10
-        self.saveButton.layer.borderWidth = 2
-        self.saveButton.layer.borderColor = AppTheme.backgroundUniversalGreen.cgColor
+        
+        [self.addNewButton, self.saveButton].forEach {
+            $0?.layer.cornerRadius = 10
+            $0?.layer.borderWidth = 2
+            $0?.layer.borderColor = AppTheme.backgroundUniversalGreen.cgColor
+        }
         
         self.ingrediantsNumber = self.ingrediantsMap.count
         self.stepsNumber = self.stepsMap.count
@@ -66,14 +72,30 @@ class IngrediantsStepsViewController: UIViewController {
     }
     
     func setColors() {
-        self.saveButton.backgroundColor = AppTheme.setBackgroundColor()
-        self.saveButton.setTitleColor(AppTheme.setTextColor(), for: .normal)
+        [self.addNewButton, self.saveButton].forEach {
+            $0?.backgroundColor = AppTheme.setBackgroundColor()
+            $0?.setTitleColor(AppTheme.setTextColor(), for: .normal)
+        }
         self.navigationController?.navigationBar.tintColor = AppTheme.setTextColor()
+    }
+    
+    @IBAction func addNewButtonClicked(_ sender: Any) {
+        if type == .ingredients {
+            self.ingrediantsNumber += 1
+            self.ingrediantsMap["\(self.ingrediantsNumber-1)"] = Ingredient(quantity: 0, measureUnit: "", ingredient: "")
+        }
+        else {
+            self.stepsNumber += 1
+            self.stepsMap["\(self.stepsNumber-1)"] = ""
+        }
+        self.itemsTableView.reloadData()
     }
     
     @IBAction func saveButtonClicked(_ sender: Any) {
         self.isSaveButtonClicked = true
-        (self.itemsTableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? AddNewRecipeTableViewCell)?.quantityTextField?.becomeFirstResponder() // Added this line so that eventualy current selected text field in table view will lose focus and its value will be saved in map and sent further
+        (self.itemsTableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? AddNewRecipeTableViewCell)?.cellTextField?.becomeFirstResponder()
+        (self.itemsTableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? AddNewRecipeTableViewCell)?.cellTextField?.resignFirstResponder()
+        // Added this line so that eventualy current selected text field in table view will lose focus and its value will be saved in map and sent further
     }
 }
 
@@ -90,9 +112,9 @@ extension IngrediantsStepsViewController : UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "textFieldCell") as! AddNewRecipeTableViewCell
-        cell.addNewTextFieldButton.isHidden = ((self.type == .ingredients) ? !(indexPath.row == self.ingrediantsNumber - 1) : !(indexPath.row == self.stepsNumber - 1))
-        cell.addNewTextFieldButton.tintColor = AppTheme.setTextColor()
         cell.delegate = self
+        cell.cellIndex = indexPath.row
+        cell.selectionStyle = .none
         
         if self.type == .ingredients {
             cell.quantityTextField.placeholder = "Kolicina"
@@ -118,11 +140,11 @@ extension IngrediantsStepsViewController : UITableViewDataSource {
             let record = self.stepsMap[String(indexPath.row)]
             if record != nil, !record!.isEmpty {
                 cell.cellTextField.text = record
-                cell.cellTextField.textColor = AppTheme.setTextColor()
             }
             else {
                 cell.cellTextField.placeholder = "Korak"
             }
+            cell.cellTextField.textColor = AppTheme.setTextColor()
         }
         
         return cell
@@ -131,14 +153,32 @@ extension IngrediantsStepsViewController : UITableViewDataSource {
 
 //MARK: - AddNewRecipeTableViewCellDelegate
 extension IngrediantsStepsViewController : AddNewRecipeTableViewCellDelegate {
-    func addNewTextField(_ tableViewCell: UITableViewCell, _ tableView: UITableView?) {
+    func removeTextField(_ tableViewCell: UITableViewCell, cellIndex: Int) {
         if self.type == .ingredients {
-            self.ingrediantsNumber += 1
-            self.ingrediantsMap["\(self.ingrediantsNumber-1)"] = Ingredient(quantity: 0, measureUnit: "", ingredient: "")
+            self.ingrediantsNumber -= 1
+            if self.ingrediantsMap.count > cellIndex {
+                // Remove ingredient from map
+                self.ingrediantsMap.removeValue(forKey: String(cellIndex))
+                // For all other ingredients, have to lower key value by 1 so it could be manipuladted with after deletion
+                for i in cellIndex..<ingrediantsMap.count {
+                    if let entry = ingrediantsMap.removeValue(forKey: String(i+1)) {
+                        ingrediantsMap[String(i)] = entry
+                    }
+                }
+            }
         }
         else {
-            self.stepsNumber += 1
-            self.stepsMap["\(self.stepsNumber-1)"] = ""
+            self.stepsNumber -= 1
+            if self.stepsMap.count > cellIndex {
+                // Remove ingredient from map
+                self.stepsMap.removeValue(forKey: String(cellIndex))
+                // For all other ingredients, have to lower key value by 1 so it could be manipuladted with after deletion
+                for i in cellIndex..<stepsMap.count {
+                    if let entry = stepsMap.removeValue(forKey: String(i+1)) {
+                        stepsMap[String(i)] = entry
+                    }
+                }
+            }
         }
         self.itemsTableView.reloadData()
     }

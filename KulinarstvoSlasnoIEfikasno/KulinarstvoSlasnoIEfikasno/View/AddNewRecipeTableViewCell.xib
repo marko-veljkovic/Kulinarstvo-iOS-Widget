@@ -44,13 +44,13 @@
                         </constraints>
                         <state key="normal" title="Button"/>
                         <buttonConfiguration key="configuration" style="plain">
-                            <imageReference key="image" image="plus.circle" catalog="system" symbolScale="medium"/>
+                            <imageReference key="image" image="minus.circle" catalog="system" symbolScale="medium"/>
                             <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="font">
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
                             </preferredSymbolConfiguration>
                         </buttonConfiguration>
                         <connections>
-                            <action selector="addNewTextFieldButtonClicked:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="YkB-WM-iDE"/>
+                            <action selector="removeTextFieldButtonClicked:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="mno-bd-MV1"/>
                         </connections>
                     </button>
                 </subviews>
@@ -66,15 +66,15 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="addNewTextFieldButton" destination="i0q-iO-HOe" id="hS3-Mr-zoL"/>
                 <outlet property="cellTextField" destination="NQa-Cv-srN" id="uCY-gp-4sJ"/>
                 <outlet property="ingredientTextField" destination="g8p-yd-QmK" id="fZQ-JA-zyf"/>
                 <outlet property="quantityTextField" destination="vAJ-LE-oAx" id="hdh-6S-F60"/>
+                <outlet property="removeTextFieldButton" destination="i0q-iO-HOe" id="vdX-8A-xcf"/>
             </connections>
             <point key="canvasLocation" x="139" y="140"/>
         </tableViewCell>
     </objects>
     <resources>
-        <image name="plus.circle" catalog="system" width="128" height="121"/>
+        <image name="minus.circle" catalog="system" width="128" height="121"/>
     </resources>
 </document>

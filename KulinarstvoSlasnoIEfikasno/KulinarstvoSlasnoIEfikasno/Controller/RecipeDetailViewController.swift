@@ -193,14 +193,20 @@ class RecipeDetailViewController: UIViewController {
     }
     
     @IBAction func deleteRecipeButtonClicked(_ sender: Any) {
-        guard let currentRecipeIndex = Datafeed.shared.recipes.firstIndex(where: {
-            $0.name == self.recipe.name
-        }) else {
-            return
-        }
-        Datafeed.shared.recipes.remove(at: currentRecipeIndex)
-        self.navigationController?.popViewController(animated: true)
-        self.dismiss(animated: true, completion: nil)
+        let alert = UIAlertController(title: "Izbrisati recept?", message: "Da li ste sigurni da zelite da izbrisete recept", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Odustani", style: .default, handler: nil))
+        alert.addAction(UIAlertAction(title: "Izbrisi", style: .destructive, handler: { _ in
+            guard let currentRecipeIndex = Datafeed.shared.recipes.firstIndex(where: {
+                $0.name == self.recipe.name
+            }) else {
+                return
+            }
+            Datafeed.shared.recipes.remove(at: currentRecipeIndex)
+            self.navigationController?.popViewController(animated: true)
+            self.dismiss(animated: true, completion: nil)
+        }))
+        
+        self.present(alert, animated: true, completion: nil)
     }
     
     func updateIngredientsQuantity() {

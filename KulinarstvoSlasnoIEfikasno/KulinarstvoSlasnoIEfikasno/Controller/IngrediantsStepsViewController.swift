@@ -145,6 +145,7 @@ extension IngrediantsStepsViewController : UITableViewDataSource {
                 cell.cellTextField.placeholder = "Korak"
             }
             cell.cellTextField.textColor = AppTheme.setTextColor()
+            cell.cellStackView.spacing = 0
         }
         
         return cell

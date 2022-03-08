@@ -16,10 +16,11 @@ class AddNewRecipeTableViewCell: UITableViewCell {
 
     weak var delegate: AddNewRecipeTableViewCellDelegate?
     
+    @IBOutlet weak var cellStackView: UIStackView!
     @IBOutlet weak var cellTextField: UITextField!
-    @IBOutlet weak var removeTextFieldButton: UIButton!
     @IBOutlet weak var quantityTextField: UITextField!
     @IBOutlet weak var ingredientTextField: UITextField!
+    @IBOutlet weak var removeTextFieldButton: UIButton!
     
     var cellIndex = -1
     

@@ -87,12 +87,40 @@ struct SecondProvider : TimelineProvider {
         
         let currentDate = Date()
         for hourOffset in 0 ..< 5 {
-            let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
-            let firstRandomInt = Int.random(in: 0..<Datafeed.shared.favRecipes.count)
-            let secondRandomInt = Int.random(in: 0..<Datafeed.shared.favRecipes.count)
-            let thirdRandomInt = Int.random(in: 0..<Datafeed.shared.favRecipes.count)
-            let fourthRandomInt = Int.random(in: 0..<Datafeed.shared.favRecipes.count)
-            let entry = SecondEntry(date: entryDate, firstRecipe: Datafeed.shared.favRecipes[firstRandomInt], secondRecipe: Datafeed.shared.favRecipes[secondRandomInt], thirdRecipe: Datafeed.shared.favRecipes[thirdRandomInt], fourthRecipe: Datafeed.shared.favRecipes[fourthRandomInt])
+            let entryDate = Calendar.current.date(byAdding: .second, value: hourOffset, to: currentDate)!
+            
+            var tmpFavoriteRecipesArray = Datafeed.shared.favRecipes
+            
+            var firstRecipe = RecipeModel.myTestData[0]
+            var secondRecipe = RecipeModel.myTestData[0]
+            var thirdRecipe = RecipeModel.myTestData[0]
+            var fourthRecipe = RecipeModel.myTestData[0]
+            
+            if !tmpFavoriteRecipesArray.isEmpty {
+                let firstRandomInt = Int.random(in: 0..<tmpFavoriteRecipesArray.count)
+                firstRecipe = tmpFavoriteRecipesArray[firstRandomInt]
+                tmpFavoriteRecipesArray.remove(at: firstRandomInt)
+            }
+            
+            if !tmpFavoriteRecipesArray.isEmpty {
+                let secondRandomInt = Int.random(in: 0..<tmpFavoriteRecipesArray.count)
+                secondRecipe = tmpFavoriteRecipesArray[secondRandomInt]
+                tmpFavoriteRecipesArray.remove(at: secondRandomInt)
+            }
+            
+            if !tmpFavoriteRecipesArray.isEmpty {
+                let thirdRandomInt = Int.random(in: 0..<tmpFavoriteRecipesArray.count)
+                thirdRecipe = tmpFavoriteRecipesArray[thirdRandomInt]
+                tmpFavoriteRecipesArray.remove(at: thirdRandomInt)
+            }
+            
+            if !tmpFavoriteRecipesArray.isEmpty {
+                let fourthRandomInt = Int.random(in: 0..<tmpFavoriteRecipesArray.count)
+                fourthRecipe = tmpFavoriteRecipesArray[fourthRandomInt]
+                tmpFavoriteRecipesArray.remove(at: fourthRandomInt)
+            }
+            
+            let entry = SecondEntry(date: entryDate, firstRecipe: firstRecipe, secondRecipe: secondRecipe, thirdRecipe: thirdRecipe, fourthRecipe: fourthRecipe)
             entries.append(entry)
         }
         
@@ -382,8 +410,8 @@ struct KulinarstvoSecondWidget: Widget {
         StaticConfiguration(kind: kind, provider: SecondProvider()) { entry in
             KulinarstvoSecondWidgetEntryView(entry: entry)
         }
-        .configurationDisplayName("Recept na drugi klik")
-        .description("Dodaj svoje omiljene recepte na pocetni ekran")
+        .configurationDisplayName("Nasumicni recepti")
+        .description("Nemas ideju sta da jedes danas? Neka ti aplikacija kaze")
         .supportedFamilies([.systemLarge])
     }
 }
@@ -406,6 +434,8 @@ struct Kulinarstvo_widget_Previews: PreviewProvider {
                 .previewContext(WidgetPreviewContext(family: .systemLarge))
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
 //                .preferredColorScheme(.dark)
+            KulinarstvoSecondWidgetEntryView(entry: SecondEntry(date: Date(), firstRecipe: RecipeModel.testData[0], secondRecipe: RecipeModel.testData[0], thirdRecipe: RecipeModel.testData[0], fourthRecipe: RecipeModel.testData[0]))
+                .previewContext(WidgetPreviewContext(family: .systemLarge))
             
 //            KulinarstvoSecondWidgetEntryView(entry: SecondEntry(date: Date(), firstRecipe: RecipeModel.testData[0], secondRecipe: RecipeModel.testData[1], thirdRecipe: RecipeModel.testData[2], fourthRecipe: RecipeModel.testData[3]))
 //                .previewContext(WidgetPreviewContext(family: .systemLarge))

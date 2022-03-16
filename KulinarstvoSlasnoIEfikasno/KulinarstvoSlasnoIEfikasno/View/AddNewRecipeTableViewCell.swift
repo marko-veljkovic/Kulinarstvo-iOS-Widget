@@ -12,6 +12,7 @@ protocol AddNewRecipeTableViewCellDelegate : AnyObject {
     func textFieldDidEndEditingInCell(_ tableViewCell: UITableViewCell, _ tableView: UITableView?, _ text: String?, _ textField: UITextField, isMeasure: Bool, isIngredient: Bool)
 }
 
+// Class that represent cell in steps/ingredients manipulation table view add/edit/remove 
 class AddNewRecipeTableViewCell: UITableViewCell {
 
     weak var delegate: AddNewRecipeTableViewCellDelegate?
@@ -30,9 +31,6 @@ class AddNewRecipeTableViewCell: UITableViewCell {
             $0?.delegate = self
             $0?.autocorrectionType = .no
         }
-//        self.cellTextField.delegate = self
-//        self.quantityTextField.delegate = self
-//        self.ingredientTextField.delegate = self
         self.removeTextFieldButton.tintColor = .red
     }
 

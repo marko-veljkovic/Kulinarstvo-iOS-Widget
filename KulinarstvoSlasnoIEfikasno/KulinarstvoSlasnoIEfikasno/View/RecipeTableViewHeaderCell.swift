@@ -2,7 +2,7 @@
 //  RecipeTableViewHeaderCell.swift
 //  KulinarstvoSlasnoIEfikasno
 //
-//  Created by Marko Veljkovic private on 27.1.22..
+//  Created by Marko Veljkovic private on 27.1.22.
 //
 
 import UIKit
@@ -31,8 +31,7 @@ class RecipeTableViewHeaderCell: UITableViewHeaderFooterView {
         }
     }
     
-    @objc
-    func sortByPrepTimeClicked() {
+    @objc func sortByPrepTimeClicked() {
         self.delegate?.prepTimeSortClicked(headerCell: self)
     }
     

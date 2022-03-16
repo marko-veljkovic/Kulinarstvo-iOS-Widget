@@ -112,28 +112,7 @@ class RecipeDetailViewController: UIViewController {
         self.titleLabel?.text = self.recipe.name
         
         let recipeCategory = self.recipe.category ?? .snack
-        self.categoryLabel.text = {
-            switch recipeCategory {
-            case .coldSideDish:
-                return "Hladno predjelo"
-            case .warmSideDish:
-                return "Toplo predjelo"
-            case .mainDish:
-                return "Glavno jelo"
-            case .snack:
-                return "Uzina"
-            case .drink:
-                return "Pice"
-            case .soup:
-                return "Supe i corbe"
-            case .dessert:
-                return "Dezert"
-            case .salad:
-                return "Salata"
-            case .bread:
-                return "Hleba"
-            }
-        }()
+        self.categoryLabel.text = Datafeed.shared.recipeCategoryName(currentCategory: recipeCategory)
         
         var recipeImage = UIImage(named: self.recipe.imageName)
         

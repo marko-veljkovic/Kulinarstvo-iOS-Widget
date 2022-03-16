@@ -261,28 +261,7 @@ extension AddNewRecipeViewController : UIImagePickerControllerDelegate, UINaviga
 extension AddNewRecipeViewController : UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
         let category = RecipeCategory(rawValue: row) ?? .snack
-        let stringToReturn = { () -> String in
-            switch category {
-            case .coldSideDish:
-                return "Hladno predjelo"
-            case .warmSideDish:
-                return "Toplo predjelo"
-            case .mainDish:
-                return "Glavno jelo"
-            case .snack:
-                return "Uzina"
-            case .drink:
-                return "Pice"
-            case .soup:
-                return "Supe i corbe"
-            case .dessert:
-                return "Dezert"
-            case .salad:
-                return "Salata"
-            case .bread:
-                return "Hleba"
-            }
-        }()
+        let stringToReturn = Datafeed.shared.recipeCategoryName(currentCategory: category)
         
         return NSAttributedString(string: stringToReturn, attributes: [.foregroundColor : AppTheme.setTextColor()])
     }

@@ -36,7 +36,6 @@ class GeneralViewController: UIViewController {
     var sortByPrepTime = SortByPrepTime.Unsorted
     
     var oldSearchText = ""
-//    var isUserDeletingSearchTerm = false
     
     init(isFavorites: Bool = false, isMyRecipes: Bool = false) {
         self.isFavorites = isFavorites
@@ -73,7 +72,7 @@ class GeneralViewController: UIViewController {
         
         self.refreshControl = UIRefreshControl()
         self.refreshControl!.addTarget(self, action: #selector(self.refreshTable), for: .valueChanged)
-        self.refreshControl!.tintColor = .blue
+        self.refreshControl!.tintColor = AppTheme.textUniversalGreen
         self.tableView.refreshControl = self.refreshControl!
         
         self.addNewRecipeButton.isHidden = !self.isMyRecipes
@@ -100,14 +99,14 @@ class GeneralViewController: UIViewController {
         (self.searchBar?.value(forKey: "cancelButton") as? UIButton)?.tintColor = AppTheme.setTextColor()
     }
     
+    // Device color appearance has changed (light/dark)
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         self.setColor()
         self.tableView.reloadData()
     }
     
-    @objc
-    func refreshTable() {
+    @objc func refreshTable() {
         self.tableView.reloadData()
         self.refreshControl?.endRefreshing()
     }
@@ -130,6 +129,7 @@ class GeneralViewController: UIViewController {
         let alert = UIAlertController(title: "Izaberi kategoriju recepata", message: "", preferredStyle: .alert)
         alert.setValue(vc, forKey: "contentViewController")
         alert.addAction(UIAlertAction(title: "Sacuvaj", style: .default, handler: {_ in
+            // Select category action is applied to both recipes array and unsorted recipes array
             self.categoryRecipes = []
             self.recipes = self.unfilteredRecipes
             self.categoryRecipes = self.recipes.filter {
@@ -152,28 +152,7 @@ class GeneralViewController: UIViewController {
     }
     
     func setCategoryButtonTitle() -> String {
-        switch self.categoryPicked {
-        case .coldSideDish:
-            return "Hladno predjelo"
-        case .warmSideDish:
-            return "Toplo predjelo"
-        case .mainDish:
-            return "Glavno jelo"
-        case .snack:
-            return "Uzina"
-        case .drink:
-            return "Pice"
-        case .soup:
-            return "Supe i corbe"
-        case .dessert:
-            return "Dezert"
-        case .salad:
-            return "Salata"
-        case .bread:
-            return "Hleba"
-        default:
-            return "Izaberi kategoriju"
-        }
+        return Datafeed.shared.recipeCategoryName(currentCategory: self.categoryPicked)
     }
     
     @IBAction func clearCategoryButtonClicked(_ sender: Any) {
@@ -213,7 +192,6 @@ extension GeneralViewController : UITableViewDataSource {
         
         cell.titleLabel?.text = record.name
         cell.titleLabel?.textColor = AppTheme.setTextColor()
-        
         cell.prepTimeLabel.text = "\(record.prepTime + record.cookTime)"
         cell.prepTimeLabel.textColor = AppTheme.setTextColor()
         
@@ -221,7 +199,7 @@ extension GeneralViewController : UITableViewDataSource {
         if recipeImage == nil, let imageData = UserDefaults(suiteName: Datafeed.shared.kAppGroup)?.object(forKey: record.imageName) as? Data {
             recipeImage = UIImage(data: imageData)
         }
-        cell.recipeImageView.image = recipeImage //UIImage(named: record.imageName)
+        cell.recipeImageView.image = recipeImage
         
         return cell
     }
@@ -232,7 +210,6 @@ extension GeneralViewController : UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.tableView.deselectRow(at: indexPath, animated: false)
         let destination = RecipeDetailViewController(recipe: self.recipes[indexPath.row])
-        //RecipeDetailViewController(recipe: self.isFavorites ? Datafeed.shared.favRecipes[indexPath.row] : self.isMyRecipes ? Datafeed.shared.myRecipes[indexPath.row] : Datafeed.shared.recipes[indexPath.row])
         self.navigationController?.pushViewController(destination, animated: true)
     }
     
@@ -240,11 +217,9 @@ extension GeneralViewController : UITableViewDelegate {
         let cell = tableView.dequeueReusableHeaderFooterView(withIdentifier: "RecipeHeaderCell") as! RecipeTableViewHeaderCell
 
         cell.delegate = self
-        
         [cell.titleLabel, cell.prepTimeLabel, cell.imageLabel].forEach {
             $0?.textColor = AppTheme.setTextColor()
         }
-        
         cell.sortArrowImage.tintColor = AppTheme.setTextColor()
         
         return cell
@@ -359,26 +334,7 @@ extension GeneralViewController : UISearchBarDelegate {
 extension GeneralViewController : UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         let category = RecipeCategory(rawValue: row) ?? .snack
-        switch category {
-        case .coldSideDish:
-            return "Hladno predjelo"
-        case .warmSideDish:
-            return "Toplo predjelo"
-        case .mainDish:
-            return "Glavno jelo"
-        case .snack:
-            return "Uzina"
-        case .drink:
-            return "Pice"
-        case .soup:
-            return "Supe i corbe"
-        case .dessert:
-            return "Dezert"
-        case .salad:
-            return "Salata"
-        case .bread:
-            return "Hleba"
-        }
+        return Datafeed.shared.recipeCategoryName(currentCategory: category)
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {

@@ -45,6 +45,12 @@
 		559AF16C2778F95800DCDC51 /* RecipesData.json in Resources */ = {isa = PBXBuildFile; fileRef = 550C716D2731C0890021D689 /* RecipesData.json */; };
 		55D6172227C17E6F00FBF8B3 /* IngrediantsStepsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D6172027C17E6F00FBF8B3 /* IngrediantsStepsViewController.swift */; };
 		55D6172327C17E6F00FBF8B3 /* IngrediantsStepsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55D6172127C17E6F00FBF8B3 /* IngrediantsStepsViewController.xib */; };
+		55EDDD0827E257E500BB8364 /* Datafeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EDDD0727E257E500BB8364 /* Datafeed.swift */; };
+		55EDDD0927E257E500BB8364 /* Datafeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EDDD0727E257E500BB8364 /* Datafeed.swift */; };
+		55EDDD0A27E2586400BB8364 /* Datafeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EDDD0727E257E500BB8364 /* Datafeed.swift */; };
+		55EDDD0C27E258DE00BB8364 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EDDD0B27E258DE00BB8364 /* AppTheme.swift */; };
+		55EDDD0D27E258DE00BB8364 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EDDD0B27E258DE00BB8364 /* AppTheme.swift */; };
+		55EDDD0E27E258E400BB8364 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EDDD0B27E258DE00BB8364 /* AppTheme.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -116,6 +122,8 @@
 		559AF16D27791C1F00DCDC51 /* KulinarstvoSlasnoIEfikasno.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = KulinarstvoSlasnoIEfikasno.entitlements; sourceTree = "<group>"; };
 		55D6172027C17E6F00FBF8B3 /* IngrediantsStepsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngrediantsStepsViewController.swift; sourceTree = "<group>"; };
 		55D6172127C17E6F00FBF8B3 /* IngrediantsStepsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IngrediantsStepsViewController.xib; sourceTree = "<group>"; };
+		55EDDD0727E257E500BB8364 /* Datafeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Datafeed.swift; sourceTree = "<group>"; };
+		55EDDD0B27E258DE00BB8364 /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
 		55FB9D7E277E227900B536F7 /* KulinarstoSlasnoIEfikasnoWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = KulinarstoSlasnoIEfikasnoWidgetExtension.entitlements; sourceTree = "<group>"; };
 		55FB9D7F277E22A500B536F7 /* IntentHandler.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = IntentHandler.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -221,6 +229,8 @@
 			isa = PBXGroup;
 			children = (
 				559363CE272EF89C0071A10D /* RecipeModel.swift */,
+				55EDDD0727E257E500BB8364 /* Datafeed.swift */,
+				55EDDD0B27E258DE00BB8364 /* AppTheme.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -405,9 +415,11 @@
 				559363D2272EFC440071A10D /* RecipeDetailViewController.swift in Sources */,
 				55D6172227C17E6F00FBF8B3 /* IngrediantsStepsViewController.swift in Sources */,
 				559363A8272EBF740071A10D /* AppDelegate.swift in Sources */,
+				55EDDD0C27E258DE00BB8364 /* AppTheme.swift in Sources */,
 				559363C8272EE26B0071A10D /* GeneralViewController.swift in Sources */,
 				559363CC272EE8EC0071A10D /* RecipeTableViewCell.swift in Sources */,
 				559363F2272F3FC10071A10D /* AddNewRecipeViewController.swift in Sources */,
+				55EDDD0827E257E500BB8364 /* Datafeed.swift in Sources */,
 				559363E6272F05DF0071A10D /* KulinarstoSlasnoIEfikasnoWidget.intentdefinition in Sources */,
 				559363AA272EBF740071A10D /* SceneDelegate.swift in Sources */,
 			);
@@ -420,6 +432,8 @@
 				559363E5272F05DF0071A10D /* KulinarstoSlasnoIEfikasnoWidget.intentdefinition in Sources */,
 				559363E0272F05DC0071A10D /* KulinarstoSlasnoIEfikasnoWidget.swift in Sources */,
 				559363EE272F06BB0071A10D /* RecipeModel.swift in Sources */,
+				55EDDD0927E257E500BB8364 /* Datafeed.swift in Sources */,
+				55EDDD0D27E258DE00BB8364 /* AppTheme.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -430,6 +444,8 @@
 				559AF16827778ABD00DCDC51 /* KulinarstoSlasnoIEfikasnoWidget.intentdefinition in Sources */,
 				559AF1602777876700DCDC51 /* IntentHandler.swift in Sources */,
 				559AF1692777AB0100DCDC51 /* RecipeModel.swift in Sources */,
+				55EDDD0A27E2586400BB8364 /* Datafeed.swift in Sources */,
+				55EDDD0E27E258E400BB8364 /* AppTheme.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,8 +8,19 @@
 import Foundation
 import SwiftUI
 
-public class Recipe : Codable {
+public struct Ingredient : Codable {
+    var quantity: Double
+    var measureUnit: String
+    var ingredient: String
     
+    init(quantity: Double, measureUnit: String, ingredient: String) {
+        self.quantity = quantity
+        self.measureUnit = measureUnit
+        self.ingredient = ingredient
+    }
+}
+
+public class Recipe : Codable {
     var name: String
     var prepTime: Int // In minutes
     var cookTime: Int // In minutes
@@ -24,6 +35,7 @@ public class Recipe : Codable {
     
     var numOfPersons: Int = 0
     
+    // Variable 'stringIngredients' is used for formatting ingredient print
     var stringIngredients: [String] {
         var stringIngredients: [String] = []
         for ingredient in self.ingredients {
@@ -52,18 +64,6 @@ public class Recipe : Codable {
         self.isMyRecipe = isMyRecipe
         self.category = category
         self.numOfPersons = numOfPersons
-    }
-}
-
-public struct Ingredient : Codable {
-    var quantity: Double
-    var measureUnit: String
-    var ingredient: String
-    
-    init(quantity: Double, measureUnit: String, ingredient: String) {
-        self.quantity = quantity
-        self.measureUnit = measureUnit
-        self.ingredient = ingredient
     }
 }
 
@@ -116,12 +116,15 @@ class RecipeModel {
         ], category: .snack)
     ]
     
-    private var recipes: [Recipe] = []
+    fileprivate var recipes: [Recipe] = []
     var isLoaded = false
-    
+}
+
+// Loading file with recipes
+extension RecipeModel {
     func loadFile() {
         do {
-            let dir = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: Datafeed.shared.kAppGroup) //FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
+            let dir = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: Datafeed.shared.kAppGroup)
             let fileURL = dir?.appendingPathComponent("RecipesData.json")
             
             //If file exist in document directory
@@ -135,7 +138,7 @@ class RecipeModel {
                 self.delegate?.recipeModelDidChange(recipes: self.recipes)
                 self.isLoaded = true
             }
-            //If file exist in local
+            //If file exist only local
             else if let path = Bundle.main.path(forResource: "RecipesData", ofType: "json") {
                 let data = try Data(contentsOf: URL(fileURLWithPath: path))
                 let jsonResult = try JSONSerialization.jsonObject(with: data, options: .mutableLeaves)
@@ -151,7 +154,10 @@ class RecipeModel {
             print("File could not be loaded")
         }
     }
-    
+}
+
+// Parsing recipe data
+extension RecipeModel {
     func parseRecipe(recipe: Any) -> Recipe {
         guard let r = recipe as? [String:Any] else {
             return Recipe(name: "", prepTime: 0, cookTime: 0, ingredients: [], steps: [], isFavorite: false, category: .snack)
@@ -167,6 +173,7 @@ class RecipeModel {
             case "cookTime":
                 rec.cookTime = (r["cookTime"] as? Int ?? 0)
             case "ingredients":
+                // Ingredients are stored with '_' between 3 properties -> 'quantity_measureUnit_ingredient'
                 let stringIngredients = (r["ingredients"] as? [String] ?? [])
                 var ingredients: [Ingredient] = []
                 for stringIngredient in stringIngredients {
@@ -195,72 +202,5 @@ class RecipeModel {
             }
         }
         return rec
-    }
-}
-
-protocol DatafeedDelegate : AnyObject {
-    func recipesDataParsed()
-}
-
-class Datafeed {
-    
-    static let shared = Datafeed()
-    
-    private init() {
-//        self.recipes = []
-    }
-    
-    lazy var recipeModel: RecipeModel = {
-        var model = RecipeModel()
-        model.delegate = self
-        return model
-    }()
-    
-    weak var delegate: DatafeedDelegate?
-    
-    var recipes: [Recipe] = [] {
-        didSet {
-            self.delegate?.recipesDataParsed()
-        }
-    }
-    
-    var favRecipes: [Recipe] {
-        get {
-            let filtered = self.recipes.filter {
-                $0.isFavorite ?? false
-            }
-            return filtered
-        }
-    }
-    
-    var myRecipes: [Recipe] {
-        get {
-            let filtered = self.recipes.filter {
-                $0.isMyRecipe ?? false
-            }
-            return filtered
-        }
-    }
-    
-    let kAppGroup = "group.com.kulinarstvo_slasno_i_efikasno"
-}
-
-extension Datafeed : RecipeModelDelegate {
-    func recipeModelDidChange(recipes: [Recipe]) {
-        self.recipes = recipes
-    }
-    
-}
-
-class AppTheme {
-    static let backgroundUniversalGreen = UIColor(displayP3Red: 4/255, green: 110/255, blue: 75/255, alpha: 1)
-    static let textUniversalGreen = UIColor(displayP3Red: 190/255, green: 255/255, blue: 249/255, alpha: 1)
-    
-    static func setTextColor() -> UIColor {
-        return UITraitCollection.current.userInterfaceStyle == .dark ? AppTheme.textUniversalGreen : AppTheme.backgroundUniversalGreen
-    }
-    
-    static func setBackgroundColor() -> UIColor {
-        return UITraitCollection.current.userInterfaceStyle == .dark ? AppTheme.backgroundUniversalGreen : AppTheme.textUniversalGreen
     }
 }

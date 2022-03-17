@@ -59,6 +59,7 @@ class AddNewRecipeViewController : UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // This controller is used for both editing existing recipe and creating new recipe
         self.addNewRecipeLabel.text = self.existingRecipe != nil ? "Izmeni recept" : "Dodaj novi recept"
         self.isFavoritesLabel.text = "Dodati u omiljene?"
         self.chooseImageButton.setTitle("Izaberi sliku jela", for: .normal)
@@ -82,6 +83,7 @@ class AddNewRecipeViewController : UIViewController {
             $0?.autocorrectionType = .no
         }
         
+        // If self.existingRecipe != nil is true, that means that user selected to edit one of his/hers recipes and all fields should be filled with that recipe data
         if self.existingRecipe != nil {
             self.fillFields()
         }
@@ -160,6 +162,8 @@ class AddNewRecipeViewController : UIViewController {
         
         self.saveImage(recipeName: recipeName)
         
+        // Dictionaries doesn't save data order, but we have to keep track of steps order for recipe
+        // For ingredients it's not necessary but it's nice
         let sortedIngrediants = self.ingrediantsMap?.sorted(by: {Int($0.key) ?? 0 < Int($1.key) ?? 0})
         let sortedSteps = self.stepsMap?.sorted(by: {Int($0.key) ?? 0 < Int($1.key) ?? 0})
         
@@ -253,6 +257,7 @@ extension AddNewRecipeViewController : UIImagePickerControllerDelegate, UINaviga
         }
         
         let data = UIImage.pngData(image)
+        // Saving recipe image in user defaults with recipe name as it's key
         UserDefaults(suiteName: Datafeed.shared.kAppGroup)?.set(data(), forKey: recipeName)
     }
 }

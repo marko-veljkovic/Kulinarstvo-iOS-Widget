@@ -179,9 +179,9 @@ extension GeneralViewController : UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let recipesCount = self.recipes.count
-        if recipesCount == 0 {
-            self.recipes = self.categoryPicked == nil ? self.unfilteredRecipes : self.categoryRecipes
-        }
+//        if recipesCount == 0 {
+//            self.recipes = self.categoryPicked == nil ? self.unfilteredRecipes : self.categoryRecipes
+//        }
         return recipesCount
     }
     
@@ -235,15 +235,15 @@ extension GeneralViewController : RecipeTableViewHeaderCellDelegate {
     func prepTimeSortClicked(headerCell: RecipeTableViewHeaderCell) {
         self.sortByPrepTime = {
             switch self.sortByPrepTime {
-            case .Unsorted:
-                headerCell.sortArrowImage.image = UIImage(systemName: "arrowtriangle.up")
-                return .Ascending
             case .Ascending:
                 headerCell.sortArrowImage.image = UIImage(systemName: "arrowtriangle.down")
                 return .Descending
             case .Descending:
                 headerCell.sortArrowImage.image = UIImage(systemName: "arrow.up.and.down.circle")
                 return .Unsorted
+            case .Unsorted:
+                headerCell.sortArrowImage.image = UIImage(systemName: "arrowtriangle.up")
+                return .Ascending
             }
         }()
         self.sortData()

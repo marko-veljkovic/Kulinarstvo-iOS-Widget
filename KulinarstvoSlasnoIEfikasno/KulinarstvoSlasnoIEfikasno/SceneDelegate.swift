@@ -34,6 +34,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         self.shouldSave = true
         
+        // This scene is called from widget, when user click on some recipe and want to open Detail recipe view in app
         guard let url = URLContexts.first?.url else {
             return
         }
@@ -42,7 +43,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let recipe = Datafeed.shared.favRecipes.first(where: {$0.url?.absoluteString == urlStr}) else {
             return
         }
-        
         let cv = window?.rootViewController as! TabBarViewController
         (cv.selectedViewController as? UINavigationController)?.pushViewController(RecipeDetailViewController(recipe: recipe), animated: true)
     }
@@ -89,6 +89,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
     }
     
+    // When user close app or put it in background, saveRecipes function gets called which save recipe json file on user device
     private func saveRecipes() {
         let finalRecipes = Datafeed.shared.recipes
         var topLevel: [String : Any] = [:]

@@ -25,6 +25,7 @@ class IngrediantsStepsViewController: UIViewController {
     weak var delegate: IngrediantsStepsViewControllerDelegate?
     
     var type: TableViewType
+    // When user create new recipe, 3 empty ingredients and 3 empty steps will be added in ingredients/steps list
     var ingrediantsNumber = 3
     var stepsNumber = 3
     var ingrediantsMap: [String : Ingredient] = ["0":Ingredient(quantity: 0, measureUnit: "", ingredient: ""), "1":Ingredient(quantity: 0, measureUnit: "", ingredient: ""), "2":Ingredient(quantity: 0, measureUnit: "", ingredient: "")]
@@ -171,9 +172,9 @@ extension IngrediantsStepsViewController : AddNewRecipeTableViewCellDelegate {
         else {
             self.stepsNumber -= 1
             if self.stepsMap.count > cellIndex {
-                // Remove ingredient from map
+                // Remove step from map
                 self.stepsMap.removeValue(forKey: String(cellIndex))
-                // For all other ingredients, have to lower key value by 1 so it could be manipuladted with after deletion
+                // For all other steps, have to lower key value by 1 so it could be manipuladted with after deletion
                 for i in cellIndex..<stepsMap.count {
                     if let entry = stepsMap.removeValue(forKey: String(i+1)) {
                         stepsMap[String(i)] = entry

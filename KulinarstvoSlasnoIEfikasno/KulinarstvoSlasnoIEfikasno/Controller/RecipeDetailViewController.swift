@@ -188,6 +188,7 @@ class RecipeDetailViewController: UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
+    // Changes when user increase or decrease number of persons he's prepearing meal for
     func updateIngredientsQuantity() {
         for (indexList, ingredient) in self.recipe.ingredients.enumerated() {
             let forDelt = Double(self.localNumberOfPersons) / Double(self.recipe.numOfPersons)
@@ -196,12 +197,15 @@ class RecipeDetailViewController: UIViewController {
         self.tableView.reloadData()
     }
     
+    // Changes when user increase or decrease number of persons he's prepearing meal for
     func updatePrepAndCookTime(isDecrease: Bool = false) {
         if isDecrease {
+            // Prep time is decreased for small value every time user decrease number of persons for recipe (each prep time descrease is larger then the last one)
             self.localPrepTime = self.localPrepTime - Int(Double(self.recipe.prepTime) * self.localPrepTimeFactor)
             if self.localPrepTimeFactor > 0.025 {
                 self.localPrepTimeFactor -= 0.025
             }
+            // Cook time is decreased for small value when number of persons drop to 14 or 6
             if localNumberOfPersons == 6 {
                 self.localCookTime -= Int(Double(self.recipe.cookTime) * 0.25)
             }
@@ -210,10 +214,12 @@ class RecipeDetailViewController: UIViewController {
             }
         }
         else {
+            // Prep time is increased for small value every time user increase number of persons for recipe (each prep time inscrease is smaller then the last one)
             self.localPrepTime = self.localPrepTime + Int(Double(self.recipe.prepTime) * self.localPrepTimeFactor)
             if self.localPrepTimeFactor > 0.025 {
                 self.localPrepTimeFactor -= 0.025
             }
+            // Cook time is increased for small value when number of persons goes to 15 or 7
             if localNumberOfPersons == 7 {
                 self.localCookTime += Int(Double(self.recipe.cookTime) * 0.25)
             }
@@ -225,6 +231,7 @@ class RecipeDetailViewController: UIViewController {
     }
     
     @IBAction func isFavoritedRecipeSwitched(_ sender: Any) {
+        // If user click on switch and add/remove recipe from favorites, recipe data will be refreshed
         let newRecipe = self.recipe
         newRecipe.isFavorite = !(newRecipe.isFavorite ?? true)
         guard let oldRecipeIndex = Datafeed.shared.recipes.firstIndex(where: {
@@ -288,6 +295,7 @@ extension RecipeDetailViewController : NewRecipeViewControllerDelegate {
     }
     
     func didEditRecipe(_ controller: AddNewRecipeViewController, oldRecipe: Recipe, newRecipe: Recipe) {
+        // Recipe is being saved in recipe list after user edited it
         guard let oldRecipeIndex = Datafeed.shared.recipes.firstIndex(where: {
             $0.name == oldRecipe.name
         }) else {

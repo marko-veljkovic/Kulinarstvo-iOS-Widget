@@ -32,6 +32,7 @@ struct Provider: IntentTimelineProvider {
     
     func recipe(for configuration: ConfigurationIntent) -> Recipe {
         self.loadDataFile()
+        // Show recipe in widget which user choose in configuration
         return Datafeed.shared.favRecipes.first(where: {
             $0.name == configuration.Recipe?.identifier
         }) ?? Datafeed.shared.favRecipes[0]
@@ -39,6 +40,7 @@ struct Provider: IntentTimelineProvider {
     
     func parametereToShow(for configuration: ConfigurationIntent) -> String {
         self.loadDataFile()
+        // Show main parameter in widget which user choose in configuration
         switch configuration.ParameterToShow {
         case .sastojci:
             return MainParameter.Sastojci.rawValue
@@ -55,12 +57,12 @@ struct Provider: IntentTimelineProvider {
         }
     }
     
-    func firstRecipeInSecondWidget(for configuration: ConfigurationIntent) -> Recipe {
-        self.loadDataFile()
-        return Datafeed.shared.favRecipes.first(where: {
-            $0.name == configuration.Recipe?.identifier
-        }) ?? Datafeed.shared.favRecipes[0]
-    }
+//    func firstRecipeInSecondWidget(for configuration: ConfigurationIntent) -> Recipe {
+//        self.loadDataFile()
+//        return Datafeed.shared.favRecipes.first(where: {
+//            $0.name == configuration.Recipe?.identifier
+//        }) ?? Datafeed.shared.favRecipes[0]
+//    }
 }
 
 struct SecondProvider : TimelineProvider {
@@ -387,6 +389,7 @@ struct RecipeSecondLargeView: View {
     }
 }
 
+// Main struct for first widget type
 struct KulinarstvoWidget: Widget {
     @Environment(\.colorScheme) var colorScheme
     
@@ -401,6 +404,7 @@ struct KulinarstvoWidget: Widget {
     }
 }
 
+// Main struct for second widget type
 struct KulinarstvoSecondWidget: Widget {
     @Environment(\.colorScheme) var colorScheme
     

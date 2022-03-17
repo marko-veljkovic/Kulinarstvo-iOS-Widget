@@ -13,9 +13,7 @@ class IntentHandler: INExtension {
         if !Datafeed.shared.recipeModel.isLoaded {
             Datafeed.shared.recipeModel.loadFile()
         }
-        // This is the default implementation.  If you want different objects to handle different intents,
-        // you can override this and return the handler you want for that particular intent.
-        
+       
         return self
     }
 }
@@ -26,7 +24,7 @@ extension IntentHandler : ConfigurationIntentHandling {
     }
     
     func provideRecipeOptionsCollection(for intent: ConfigurationIntent, with completion: @escaping (INObjectCollection<ReceptTip>?, Error?) -> Void) {
-        
+        // Get dynamic list of users favorites recipes and show it in list for configuration
         let recipes = Datafeed.shared.favRecipes.map { recipe in
             ReceptTip(identifier: recipe.name, display: recipe.name)
         }

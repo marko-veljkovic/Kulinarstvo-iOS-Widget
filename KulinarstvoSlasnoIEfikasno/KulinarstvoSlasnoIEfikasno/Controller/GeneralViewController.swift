@@ -56,7 +56,7 @@ class GeneralViewController: UIViewController {
             Datafeed.shared.recipeModel.loadFile()
         }
         
-        self.searchBar.placeholder = "Pretrazi recepte"
+        self.searchBar.placeholder = "Pretraži recepte"
         self.searchBar.delegate = self
         
         self.categoryButton.setTitle("Izaberi kategoriju", for: .normal)
@@ -77,7 +77,7 @@ class GeneralViewController: UIViewController {
         
         self.addNewRecipeButton.isHidden = !self.isMyRecipes
         self.clearCategoryButton.isHidden = true
-        self.clearCategoryButton.setTitle("Ponisti", for: .normal)
+        self.clearCategoryButton.setTitle("Poništi", for: .normal)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -128,7 +128,7 @@ class GeneralViewController: UIViewController {
         
         let alert = UIAlertController(title: "Izaberi kategoriju recepata", message: "", preferredStyle: .alert)
         alert.setValue(vc, forKey: "contentViewController")
-        alert.addAction(UIAlertAction(title: "Sacuvaj", style: .default, handler: {_ in
+        alert.addAction(UIAlertAction(title: "Sačuvaj", style: .default, handler: {_ in
             // Select category action is applied to both recipes array and unsorted recipes array
             self.categoryRecipes = []
             self.recipes = self.unfilteredRecipes
@@ -144,7 +144,7 @@ class GeneralViewController: UIViewController {
             self.searchBar.isHidden = true
             self.sortData()
         }))
-        alert.addAction(UIAlertAction(title: "Ponisti", style: .cancel, handler: {_ in
+        alert.addAction(UIAlertAction(title: "Poništi", style: .cancel, handler: {_ in
             self.filterByCategoryCanceled()
         }))
         self.categoryPicked = .coldSideDish
@@ -317,7 +317,7 @@ extension GeneralViewController : UISearchBarDelegate {
         self.searchBar.showsCancelButton = true
         let searchBarCancelButton = self.searchBar.value(forKey: "cancelButton") as! UIButton
         searchBarCancelButton.tintColor = AppTheme.setTextColor()
-        searchBarCancelButton.setTitle("Ponisti", for: .normal)
+        searchBarCancelButton.setTitle("Poništi", for: .normal)
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {

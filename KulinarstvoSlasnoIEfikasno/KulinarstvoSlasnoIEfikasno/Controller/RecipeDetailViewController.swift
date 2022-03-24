@@ -60,7 +60,7 @@ class RecipeDetailViewController: UIViewController {
         self.changeRecipeButton.setTitle("Izmeni recept", for: .normal)
         self.changeRecipeButton.isHidden = !(self.recipe.isMyRecipe ?? false)
         
-        self.deleteRecipeButton.setTitle("Obrisi recept", for: .normal)
+        self.deleteRecipeButton.setTitle("Obriši recept", for: .normal)
         self.deleteRecipeButton.isHidden = !(self.recipe.isMyRecipe ?? false)
         self.deleteRecipeButton.backgroundColor = .red
         self.deleteRecipeButton.layer.cornerRadius = 10
@@ -172,9 +172,9 @@ class RecipeDetailViewController: UIViewController {
     }
     
     @IBAction func deleteRecipeButtonClicked(_ sender: Any) {
-        let alert = UIAlertController(title: "Izbrisati recept?", message: "Da li ste sigurni da zelite da izbrisete recept", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Obrisati recept?", message: "Da li ste sigurni da želite da obrišete recept", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Odustani", style: .default, handler: nil))
-        alert.addAction(UIAlertAction(title: "Izbrisi", style: .destructive, handler: { _ in
+        alert.addAction(UIAlertAction(title: "Obriši", style: .destructive, handler: { _ in
             guard let currentRecipeIndex = Datafeed.shared.recipes.firstIndex(where: {
                 $0.name == self.recipe.name
             }) else {

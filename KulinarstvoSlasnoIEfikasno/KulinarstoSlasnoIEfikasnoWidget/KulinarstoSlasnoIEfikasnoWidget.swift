@@ -400,7 +400,7 @@ struct KulinarstvoWidget: Widget {
             Kulinarstvo_widgetEntryView(entry: entry)
         }
         .configurationDisplayName("Recept na klik")
-        .description("Dodaj svoj omiljeni recept na pocetni ekran")
+        .description("Dodaj svoj omiljeni recept na početni ekran")
     }
 }
 
@@ -414,8 +414,8 @@ struct KulinarstvoSecondWidget: Widget {
         StaticConfiguration(kind: kind, provider: SecondProvider()) { entry in
             KulinarstvoSecondWidgetEntryView(entry: entry)
         }
-        .configurationDisplayName("Nasumicni recepti")
-        .description("Nemas ideju sta da jedes danas? Neka ti aplikacija kaze")
+        .configurationDisplayName("Nasumični recepti")
+        .description("Nemaš ideju šta da jedeš danas? Neka ti aplikacija kaže")
         .supportedFamilies([.systemLarge])
     }
 }

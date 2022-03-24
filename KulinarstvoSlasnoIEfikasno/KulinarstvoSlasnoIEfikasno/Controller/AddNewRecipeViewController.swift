@@ -75,7 +75,7 @@ class AddNewRecipeViewController : UIViewController {
             $0?.layer.borderColor = AppTheme.backgroundUniversalGreen.cgColor
         }
         
-        self.addNewRecipeButton.setTitle(self.existingRecipe != nil ? "Sacuvaj" : "Dodaj recept", for: .normal)
+        self.addNewRecipeButton.setTitle(self.existingRecipe != nil ? "Sačuvaj" : "Dodaj recept", for: .normal)
         self.addNewRecipeButton.isEnabled = false
         
         [self.recipeNameTextField, self.preparationTimeTextField, self.cookingTimeTextField, self.numOfPersonsTextField].forEach {

@@ -61,17 +61,17 @@ public class Datafeed {
         case .mainDish:
             return "Glavno jelo"
         case .snack:
-            return "Uzina"
+            return "Užina"
         case .drink:
-            return "Pice"
+            return "Piće"
         case .soup:
-            return "Supe i corbe"
+            return "Supe i čorbe"
         case .dessert:
             return "Dezert"
         case .salad:
             return "Salata"
         case .bread:
-            return "Hleba"
+            return "Hleb"
         default:
             return "Izaberi kategoriju"
         }

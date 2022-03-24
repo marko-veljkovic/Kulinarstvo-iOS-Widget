@@ -118,7 +118,7 @@ extension IngrediantsStepsViewController : UITableViewDataSource {
         cell.selectionStyle = .none
         
         if self.type == .ingredients {
-            cell.quantityTextField.placeholder = "Kolicina"
+            cell.quantityTextField.placeholder = "Količina"
             cell.cellTextField.placeholder = "Jedinica mere"
             cell.ingredientTextField.placeholder = "Sastojak"
             

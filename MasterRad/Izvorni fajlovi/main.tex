@@ -8,6 +8,7 @@
 \usepackage{graphicx}
 \usepackage{float}
 \usepackage{hyperref}
+\usepackage{caption}
 
 \usepackage{color}
 \definecolor{lightgray}{rgb}{.9,.9,.9}
@@ -77,9 +78,15 @@
 
 \chapter{Увод}
 
+\indent Swift jе модеран програмски jезик опште намене, настао 2014. године у оквиру компаниjе Apple. Првенствено jе намењен развоjу апликациjа на њиховим платформама (iOS, iPadOS, macOS, tvOS и watchOS), али jе део развоjа jезика усмерен ка поjедностављивању процеса израде корисничког интерфеjса и увођењу декларативне синтаксе у jезик. У том контексту настало jе радно окружење SwiftUI коjе одликуjе могућност брзог креирања концизних и ефикасних решења. Пример примене радног окружења SwiftUI jе израда виџета намењених оперативним системима iOS, iPadOS и macOS. 
+\\
+\indent Виџет, као део мобилне апликациjе, се налази на почетном екрану уређаjа (телефона или таблета) и кориснику приказуjе одабране важне информациjе из те апликациjе. За разлику од виџета у оперативном систему Android, коjи су присутни више од десет година, виџети на Apple платформама су уведени 2020. године, тако да jе и сама технологиjа коjа подржава њихово креирање и даље у активном развоjу.
+\\
+\indent Циљ рада jе истраживање и опис карактеристика и могућности коjе пружа програмски jезик Swift, промене и побољшања коjе jе донело радно окружење SwiftUI и приказ новина насталих увођењем виџета (конкретно у оперативном систему iOS). У оквиру рада биће имплементирана iOS апликациjа о кулинарству "Кулинарство - сласно и ефикасно" коришћењем програмског jезика Swift, након чега ће бити креиран одговараjући виџет помоћу радног окружења SwiftUI. Оваj виџет пружаће кориснику помоћ приликом избора и припреме оброка.
+
 \chapter{Програмски језик Swift}
 
-\indent \textit{Swift} је модеран програмски језик, првенствено намењен развоју  апликациjа на платформама компаније \textit{Apple} (\textit{iOS}, \textit{iPadOS}, \textit{macOS}, \textit{tvOS} и \textit{watchOS}). Настао је као резултат истоименог пројекта унутар компаније \textit{Apple}, чији је циљ био креирање програмског језика  који ће бити сигуран, концизан и ефикасан. Резултати пројекта \textit{Swift} као и унапређења програмског језика \textit{Swift} током година биће приказани у наставку. 
+\indent \textit{Swift} је модеран програмски језик настао као резултат истоименог пројекта унутар компаније \textit{Apple}, чији је циљ био креирање програмског језика  који ће бити сигуран, концизан и ефикасан. Резултати пројекта \textit{Swift} као и унапређења програмског језика \textit{Swift} током година биће приказани у наставку. 
 
 \section{Настанак, развој и карактеристике}
 
@@ -1448,417 +1455,256 @@ struct Content : View {
 \\
 \indent Потребно је искористити могућност приказа описа виџета у галерији и саставити кратак и јасан опис функционалности виџета. Груписање свих величина једног типа виџета са јединственим описом је погодно корисницима апликације, пре свега због једноставности разумевања коришћења виџета.
 
-\chapter{Опис апликације}
+\chapter{Визуелни приказ и текстуални опис апликације}
 
 \indent У овом поглављу биће представљена апликација "Кулинарство - сласно и ефикасно" која прати мастер рад. Апликација треба да помогне корисницима приликом избора и припреме оброка, док виџет који је имплементиран у склопу апликације може послужити као подсетник за потребне састојке или кораке припреме и истовремено бити употребљен за предлагање наредних оброка.
 \\
-\indent Рад апликације ће бити приказан упоредо на два симулатора, \textit{iPhone 13 Pro Max} са тамном бојом позадине (у наставку означен бројем 1) и \textit{iPhone SE (2nd generation)} са светлом бојом позадине (у наставку означен бројем 2). Оба симулатора покрећу оперативни систем \textit{iOS 15.0}.
+\indent Рад апликације ће бити приказан упоредо на два симулатора, \textit{iPhone 13 Pro Max} са тамном бојом позадине и \textit{iPhone SE (2nd generation)} са светлом бојом позадине. Оба симулатора покрећу оперативни систем \textit{iOS 15.0}.
 
 \subsection{Почетни екран}
 
-\indent На почетном екрану корисник може видети преглед свих рецепата који су тренутно доступни у апликацији, сортирати рецепте по времену потребном за њихову припрему (растуће и опадајуће), изабрати категорију рецепата који ће бити приказани, претраживати рецепте по именима као и комбиновати ова својства да би у што краћем времену пронашао жељени рецепт(е). 
+\indent На почетном екрану корисник може видети преглед свих рецепата који су тренутно доступни у апликацији, сортирати рецепте по времену потребном за њихову припрему (растуће и опадајуће), изабрати категорију рецепата који ће бити приказани, претраживати рецепте по именима као и комбиновати ова својства да би у што краћем времену пронашао жељени рецепт (или жељене рецепте).
 
-\indent Рецепти су приказани унутар табеле, сваки рецепт је презентован именом, временом припреме у минутима и сликом. Приказ почетног екрана може се видети на сликама \ref{slika:почетни_екран_1} и \ref{slika:почетни_екран_2}.
+\indent Рецепти су приказани унутар табеле, сваки рецепт је презентован именом, временом припреме у минутима и сликом. Приказ почетног екрана може се видети на слици \ref{slika:почетни_екран_1}.
 
-\begin{figure} %[H] da li?
+\begin{figure} [H]
     \centering
-    \begin{minipage}{0.5\textwidth}
-        \centering
-        \includegraphics[width=0.95\textwidth]{images/simulators/dark - overview.png} 
-        \caption{\textit{Почетни екран - 1}}
-        \label{slika:почетни_екран_1}
-    \end{minipage}\hfill
-    \begin{minipage}{0.5\textwidth}
-        \centering
-        \includegraphics[width=0.95\textwidth]{images/simulators/light - overview.png} 
-        \caption{\textit{Почетни екран - 2}}
-        \label{slika:почетни_екран_2}
-    \end{minipage}
+    \captionsetup{justification=centering}
+    \includegraphics[width=0.475\textwidth]{images/simulators/dark - overview.png} 
+    \hfill
+    \includegraphics[width=0.475\textwidth]{images/simulators/light - overview.png} 
+    \caption{\textit{Почетни екран - iPhone 13 (лево) и iPhone SE (десно)}}
+    \label{slika:почетни_екран_1}
 \end{figure}
 
-\indent Корисник може изабрати одређену категорију из које ће му бити приказани рецепти. Међу понуђеним категоријама се налазе "Хладно предјело", "Топло предјело", "Главно јело", "Ужина", "Пиће", "Супе и чорбе", "Дезерт", "Салата" и "Хлеба". Приказ избора категорије налази се на сликама \ref{slika:категорија_1} и \ref{slika:категорија_2}, док је на сликама \ref{slika:изабрана_категорија_1} и \ref{slika:изабрана_категорија_2} приказан изглед екрана када је једна категорија изабрана (конкретно категорија "Главно јело").
+\indent Корисник може изабрати одређену категорију из које ће му бити приказани рецепти. Међу понуђеним категоријама се налазе "Хладно предјело", "Топло предјело", "Главно јело", "Ужина", "Пиће", "Супе и чорбе", "Дезерт", "Салата" и "Хлеба". Приказ избора категорије налази се на слици \ref{slika:категорија_1}, док је на слици \ref{slika:изабрана_категорија_1} приказан изглед екрана када је једна категорија изабрана (конкретно категорија "Главно јело").
 
-\begin{figure}
+\begin{figure} [H]
     \centering
-    \begin{minipage}{0.5\textwidth}
-        \includegraphics[width=0.95\textwidth]{images/simulators/dark - category.png} 
-        \caption{\textit{Категорија - 1}}
-        \label{slika:категорија_1}
-        \centering
-    \end{minipage}\hfill
-    \begin{minipage}{0.5\textwidth}
-        \centering
-        \includegraphics[width=0.95\textwidth]{images/simulators/light - category.png} 
-        \caption{\textit{Категорија - 2}}
-        \label{slika:категорија_2}
-    \end{minipage}
+    \captionsetup{justification=centering}
+    \includegraphics[width=0.475\textwidth]{images/simulators/dark - category.png} 
+    \hfill
+    \includegraphics[width=0.475\textwidth]{images/simulators/light - category.png}
+    \caption{\textit{Избор категорије - iPhone 13 (лево) и iPhone SE (десно)}}
+    \label{slika:категорија_1}
 \end{figure}
 
-\begin{figure}
+\begin{figure} [H]
     \centering
-    \begin{minipage}{0.5\textwidth}
-        \includegraphics[width=0.95\textwidth]{images/simulators/dark - choosen category.png} 
-        \caption{\textit{Изабрана категорија - 1}}
-        \label{slika:изабрана_категорија_1}
-        \centering
-    \end{minipage}\hfill
-    \begin{minipage}{0.5\textwidth}
-        \centering
-        \includegraphics[width=0.95\textwidth]{images/simulators/light - choosen category.png} 
-        \caption{\textit{Изабрана категорија - 2}}
-        \label{slika:изабрана_категорија_2}
-    \end{minipage}
+    \captionsetup{justification=centering}
+    \includegraphics[width=0.475\textwidth]{images/simulators/dark - choosen category.png}
+    \hfill
+    \includegraphics[width=0.475\textwidth]{images/simulators/light - choosen category.png}
+    \caption{\textit{Категорија "Главно јело" - iPhone 13 (лево) и iPhone SE (десно)}}
+    \label{slika:изабрана_категорија_1}
 \end{figure}
 
-\indent Поред избора категорије, корисник може филтрирати приказане рецепате претрагом по имену и у том случају ће му бити приказани сви рецепти чије име садржи текст који је корисник унео у поље претраге. Почетак претраге приказан је на сликама \ref{slika:претрага_1} и \ref{slika:претрага_2}. 
-\begin{figure}
+\indent Поред избора категорије, корисник може филтрирати приказане рецепте претрагом по имену и у том случају ће му бити приказани сви рецепти чије име садржи текст који је корисник унео у поље претраге. Почетак претраге приказан је на слици \ref{slika:претрага_1}.
+
+\begin{figure} [H]
     \centering
-    \begin{minipage}{0.5\textwidth}
-        \includegraphics[width=0.95\textwidth]{images/simulators/dark - search.png} 
-        \caption{\textit{Претрага - 1}}
-        \label{slika:претрага_1}
-        \centering
-    \end{minipage}\hfill
-    \begin{minipage}{0.5\textwidth}
-        \centering
-        \includegraphics[width=0.95\textwidth]{images/simulators/light - search.png} 
-        \caption{\textit{Претрага - 2}}
-        \label{slika:претрага_2}
-    \end{minipage}
+    \captionsetup{justification=centering}
+    \includegraphics[width=0.475\textwidth]{images/simulators/dark - search.png} 
+    \hfill
+    \includegraphics[width=0.475\textwidth]{images/simulators/light - search.png} 
+    \caption{\textit{Претрага - iPhone 13 (лево) и iPhone SE (десно)}}
+    \label{slika:претрага_1}
 \end{figure}
 
-\indent Рецепте на почетној страни корисник може и сортирати, опадајуће или растуће по укупном времену потребном за њихово спремање (припрема и кување). Сортирање се може и комбиновати са избором категорије или претрагом по називу, па тако корисник лако може наћи рецепт из одређене категорије (на пример, из категорије дезерта) који се спрема најбрже од понућених. Сортирани рецепти у растућем редоследу су приказани на сликама \ref{slika:сортирање_растуће_1} и \ref{slika:сортирање_растуће_2}.
+\indent Рецепте на почетној страни корисник може и сортирати, опадајуће или растуће по укупном времену потребном за њихову припрему (припрема и спремање). Сортирање се може и комбиновати са избором категорије или претрагом по називу, па тако корисник лако може наћи рецепт из одређене категорије (на пример, из категорије дезерта) за чију припрему је потребно издвојити најмање времена. Сортирани рецепти у растућем редоследу су приказани на слици \ref{slika:сортирање_растуће_1}.
 
-\begin{figure}
+\begin{figure} [H]
     \centering
-    \begin{minipage}{0.5\textwidth}
-        \centering
-        \includegraphics[width=0.95\textwidth]{images/simulators/dark - sort asc.png} 
-        \caption{\textit{Рецепти сортирани растуће - 1}}
-        \label{slika:сортирање_растуће_1}
-    \end{minipage}\hfill
-    \begin{minipage}{0.5\textwidth}
-        \centering
-        \includegraphics[width=0.95\textwidth]{images/simulators/light - sort asc.png} 
-        \caption{\textit{Рецепти сортирани растуће - 2}}
-        \label{slika:сортирање_растуће_2}
-    \end{minipage}
+    \captionsetup{justification=centering}
+    \includegraphics[width=0.475\textwidth]{images/simulators/dark - sort asc.png}
+    \hfill
+    \includegraphics[width=0.475\textwidth]{images/simulators/light - sort asc.png} 
+    \caption{\textit{Рецепти сортирани растуће - iPhone 13 (лево) и iPhone SE (десно)}}
+    \label{slika:сортирање_растуће_1}
 \end{figure}
-
-%\begin{figure}
-%    \centering
-%    \begin{minipage}{0.5\textwidth}
-%        \centering
-%        \includegraphics[width=0.95\textwidth]{images/simulators/dar%k - sort desc.png} 
-%        \caption{\textit{Рецепти сортирани опадајуће - 1}}
-%        \label{slika:сортирање_опадајуће_1}
-%    \end{minipage}\hfill
-%    \begin{minipage}{0.5\textwidth}
-%        \centering
-%        \includegraphics[width=0.95\textwidth]{images/simulators/lig%ht - sort desc.png} 
-%        \caption{\textit{Рецепти сортирани опадајуће - 2}}
-%        \label{slika:сортирање_опадајуће_2}
-%    \end{minipage}
-%\end{figure}
-
 
 \subsection{Омиљени и моји рецепти}
 
 \indent Поред дела са прегледом свих рецепата на почетном екрану, кориснику се пружа могућност прегледа дела "Омиљени рецепти" и "Моји рецепти". Све могућности управљања рецептима (избор категорије, претрага по називу и сортирање) које су кориснику биле на располагању у почетном делу, су омогућене и у преостала два главна дела апликације.
 
-\indent "Омиљени рецепти" је део апликације који садржи листу свих рецепата које је корисник означио као омиљене и тиме их издвојио од осталих. Слике \ref{slika:омиљени_1} и \ref{slika:омиљени_2} представљају изглед дела "Омиљени рецепти".
+\indent "Омиљени рецепти" је део апликације који садржи листу свих рецепата које је корисник означио као омиљене и тиме их издвојио од осталих. Слика \ref{slika:омиљени_1} представља изглед дела "Омиљени рецепти".
 
-\begin{figure}
+\begin{figure} [H]
     \centering
-    \begin{minipage}{0.5\textwidth}
-        \includegraphics[width=0.95\textwidth]{images/simulators/dark - favorites.png} 
-        \caption{\textit{Омиљени рецепти - 1}}
-        \label{slika:омиљени_1}
-        \centering
-    \end{minipage}\hfill
-    \begin{minipage}{0.5\textwidth}
-        \centering
-        \includegraphics[width=0.95\textwidth]{images/simulators/light - favorites.png} 
-        \caption{\textit{Омиљени рецепти - 2}}
-        \label{slika:омиљени_2}
-    \end{minipage}
+    \captionsetup{justification=centering}
+    \includegraphics[width=0.475\textwidth]{images/simulators/dark - favorites.png} 
+    \hfill
+    \includegraphics[width=0.475\textwidth]{images/simulators/light - favorites.png}
+    \caption{\textit{Омиљени рецепти - iPhone 13 (лево) и iPhone SE (десно)}}
+    \label{slika:омиљени_1}
 \end{figure}
 
-\indent Када корисник дода свој рецепт, он ће бити приказан у делу "Моји рецепти" у којем ће корисник моћи да види све своје рецепте са којима може и да манипулише, више о овоме биће објашњено у делу \ref{subsec:Измена и брисање постојећег рецепта} - \nameref{subsec:Измена и брисање постојећег рецепта}. Још једна могућност која се пружа кориснику на овој страни је додавање новог рецета, што ће детаљно бити објашњено у делу \ref{subsec:Креирање новог рецепта} - \nameref{subsec:Креирање новог рецепта}. Сликама \ref{slika:моји_рецепти_1} и \ref{slika:моји_рецепти_2} приказан је изглед странице "Моји рецепти".
+\indent Када корисник дода свој рецепт, он ће бити приказан у делу "Моји рецепти" у којем ће корисник моћи да види све своје рецепте са којима може манипулисати, више о овоме биће објашњено у делу \ref{subsec:Измена и брисање постојећег рецепта} - \nameref{subsec:Измена и брисање постојећег рецепта}. Још једна могућност која се пружа кориснику на овој страни је додавање новог рецета, што ће детаљно бити објашњено у делу \ref{subsec:Креирање новог рецепта} - \nameref{subsec:Креирање новог рецепта}. Сликом \ref{slika:моји_рецепти_1} приказан је изглед странице "Моји рецепти".
 
-\begin{figure}
+\begin{figure} [H]
     \centering
-    \begin{minipage}{0.5\textwidth}
-        \includegraphics[width=0.95\textwidth]{images/simulators/dark - my recipes.png} 
-        \caption{\textit{Моји рецепти - 1}}
-        \label{slika:моји_рецепти_1}
-        \centering
-    \end{minipage}\hfill
-    \begin{minipage}{0.5\textwidth}
-        \centering
-        \includegraphics[width=0.95\textwidth]{images/simulators/light - my recipes.png} 
-        \caption{\textit{Моји рецепти - 2}}
-        \label{slika:моји_рецепти_2}
-    \end{minipage}
+    \captionsetup{justification=centering}
+    \includegraphics[width=0.475\textwidth]{images/simulators/dark - my recipes.png} 
+    \hfill
+    \includegraphics[width=0.475\textwidth]{images/simulators/light - my recipes.png}
+    \caption{\textit{Моји рецепти - iPhone 13 (лево) и iPhone SE (десно)}}
+    \label{slika:моји_рецепти_1}
 \end{figure}
-
 
 \subsection{Детаљан приказ рецепта}
 
-\indent У детаљном приказу рецепта, кориснику је презентован опис рецепта који се састоји од: назива рецепта, категорије којој рецепт припада, слике рецепта, времена припреме и спремања, могућност повећавања и смањивања броја особа за које је рецепт предвиђен (истовремено ће бити промењена количина састојака као и време припреме), списак састојака и корака припреме, могућност додавања и брисања рецепта из листе омиљених, и уколико је приказани рецепт креиран од стране тренутног корисника, може га изменити или обрисати. Детаљан приказ рецепта за цезар салату приказан је на сликама \ref{slika:детаљан_рецепт_1} и \ref{slika:детаљан_рецепт_2} за четири особе односно на сликама \ref{slika:детаљан_рецепт_2_1} и \ref{slika:детаљан_рецепт_2_2} за шест особа.
+\indent У детаљном приказу рецепта, кориснику је презентован опис рецепта који се састоји од: назива рецепта, категорије којој рецепт припада, слике рецепта, времена припреме и спремања, број особа за које је приказана количина састојака намењена, списак састојака и корака припреме, могућност додавања и брисања рецепта из листе омиљених рецепата. Кориснику се пружа могућност повећавања и смањивања броја особа за које је рецепт предвиђен (истовремено ће бити промењена количина састојака као и време припреме). Уколико је приказани рецепт креиран од стране тренутног корисника, приказана су два дугмета за измену и брисање рецепта. Детаљан приказ рецепта за Цезар салату представљен је на слици \ref{slika:детаљан_рецепт_1} за четири особе, односно на слици \ref{slika:детаљан_рецепт_2_1} за шест особа.
 
-\begin{figure}
+\begin{figure} [H]
     \centering
-    \begin{minipage}{0.5\textwidth}
-        \includegraphics[width=0.95\textwidth]{images/simulators/dark - detail4.png} 
-        \caption{\textit{Детаљан приказ рецепта - 1}}
-        \label{slika:детаљан_рецепт_1}
-        \centering
-    \end{minipage}\hfill
-    \begin{minipage}{0.5\textwidth}
-        \centering
-        \includegraphics[width=0.95\textwidth]{images/simulators/light - detail4.png} 
-        \caption{\textit{Детаљан приказ рецепта - 2}}
-        \label{slika:детаљан_рецепт_2}
-    \end{minipage}
+    \captionsetup{justification=centering}
+    \includegraphics[width=0.475\textwidth]{images/simulators/dark - detail4.png} 
+    \hfill
+    \includegraphics[width=0.475\textwidth]{images/simulators/light - detail4.png} 
+    \caption{\textit{Детаљан приказ рецепта - iPhone 13 (лево) и iPhone SE (десно)}}
+    \label{slika:детаљан_рецепт_1}
 \end{figure}
 
-\begin{figure}
+\begin{figure} [H]
     \centering
-    \begin{minipage}{0.5\textwidth}
-        \includegraphics[width=0.95\textwidth]{images/simulators/dark - detail6.png} 
-        \caption{\textit{Детаљан приказ рецепта за 6 особа - 1}}
-        \label{slika:детаљан_рецепт_2_1}
-        \centering
-    \end{minipage}\hfill
-    \begin{minipage}{0.5\textwidth}
-        \centering
-        \includegraphics[width=0.95\textwidth]{images/simulators/light - detail4.png} 
-        \caption{\textit{Детаљан приказ рецепта за 6 особа - 2}}
-        \label{slika:детаљан_рецепт_2_2}
-    \end{minipage}
+    \captionsetup{justification=centering}
+    \includegraphics[width=0.475\textwidth]{images/simulators/dark - detail6.png} 
+    \hfill
+    \includegraphics[width=0.475\textwidth]{images/simulators/light - detail6.png} 
+    \caption{\textit{Детаљан приказ рецепта за 6 особа - iPhone 13 (лево) и iPhone SE (десно)}}
+    \label{slika:детаљан_рецепт_2_1}
 \end{figure}
 
 \subsection{Креирање новог рецепта}
 \label{subsec:Креирање новог рецепта}
 
-\indent Приликом креирања новог рецепта од корисника се тражи да унесе све потребне информације које су наведене у претходном поглављу. Изглед погледа додавања новог рецепта може се видети на сликама \ref{slika:нов_рецепт_1} и \ref{slika:нов_рецепт_2}.
+\indent Приликом креирања новог рецепта од корисника се тражи да унесе све потребне информације које су наведене у претходном поглављу. Изглед погледа додавања новог рецепта може се видети на слици \ref{slika:нов_рецепт_1}.
 
-\begin{figure}
+\begin{figure} [H]
     \centering
-    \begin{minipage}{0.5\textwidth}
-        \includegraphics[width=0.95\textwidth]{images/simulators/dark - new.png} 
-        \caption{\textit{Нов рецепт - 1}}
-        \label{slika:нов_рецепт_1}
-        \centering
-    \end{minipage}\hfill
-    \begin{minipage}{0.5\textwidth}
-        \centering
-        \includegraphics[width=0.95\textwidth]{images/simulators/light - new.png} 
-        \caption{\textit{Нов рецепт - 2}}
-        \label{slika:нов_рецепт_2}
-    \end{minipage}
+    \captionsetup{justification=centering}
+    \includegraphics[width=0.475\textwidth]{images/simulators/dark - new.png} 
+    \hfill
+    \includegraphics[width=0.475\textwidth]{images/simulators/light - new.png} 
+    \caption{\textit{Нов рецепт - iPhone 13 (лево) и iPhone SE (десно)}}
+    \label{slika:нов_рецепт_1}
 \end{figure}
 
 \subsection{Измена и брисање постојећег рецепта}
 \label{subsec:Измена и брисање постојећег рецепта}
 
-\indent Корисник има могућност промене свих рецепата које је додао. Приказ изгледа погледа измене рецепта налази се на сликама \ref{slika:измена_рецепта_1} и \ref{slika:измена_рецепта_2}. Постоји могућност измене и брисања састојака \ref{slika:измена_састојака_1} и \ref{slika:измена_састојака_2}, додавања нових састојака \ref{slika:измена_састојака_2_1} и \ref{slika:измена_састојака_2_2}, измене и брисања корака припреме \ref{slika:измена_корака_1} и \ref{slika:измена_корака_2} и додавања нових корака припреме \ref{slika:измена_корака_2_1} и \ref{slika:измена_корака_2_2}.
+\indent Корисник има могућност промене свих рецепата које је додао. Приказ изгледа погледа измене рецепта налази се на слици \ref{slika:измена_рецепта_1}. Постоји могућност измене, брисања и додавања нових састојака \ref{slika:измена_састојака_2_1}, измене, брисања и додавања нових корака припреме \ref{slika:измена_корака_2_1}.
 
-\begin{figure}
+\begin{figure} [H]
     \centering
-    \begin{minipage}{0.5\textwidth}
-        \includegraphics[width=0.95\textwidth]{images/simulators/dark - change.png} 
-        \caption{\textit{Измена рецепта - 1}}
-        \label{slika:измена_рецепта_1}
-        \centering
-    \end{minipage}\hfill
-    \begin{minipage}{0.5\textwidth}
-        \centering
-        \includegraphics[width=0.95\textwidth]{images/simulators/light - change.png} 
-        \caption{\textit{Измена рецепта - 2}}
-        \label{slika:измена_рецепта_2}
-    \end{minipage}
+    \captionsetup{justification=centering}
+    \includegraphics[width=0.475\textwidth]{images/simulators/dark - change.png} 
+    \hfill
+    \includegraphics[width=0.475\textwidth]{images/simulators/light - change.png} 
+    \caption{\textit{Измена рецепта - iPhone 13 (лево) и iPhone SE (десно)}}
+    \label{slika:измена_рецепта_1}
 \end{figure}
 
-\begin{figure}
+\begin{figure} [H]
     \centering
-    \begin{minipage}{0.5\textwidth}
-        \includegraphics[width=0.95\textwidth]{images/simulators/dark - ingredients1.png} 
-        \caption{\textit{Измена састојака - 1}}
-        \label{slika:измена_састојака_1}
-        \centering
-    \end{minipage}\hfill
-    \begin{minipage}{0.5\textwidth}
-        \centering
-        \includegraphics[width=0.95\textwidth]{images/simulators/light - ingredients1.png} 
-        \caption{\textit{Измена састојака - 2}}
-        \label{slika:измена_састојака_2}
-    \end{minipage}
+    \captionsetup{justification=centering}
+    \includegraphics[width=0.475\textwidth]{images/simulators/dark - ingredients2.png}
+    \hfill
+    \includegraphics[width=0.475\textwidth]{images/simulators/light - ingredients2.png}
+    \caption{\textit{Измена тренутних састојака за припрему рецепта уз додавање новог састојка - iPhone 13 (лево) и iPhone SE (десно)}}
+    \label{slika:измена_састојака_2_1}
 \end{figure}
 
-\begin{figure}
+\begin{figure} [H]
     \centering
-    \begin{minipage}{0.5\textwidth}
-        \includegraphics[width=0.95\textwidth]{images/simulators/dark - ingredients2.png} 
-        \caption{\textit{Измена састојака са новим састојком - 1}}
-        \label{slika:измена_састојака_2_1}
-        \centering
-    \end{minipage}\hfill
-    \begin{minipage}{0.5\textwidth}
-        \centering
-        \includegraphics[width=0.95\textwidth]{images/simulators/light - ingredients2.png} 
-        \caption{\textit{Измена састојака са новим састојком - 2}}
-        \label{slika:измена_састојака_2_2}
-    \end{minipage}
+    \captionsetup{justification=centering}
+    \includegraphics[width=0.475\textwidth]{images/simulators/dark - steps2.png} 
+    \hfill
+    \includegraphics[width=0.475\textwidth]{images/simulators/light - steps2.png} 
+    \caption{\textit{Измена тренутних корака за припрему рецепта уз додавање новог корака припреме - iPhone 13 (лево) и iPhone SE (десно)}}
+    \label{slika:измена_корака_2_1}
 \end{figure}
 
-\begin{figure}
+\indent Уколико корисник жели, може и обрисати рецепте које је додао кликом на дугме "Обриши рецепт" унутар детаљног приказа рецепта, након чега ће му бити приказано упозорење у којем ће моћи да потврди брисање рецепта или да од њега одустане. Приказ упозорења приликом брисања рецепта налази се на слици \ref{slika:брисање_рецепта_1}.
+
+\begin{figure} [H]
     \centering
-    \begin{minipage}{0.5\textwidth}
-        \includegraphics[width=0.95\textwidth]{images/simulators/dark - steps1.png} 
-        \caption{\textit{Измена корака - 1}}
-        \label{slika:измена_корака_1}
-        \centering
-    \end{minipage}\hfill
-    \begin{minipage}{0.5\textwidth}
-        \centering
-        \includegraphics[width=0.95\textwidth]{images/simulators/light - steps1.png} 
-        \caption{\textit{Измена корака - 2}}
-        \label{slika:измена_корака_2}
-    \end{minipage}
+    \captionsetup{justification=centering}
+    \includegraphics[width=0.475\textwidth]{images/simulators/dark - delete.png} 
+    \hfill
+    \includegraphics[width=0.475\textwidth]{images/simulators/light - delete.png}
+    \caption{\textit{Брисање рецепта - 1}}
+    \label{slika:брисање_рецепта_1} 
 \end{figure}
 
-\begin{figure}
+\subsection{Приказ виџета} 
+
+\indent Корисник може додати виџет на почетни екран из виџет галерије, где се налазе оба типа виџета ове апликације (први тип у све три величине, док је други доступан само у великој величини) који ће детаљније бити објашњени у наставку. Приказ додавања виџета из галерије представљен је на слици \ref{slika:додавање_виџета_1}.
+
+\begin{figure} [H]
     \centering
-    \begin{minipage}{0.5\textwidth}
-        \includegraphics[width=0.95\textwidth]{images/simulators/dark - steps2.png} 
-        \caption{\textit{Измена корака са новим кораком - 1}}
-        \label{slika:измена_корака_2_1}
-        \centering
-    \end{minipage}\hfill
-    \begin{minipage}{0.5\textwidth}
-        \centering
-        \includegraphics[width=0.95\textwidth]{images/simulators/light - steps2.png} 
-        \caption{\textit{Измена корака са новим кораком - 2}}
-        \label{slika:измена_корака_2_2}
-    \end{minipage}
+    \captionsetup{justification=centering}
+    \includegraphics[width=0.475\textwidth]{images/simulators/dark - add widget.png} 
+    \hfill
+    \includegraphics[width=0.475\textwidth]{images/simulators/light - add widget.png} 
+    \caption{\textit{Додавање виџета - 1}}
+    \label{slika:додавање_виџета_1}
 \end{figure}
 
-\indent Уколико корисник жели може и обрисати рецепте које је додао, кликом на дугме "Обриши рецепт" унутар детаљног приказа рецепта, након чега ће му бити приказано упозорење у којем ће моћи да потврди брисање рецепта или да од њега одустане. Приказ упозорења приликом брисања рецепта налази се на сликама \ref{slika:брисање_рецепта_1} и \ref{slika:брисање_рецепта_2}.
+\indent Први тип виџета (назван "Рецепт на клик") доступан је корисницима у све три величине (мала, средња и велика). Мали виџет приказује слику рецепта уз његов назив и може послужити као подсетник кориснику шта је испланирао да спрема или као пречица ка детаљном опису тог рецепта. Средњи виџет је проширење малог виџета који додатно приказује састојке или кораке припреме рецепта, параметар који је конфигурабилан од стране корисника. Приказ малог и средњег виџета може се видети на слици \ref{slika:приказ_виџета_1_1}.
 
-\begin{figure}
+\begin{figure} [H]
     \centering
-    \begin{minipage}{0.5\textwidth}
-        \includegraphics[width=0.95\textwidth]{images/simulators/dark - delete.png} 
-        \caption{\textit{Брисање рецепта - 1}}
-        \label{slika:брисање_рецепта_1}
-        \centering
-    \end{minipage}\hfill
-    \begin{minipage}{0.5\textwidth}
-        \centering
-        \includegraphics[width=0.95\textwidth]{images/simulators/light - delete.png} 
-        \caption{\textit{Брисање рецепта - 2}}
-        \label{slika:брисање_рецепта_2}
-    \end{minipage}
+    \captionsetup{justification=centering}
+    \includegraphics[width=0.475\textwidth]{images/simulators/dark - widgets 1-1.png}
+    \hfill
+    \includegraphics[width=0.475\textwidth]{images/simulators/light - widgets 1-1.png} 
+    \caption{\textit{Приказ виџета мале и средње величине - 1}}
+    \label{slika:приказ_виџета_1_1}
 \end{figure}
 
-\subsection{Приказ виџета}
+\indent Први тип виџета у великој величини приказује рецепт са листама састојака и корака припреме, који су као код средњег виџета конфигурабилни и корисник може изабрати који ће од параметара бити примаран (приказан у дужој листи), уколико тај параметар испуњава услов - дужина листе мора бити већа од шест елемената (уколико услов није испуњен, секундарни параметар ће бити приказан у дужој листи; док уколико ни секундарна листа не испуњава услов, обе листе ће бити приказане у кратком формату и слика рецепта ће заузети средишњи горњи део виџета). Велики виџет првог типа приказан је на слици \ref{slika:приказ_виџета_2_1}.
 
-\indent Корисник може додати виџет на почетни екран из виџет галерије, где се налазе оба типа виџета ове апликације (први тип у све три величине, док је други представљен само у великој величини) који ће детаљније бити објашњени у наставку. Приказ додавања виџета из галерије представљен је на сликама \ref{slika:додавање_виџета_1} и \ref{slika:додавање_виџета_2}.
-
-\begin{figure}
+\begin{figure} [H]
     \centering
-    \begin{minipage}{0.5\textwidth}
-        \includegraphics[width=0.95\textwidth]{images/simulators/dark - add widget.png} 
-        \caption{\textit{Додавање виџета - 1}}
-        \label{slika:додавање_виџета_1}
-        \centering
-    \end{minipage}\hfill
-    \begin{minipage}{0.5\textwidth}
-        \centering
-        \includegraphics[width=0.95\textwidth]{images/simulators/light - add widget.png} 
-        \caption{\textit{Додавање виџета - 2}}
-        \label{slika:додавање_виџета_2}
-    \end{minipage}
+    \captionsetup{justification=centering}
+    \includegraphics[width=0.475\textwidth]{images/simulators/dark - widgets 1-2.png} 
+    \hfill
+    \includegraphics[width=0.475\textwidth]{images/simulators/light - widgets 1-2.png} 
+    \caption{\textit{Приказ првог виџета велике величине - 1}}
+    \label{slika:приказ_виџета_2_1}
 \end{figure}
 
-\indent Први тип виџета (назван "Рецепт на клик") доступан је корисницима у све три величине (мала, средња и велика). Мали виџет приказује слику рецепта уз његов назив и може послужити као подсетник кориснику шта је испланирао да спрема или као пречица ка детаљном опису тог рецепта. Средњи виџет је проширење малог виџета који додатно приказује састоје или кораке припреме рецепта, параметар који је конфигурабилан од стране корисника. Приказ малог и средњег виџета може се видети на сликама \ref{slika:приказ_виџета_1_1} и \ref{slika:приказ_виџета_1_2}.
+\indent Први тип виџета је конфигурабилан, односно корисник може мењати одређене параметре. Код малог виџета може променити рецепт који ће му бити приказан и изабрати неки од рецепата из своје листе омиљених рецепата. Средњи и велики виџет поред избора рецепта омогућавају и одабир примарног параметра (листа састојака или листа корака припреме). Изглед екрана приликом конфигурације средњег виџета приказан је на слици  \ref{slika:измена_виџета_1}.
 
-\begin{figure}
+\begin{figure} [H]
     \centering
-    \begin{minipage}{0.5\textwidth}
-        \includegraphics[width=0.95\textwidth]{images/simulators/dark - widgets 1-1.png} 
-        \caption{\textit{Приказ виџета мале и средње величине - 1}}
-        \label{slika:приказ_виџета_1_1}
-        \centering
-    \end{minipage}\hfill
-    \begin{minipage}{0.5\textwidth}
-        \centering
-        \includegraphics[width=0.95\textwidth]{images/simulators/light - widgets 1-1.png} 
-        \caption{\textit{Приказ виџета мале и средње величине - 2}}
-        \label{slika:приказ_виџета_1_2}
-    \end{minipage}
+    \captionsetup{justification=centering}
+    \includegraphics[width=0.475\textwidth]{images/simulators/dark - change widget.png}
+    \hfill
+    \includegraphics[width=0.475\textwidth]{images/simulators/light - change widget.png} 
+    \caption{\textit{Измена виџета - 1}}
+    \label{slika:измена_виџета_1}
 \end{figure}
 
-\indent Први тип виџета у великој величини приказује рецепт са листом састојака и корака припреме, који су као код средњег виџета конфигурабилни и корисник може изабрати који ће од параметара бити примаран (приказан у дужој листи), уколико тај параметар испуњава услов (дужина листе мора бити већа од шест елемената). Велики виџет првог типа приказан је на сликама \ref{slika:приказ_виџета_2_1} и \ref{slika:приказ_виџета_2_2}.
+\indent Други тип виџета се разликује од првог по неколико карактеристика. Други тип је доступан само у великој величини, није га могуће конфигурисати и приказује четири рецепта. Рецепти који су приказани у овом типу виџета представљени су као скуп четири мала виџета првог типа, рецепти су насумично изабрани из корисникове листе омиљених рецепата, статички су конфигурисани и поновно се учитавају свака 24 сата и тако кориснику предлажу шта би могао да спрема тог дана. Приказ другог типа виџета може се видети на слици \ref{slika:приказ_виџета_3_1}.
 
-\begin{figure}
+\begin{figure} [H]
     \centering
-    \begin{minipage}{0.5\textwidth}
-        \includegraphics[width=0.95\textwidth]{images/simulators/dark - widgets 1-2.png} 
-        \caption{\textit{Приказ првог виџета велике величине - 1}}
-        \label{slika:приказ_виџета_2_1}
-        \centering
-    \end{minipage}\hfill
-    \begin{minipage}{0.5\textwidth}
-        \centering
-        \includegraphics[width=0.95\textwidth]{images/simulators/light - widgets 1-2.png} 
-        \caption{\textit{Приказ првог виџета велике величине - 2}}
-        \label{slika:приказ_виџета_2_2}
-    \end{minipage}
-\end{figure}
-
-\indent Први тип виџета је конфигурабилан, односно корисник може мењати одређене параметре. Код малог виџета може променити рецепт који ће му бити приказан и изабрати неки од рецепата из своје листе омиљених рецепата. Средњи и велики виџет поред избора рецепта омогућавају и одабир параметра који одређује која ће листа бити примарна (листа састојака или листа корака припреме). Изглед екрана приликом конфигурације средњег виџета приказан је на сликама  \ref{slika:измена_виџета_1} и \ref{slika:измена_виџета_2}.
-
-\begin{figure}
-    \centering
-    \begin{minipage}{0.5\textwidth}
-        \includegraphics[width=0.95\textwidth]{images/simulators/dark - change widget.png} 
-        \caption{\textit{Измена виџета - 1}}
-        \label{slika:измена_виџета_1}
-        \centering
-    \end{minipage}\hfill
-    \begin{minipage}{0.5\textwidth}
-        \centering
-        \includegraphics[width=0.95\textwidth]{images/simulators/light - change widget.png} 
-        \caption{\textit{Измена виџета - 2}}
-        \label{slika:измена_виџета_2}
-    \end{minipage}
-\end{figure}
-
-\indent Други тип виџета се разликује од првог по неколико карактеристика. Други тип је доступан само у великој величини, није га могуће конфигурисати и приказује четири рецепта. Рецепти који су приказани у овом типу виџета представљени су као скуп четири мала виџета првог типа, који су статички конфигурисани и поновно се учитавају свака 24 сата и тако кориснику предлажу шта би могао да спрема тог дана. Приказани рецепти се налазе у листи омиљених рецепата корисника, тако да је задовољство корисника изабраним рецептима загарантовано. Приказ другог типа виџета може се видети на сликама \ref{slika:приказ_виџета_3_1} и \ref{slika:приказ_виџета_3_2}.
-
-\begin{figure}
-    \centering
-    \begin{minipage}{0.5\textwidth}
-        \includegraphics[width=0.95\textwidth]{images/simulators/dark - widgets 2-1.png} 
-        \caption{\textit{Приказ другог виџета велике величине - 1}}
-        \label{slika:приказ_виџета_3_1}
-        \centering
-    \end{minipage}\hfill
-    \begin{minipage}{0.5\textwidth}
-        \centering
-        \includegraphics[width=0.95\textwidth]{images/simulators/light - widgets 2-1.png}
-        \caption{\textit{Приказ другог виџета велике величине - 2}}
-        \label{slika:приказ_виџета_3_2}
-    \end{minipage}
+    \captionsetup{justification=centering}
+    \includegraphics[width=0.475\textwidth]{images/simulators/dark - widgets 2-1.png} 
+    \hfill
+    \includegraphics[width=0.475\textwidth]{images/simulators/light - widgets 2-1.png}
+    \caption{\textit{Приказ другог виџета велике величине - 1}}
+    \label{slika:приказ_виџета_3_1}
 \end{figure}
 
 %\subsection{Даљи планови и могућа унапређења}
 % количина састојка као енум, Други тип виџета конфигурација категорије
 
 \chapter{Закључак}
+
+\indent 
 
 \literatura
 

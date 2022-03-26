@@ -303,6 +303,8 @@ extension GeneralViewController : UISearchBarDelegate {
             return
         }
         
+        self.categoryButton.isHidden = true
+        
         self.recipes = self.recipes.filter {
             $0.name.lowercased().contains(searchText.lowercased())
         }
@@ -331,6 +333,7 @@ extension GeneralViewController : UISearchBarDelegate {
     }
 }
 
+//MARK: - UIPickerViewDelegate
 extension GeneralViewController : UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         let category = RecipeCategory(rawValue: row) ?? .snack
@@ -342,6 +345,7 @@ extension GeneralViewController : UIPickerViewDelegate {
     }
 }
 
+//MARK: - UIPickerViewDataSource
 extension GeneralViewController : UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1

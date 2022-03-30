@@ -78,11 +78,13 @@
 
 \chapter{Увод}
 
-\indent Swift jе модеран програмски jезик опште намене, настао 2014. године у оквиру компаниjе Apple. Првенствено jе намењен развоjу апликациjа на њиховим платформама (iOS, iPadOS, macOS, tvOS и watchOS), али jе део развоjа jезика усмерен ка поjедностављивању процеса израде корисничког интерфеjса и увођењу декларативне синтаксе у jезик. У том контексту настало jе радно окружење SwiftUI коjе одликуjе могућност брзог креирања концизних и ефикасних решења. Пример примене радног окружења SwiftUI jе израда виџета намењених оперативним системима iOS, iPadOS и macOS. 
+\indent \textit{Swift} jе модеран програмски jезик опште намене, настао 2014. године у оквиру компаниjе \textit{Apple}. Првенствено jе намењен развоjу апликациjа на њиховим платформама (\textit{iOS}, \textit{iPadOS}, \textit{macOS}, \textit{tvOS} и \textit{watchOS}), али jе део развоjа jезика усмерен ка поjедностављивању процеса израде корисничког интерфеjса и увођењу декларативне синтаксе у jезик. У том контексту настало jе радно окружење \textit{SwiftUI} коjе одликуjе могућност брзог креирања концизних и ефикасних решења. Пример примене радног окружења \textit{SwiftUI} jе израда виџета намењених оперативним системима \textit{iOS}, \textit{iPadOS} и \textit{macOS}. 
 \\
-\indent Виџет, као део мобилне апликациjе, се налази на почетном екрану уређаjа (телефона или таблета) и кориснику приказуjе одабране важне информациjе из те апликациjе. За разлику од виџета у оперативном систему Android, коjи су присутни више од десет година, виџети на Apple платформама су уведени 2020. године, тако да jе и сама технологиjа коjа подржава њихово креирање и даље у активном развоjу.
+\indent Виџет, као део мобилне апликациjе, се налази на почетном екрану уређаjа (телефона или таблета) и кориснику приказуjе одабране важне информациjе из те апликациjе. За разлику од виџета у оперативном систему \textit{Android}, коjи су присутни више од десет година, виџети на \textit{Apple} платформама су уведени 2020. године, тако да jе и сама технологиjа коjа подржава њихово креирање и даље у активном развоjу.
 \\
-\indent Циљ рада jе истраживање и опис карактеристика и могућности коjе пружа програмски jезик Swift, промене и побољшања коjе jе донело радно окружење SwiftUI и приказ новина насталих увођењем виџета (конкретно у оперативном систему iOS). У оквиру рада биће имплементирана iOS апликациjа о кулинарству "Кулинарство - сласно и ефикасно" коришћењем програмског jезика Swift, након чега ће бити креиран одговараjући виџет помоћу радног окружења SwiftUI. Оваj виџет пружаће кориснику помоћ приликом избора и припреме оброка.
+\indent Циљ рада jе истраживање и опис карактеристика и могућности коjе пружа програмски jезик \textit{Swift}, промене и побољшања коjе jе донело радно окружење \textit{SwiftUI} и приказ новина насталих увођењем виџета (конкретно у оперативном систему \textit{iOS}). У оквиру рада је имплементирана \textit{iOS} апликациjа о кулинарству "Кулинарство - сласно и ефикасно" коришћењем програмског jезика \textit{Swift}, након чега је креиран одговараjући виџет помоћу радног окружења \textit{SwiftUI}. Оваj виџет пружа кориснику помоћ приликом избора и припреме оброка.
+\\
+\indent У глави 2 представљен је програмски језик \textit{Swift}, описане су његове карактеристике, основни и напредни концепти, и особине које одликују овај програмски језик. Описано је интегрисано радно окружење (ИРО) \textit{Xcode} у којем се развијају апликације намењене платформама компаније \textit{Apple}, као и радно окружење \textit{SwiftUI}. Глава 3 описује виџете као део мобилне апликације у оперативном систему \textit{iOS}, развој виџета, као и правила и препоруке приликом његовог дизајнирања. Глава 4 представља визуелни приказ и текстуални опис апликације "Кулинарство - сласно и ефикасно", и виџета који је креиран уз апликацију. У другој половини 4. главе на конкретним примерима показана је исправност апликације и виџета. 5. и последња глава представља закључак целокупног рада и приказује могућа даља унапређења апликације.
 
 \chapter{Програмски језик Swift}
 
@@ -1068,15 +1070,11 @@ self.recept.slika = UIImage.slikaRecepta(self.recept.ime)
 \section{SwiftUI}
 \label{sec:SwiftUI}
 
-\indent Део развоjа програмског jезика \textit{Swift} је усмерен ка поjедностављивању процеса израде корисничког интерфеjса и увођењу декларативне синтаксе у jезик. У том контексту настало jе радно окружење \textit{SwiftUI} коjе одликуjе могућност брзог креирања концизних и ефикасних решења.
-
-\subsection{Уопштено}
-
 \indent \textit{SwiftUI} је радно окружење које служи за израду апликација са графичким интерфејсом погодним за све \textit{Apple} платформе, користећи моћ програмског језика \textit{Swift} са што мање кода. Омогућава креирање разноврсних апликација уз само један скуп алата и програмског интерфејса апликације (енг. \textit{Application Programming Interface, API}). 
 
 \subsection{Основна структура}
 
-\indent У склопу овог радног окружења добија се велики број погледа (енг. \textit{views}), контрола и распоредних структура (енг. \textit{layout structures}) који олакшавају процес израде корисничког интерфејса апликације. Уз то садржи и алате за управљање током података од модела до погледа и контролера, које корисник види и може интераговати са њима преко додира, гестова и других типова улазних података у апликацији који се обрађују помоћу обрађивача догађаја. 
+\indent Радно окружење \textit{SwiftUI} пружа велики број погледа (енг. \textit{views}), контрола и распоредних структура (енг. \textit{layout structures}) који олакшавају процес израде корисничког интерфејса апликације. Уз то садржи и алате за управљање током података од модела до погледа и контролера, које корисник види и може интераговати са њима преко додира, гестова и других типова улазних података у апликацији који се обрађују помоћу обрађивача догађаја. 
 \\
 \indent Структура апликације се дефинише помоћу протокола \textit{App} и попуњава се сценама које садрже погледе чији скуп чини кориснички интерфејс апликације. \textit{SwiftUI} омогућава и креирање нових погледа, једини услов је да тај поглед имплементира протокол \textit{View}. Нови поглед се може комбиновати са другим, корисничким или погледима радног окружења, као што су текстуална поља, слике и многи други да би се направили комплекснији погледи који ће бити погодни за све кориснике апликације.
 
@@ -1264,11 +1262,11 @@ struct Content : View {
 
 \chapter{Улога и развој виџетa}
 
-\indent Виџет, као део мобилне апликациjе, се налази на почетном екрану уређаjа (телефона или таблета) и кориснику приказуjе одабране важне информациjе из те апликациjе. За разлику од виџета у оперативном систему \textit{Android}, коjи су присутни више од десет година, виџети на Apple платформама су уведени 2020. године, тако да jе и сама технологиjа коjа подржава њихово креирање и даље у активном развоjу.
+\indent Виџет на уређајима са \textit{Apple} платформом узима један од кључних делова апликације за коју је развијен и приказује га крајњим корисницима. Виџети су за сада једини део апликације који у потпуности мора бити развијен коришћењем окружења \textit{SwiftUI}.
 
 \section{Основно}
 
-\indent Виџет на уређајима са \textit{Apple} платформом узима један од кључних делова апликације за коју је развијен и приказе га крајњим корисницима тамо где ће га најлакше уочити, на \textit{iPhone}-у и \textit{iPad}-у се може налазити на почетном екрану или у делу \textit{Today View}-а, док се на \textit{Mac} уређајима налази у центру за нотификације. Величина виџета није флексибилна као на \textit{Android} уређајима, па тако постоји могућност креирања малих (величина 2x2 места на почетном екрану \textit{iPhone}-а), средњих (2x4) и великих (4x4), а од верзије оперативног система \textit{iPadOS15} екстра великих (4x8) (само за \textit{iPad} уређаје) виџета. 
+\indent Виџет се приказеје крајњим корисницима тамо где ће се најлакше уочити, на \textit{iPhone}-у и \textit{iPad}-у се може налазити на почетном екрану или у делу \textit{Today View}-а, док се на \textit{Mac} уређајима налази у центру за нотификације. Величина виџета није флексибилна као на \textit{Android} уређајима, па тако постоји могућност креирања малих (величина 2x2 места на почетном екрану \textit{iPhone}-а), средњих (2x4) и великих (4x4), а од верзије оперативног система \textit{iPadOS15} екстра великих (4x8) (само за \textit{iPad} уређаје) виџета. 
 \\
 \indent Скуп свих тренутно доступних виџета на уређају налази се у галерији виџета (енг. \textit{widget gallery}), која помаже корисницима приликом одабира конкретне величине и типа виџета (једна апликација може испоручити више типова виџета исте величине). Унутар галерије такође постоји опција за измену виџета у којој корисници могу да контролишу и мењају своје виџете и тиме их прилагоде себи, али само уколико је у току конструисања виџета од стране програмера то омогућено. Више речи о овоме биће у делу \ref{sec:Развој виџетa} - \nameref{sec:Развој виџетa}.
 \\
@@ -1470,9 +1468,9 @@ struct Content : View {
 \begin{figure} [H]
     \centering
     \captionsetup{justification=centering}
-    \includegraphics[width=0.475\textwidth]{images/simulators/dark - overview.png} 
+    \includegraphics[width=0.475\textwidth]{images/simulators/view images/dark - overview.png} 
     \hfill
-    \includegraphics[width=0.475\textwidth]{images/simulators/light - overview.png} 
+    \includegraphics[width=0.475\textwidth]{images/simulators/view images/light - overview.png} 
     \caption{\textit{Почетни екран - iPhone 13 (лево) и iPhone SE (десно)}}
     \label{slika:почетни_екран_1}
 \end{figure}
@@ -1482,9 +1480,9 @@ struct Content : View {
 \begin{figure} [H]
     \centering
     \captionsetup{justification=centering}
-    \includegraphics[width=0.475\textwidth]{images/simulators/dark - category.png} 
+    \includegraphics[width=0.475\textwidth]{images/simulators/view images/dark - category.png} 
     \hfill
-    \includegraphics[width=0.475\textwidth]{images/simulators/light - category.png}
+    \includegraphics[width=0.475\textwidth]{images/simulators/view images/light - category.png}
     \caption{\textit{Избор категорије - iPhone 13 (лево) и iPhone SE (десно)}}
     \label{slika:категорија_1}
 \end{figure}
@@ -1492,9 +1490,9 @@ struct Content : View {
 \begin{figure} [H]
     \centering
     \captionsetup{justification=centering}
-    \includegraphics[width=0.475\textwidth]{images/simulators/dark - choosen category.png}
+    \includegraphics[width=0.475\textwidth]{images/simulators/view images/dark - choosen category.png}
     \hfill
-    \includegraphics[width=0.475\textwidth]{images/simulators/light - choosen category.png}
+    \includegraphics[width=0.475\textwidth]{images/simulators/view images/light - choosen category.png}
     \caption{\textit{Категорија "Главно јело" - iPhone 13 (лево) и iPhone SE (десно)}}
     \label{slika:изабрана_категорија_1}
 \end{figure}
@@ -1504,9 +1502,9 @@ struct Content : View {
 \begin{figure} [H]
     \centering
     \captionsetup{justification=centering}
-    \includegraphics[width=0.475\textwidth]{images/simulators/dark - search.png} 
+    \includegraphics[width=0.475\textwidth]{images/simulators/view images/dark - search.png} 
     \hfill
-    \includegraphics[width=0.475\textwidth]{images/simulators/light - search.png} 
+    \includegraphics[width=0.475\textwidth]{images/simulators/view images/light - search.png} 
     \caption{\textit{Претрага - iPhone 13 (лево) и iPhone SE (десно)}}
     \label{slika:претрага_1}
 \end{figure}
@@ -1516,9 +1514,9 @@ struct Content : View {
 \begin{figure} [H]
     \centering
     \captionsetup{justification=centering}
-    \includegraphics[width=0.475\textwidth]{images/simulators/dark - sort asc.png}
+    \includegraphics[width=0.475\textwidth]{images/simulators/view images/dark - sort asc.png}
     \hfill
-    \includegraphics[width=0.475\textwidth]{images/simulators/light - sort asc.png} 
+    \includegraphics[width=0.475\textwidth]{images/simulators/view images/light - sort asc.png} 
     \caption{\textit{Рецепти сортирани растуће - iPhone 13 (лево) и iPhone SE (десно)}}
     \label{slika:сортирање_растуће_1}
 \end{figure}
@@ -1532,9 +1530,9 @@ struct Content : View {
 \begin{figure} [H]
     \centering
     \captionsetup{justification=centering}
-    \includegraphics[width=0.475\textwidth]{images/simulators/dark - favorites.png} 
+    \includegraphics[width=0.475\textwidth]{images/simulators/view images/dark - favorites.png} 
     \hfill
-    \includegraphics[width=0.475\textwidth]{images/simulators/light - favorites.png}
+    \includegraphics[width=0.475\textwidth]{images/simulators/view images/light - favorites.png}
     \caption{\textit{Омиљени рецепти - iPhone 13 (лево) и iPhone SE (десно)}}
     \label{slika:омиљени_1}
 \end{figure}
@@ -1544,9 +1542,9 @@ struct Content : View {
 \begin{figure} [H]
     \centering
     \captionsetup{justification=centering}
-    \includegraphics[width=0.475\textwidth]{images/simulators/dark - my recipes.png} 
+    \includegraphics[width=0.475\textwidth]{images/simulators/view images/dark - my recipes.png} 
     \hfill
-    \includegraphics[width=0.475\textwidth]{images/simulators/light - my recipes.png}
+    \includegraphics[width=0.475\textwidth]{images/simulators/view images/light - my recipes.png}
     \caption{\textit{Моји рецепти - iPhone 13 (лево) и iPhone SE (десно)}}
     \label{slika:моји_рецепти_1}
 \end{figure}
@@ -1558,9 +1556,9 @@ struct Content : View {
 \begin{figure} [H]
     \centering
     \captionsetup{justification=centering}
-    \includegraphics[width=0.475\textwidth]{images/simulators/dark - detail4.png} 
+    \includegraphics[width=0.475\textwidth]{images/simulators/view images/dark - detail4.png} 
     \hfill
-    \includegraphics[width=0.475\textwidth]{images/simulators/light - detail4.png} 
+    \includegraphics[width=0.475\textwidth]{images/simulators/view images/light - detail4.png} 
     \caption{\textit{Детаљан приказ рецепта - iPhone 13 (лево) и iPhone SE (десно)}}
     \label{slika:детаљан_рецепт_1}
 \end{figure}
@@ -1568,9 +1566,9 @@ struct Content : View {
 \begin{figure} [H]
     \centering
     \captionsetup{justification=centering}
-    \includegraphics[width=0.475\textwidth]{images/simulators/dark - detail6.png} 
+    \includegraphics[width=0.475\textwidth]{images/simulators/view images/dark - detail6.png} 
     \hfill
-    \includegraphics[width=0.475\textwidth]{images/simulators/light - detail6.png} 
+    \includegraphics[width=0.475\textwidth]{images/simulators/view images/light - detail6.png} 
     \caption{\textit{Детаљан приказ рецепта за 6 особа - iPhone 13 (лево) и iPhone SE (десно)}}
     \label{slika:детаљан_рецепт_2_1}
 \end{figure}
@@ -1583,9 +1581,9 @@ struct Content : View {
 \begin{figure} [H]
     \centering
     \captionsetup{justification=centering}
-    \includegraphics[width=0.475\textwidth]{images/simulators/dark - new.png} 
+    \includegraphics[width=0.475\textwidth]{images/simulators/view images/dark - new.png} 
     \hfill
-    \includegraphics[width=0.475\textwidth]{images/simulators/light - new.png} 
+    \includegraphics[width=0.475\textwidth]{images/simulators/view images/light - new.png} 
     \caption{\textit{Нов рецепт - iPhone 13 (лево) и iPhone SE (десно)}}
     \label{slika:нов_рецепт_1}
 \end{figure}
@@ -1598,9 +1596,9 @@ struct Content : View {
 \begin{figure} [H]
     \centering
     \captionsetup{justification=centering}
-    \includegraphics[width=0.475\textwidth]{images/simulators/dark - change.png} 
+    \includegraphics[width=0.475\textwidth]{images/simulators/view images/dark - change.png} 
     \hfill
-    \includegraphics[width=0.475\textwidth]{images/simulators/light - change.png} 
+    \includegraphics[width=0.475\textwidth]{images/simulators/view images/light - change.png} 
     \caption{\textit{Измена рецепта - iPhone 13 (лево) и iPhone SE (десно)}}
     \label{slika:измена_рецепта_1}
 \end{figure}
@@ -1608,9 +1606,9 @@ struct Content : View {
 \begin{figure} [H]
     \centering
     \captionsetup{justification=centering}
-    \includegraphics[width=0.475\textwidth]{images/simulators/dark - ingredients2.png}
+    \includegraphics[width=0.475\textwidth]{images/simulators/view images/dark - ingredients2.png}
     \hfill
-    \includegraphics[width=0.475\textwidth]{images/simulators/light - ingredients2.png}
+    \includegraphics[width=0.475\textwidth]{images/simulators/view images/light - ingredients2.png}
     \caption{\textit{Измена тренутних састојака за припрему рецепта уз додавање новог састојка - iPhone 13 (лево) и iPhone SE (десно)}}
     \label{slika:измена_састојака_2_1}
 \end{figure}
@@ -1618,9 +1616,9 @@ struct Content : View {
 \begin{figure} [H]
     \centering
     \captionsetup{justification=centering}
-    \includegraphics[width=0.475\textwidth]{images/simulators/dark - steps2.png} 
+    \includegraphics[width=0.475\textwidth]{images/simulators/view images/dark - steps2.png} 
     \hfill
-    \includegraphics[width=0.475\textwidth]{images/simulators/light - steps2.png} 
+    \includegraphics[width=0.475\textwidth]{images/simulators/view images/light - steps2.png} 
     \caption{\textit{Измена тренутних корака за припрему рецепта уз додавање новог корака припреме - iPhone 13 (лево) и iPhone SE (десно)}}
     \label{slika:измена_корака_2_1}
 \end{figure}
@@ -1630,10 +1628,10 @@ struct Content : View {
 \begin{figure} [H]
     \centering
     \captionsetup{justification=centering}
-    \includegraphics[width=0.475\textwidth]{images/simulators/dark - delete.png} 
+    \includegraphics[width=0.475\textwidth]{images/simulators/view images/dark - delete.png} 
     \hfill
-    \includegraphics[width=0.475\textwidth]{images/simulators/light - delete.png}
-    \caption{\textit{Брисање рецепта - 1}}
+    \includegraphics[width=0.475\textwidth]{images/simulators/view images/light - delete.png}
+    \caption{\textit{Брисање рецепта - iPhone 13 (лево) и iPhone SE (десно)}}
     \label{slika:брисање_рецепта_1} 
 \end{figure}
 
@@ -1644,10 +1642,10 @@ struct Content : View {
 \begin{figure} [H]
     \centering
     \captionsetup{justification=centering}
-    \includegraphics[width=0.475\textwidth]{images/simulators/dark - add widget.png} 
+    \includegraphics[width=0.475\textwidth]{images/simulators/view images/dark - add widget.png} 
     \hfill
-    \includegraphics[width=0.475\textwidth]{images/simulators/light - add widget.png} 
-    \caption{\textit{Додавање виџета - 1}}
+    \includegraphics[width=0.475\textwidth]{images/simulators/view images/light - add widget.png} 
+    \caption{\textit{Додавање виџета - iPhone 13 (лево) и iPhone SE (десно)}}
     \label{slika:додавање_виџета_1}
 \end{figure}
 
@@ -1656,10 +1654,10 @@ struct Content : View {
 \begin{figure} [H]
     \centering
     \captionsetup{justification=centering}
-    \includegraphics[width=0.475\textwidth]{images/simulators/dark - widgets 1-1.png}
+    \includegraphics[width=0.475\textwidth]{images/simulators/view images/dark - widgets 1-1.png}
     \hfill
-    \includegraphics[width=0.475\textwidth]{images/simulators/light - widgets 1-1.png} 
-    \caption{\textit{Приказ виџета мале и средње величине - 1}}
+    \includegraphics[width=0.475\textwidth]{images/simulators/view images/light - widgets 1-1.png} 
+    \caption{\textit{Приказ виџета мале и средње величине - iPhone 13 (лево) и iPhone SE (десно)}}
     \label{slika:приказ_виџета_1_1}
 \end{figure}
 
@@ -1668,10 +1666,10 @@ struct Content : View {
 \begin{figure} [H]
     \centering
     \captionsetup{justification=centering}
-    \includegraphics[width=0.475\textwidth]{images/simulators/dark - widgets 1-2.png} 
+    \includegraphics[width=0.475\textwidth]{images/simulators/view images/dark - widgets 1-2.png} 
     \hfill
-    \includegraphics[width=0.475\textwidth]{images/simulators/light - widgets 1-2.png} 
-    \caption{\textit{Приказ првог виџета велике величине - 1}}
+    \includegraphics[width=0.475\textwidth]{images/simulators/view images/light - widgets 1-2.png} 
+    \caption{\textit{Приказ првог виџета велике величине - iPhone 13 (лево) и iPhone SE (десно)}}
     \label{slika:приказ_виџета_2_1}
 \end{figure}
 
@@ -1680,10 +1678,10 @@ struct Content : View {
 \begin{figure} [H]
     \centering
     \captionsetup{justification=centering}
-    \includegraphics[width=0.475\textwidth]{images/simulators/dark - change widget.png}
+    \includegraphics[width=0.475\textwidth]{images/simulators/view images/dark - change widget.png}
     \hfill
-    \includegraphics[width=0.475\textwidth]{images/simulators/light - change widget.png} 
-    \caption{\textit{Измена виџета - 1}}
+    \includegraphics[width=0.475\textwidth]{images/simulators/view images/light - change widget.png} 
+    \caption{\textit{Измена виџета - iPhone 13 (лево) и iPhone SE (десно)}}
     \label{slika:измена_виџета_1}
 \end{figure}
 
@@ -1692,11 +1690,124 @@ struct Content : View {
 \begin{figure} [H]
     \centering
     \captionsetup{justification=centering}
-    \includegraphics[width=0.475\textwidth]{images/simulators/dark - widgets 2-1.png} 
+    \includegraphics[width=0.475\textwidth]{images/simulators/view images/dark - widgets 2-1.png} 
     \hfill
-    \includegraphics[width=0.475\textwidth]{images/simulators/light - widgets 2-1.png}
-    \caption{\textit{Приказ другог виџета велике величине - 1}}
+    \includegraphics[width=0.475\textwidth]{images/simulators/view images/light - widgets 2-1.png}
+    \caption{\textit{Приказ другог виџета велике величине - iPhone 13 (лево) и iPhone SE (десно)}}
     \label{slika:приказ_виџета_3_1}
+\end{figure}
+
+\subsection{Тестирање исправности апликације}
+\indent На слици \ref{slika:приказ_свих_рецепата} корисник може видети све рецепте који тренутно постоје унутар апликације. На слици \ref{slika:приказ_избора_категорије_претраге_рецепата} (лево) може се видети приказ рецепата који припадају категорији "Главно јело" док се на истој слици (десно) налазе рецепти који задовољавају тренутни услов претраге (име мора садржати стринг "М"). 
+
+% приказ свих рецепата
+\begin{figure} [H]
+    \centering
+    \captionsetup{justification=centering}
+    \includegraphics[width=0.475\textwidth]{images/simulators/testing images/general tab.png}
+    \caption{\textit{Приказ свих рецепата}}
+    \label{slika:приказ_свих_рецепата}
+\end{figure}
+
+% избор категорије
+% претрага
+\begin{figure} [H]
+    \centering
+    \captionsetup{justification=centering}
+    \includegraphics[width=0.475\textwidth]{images/simulators/testing images/choosen category.png}
+    \hfill
+    \includegraphics[width=0.475\textwidth]{images/simulators/testing images/search.png}
+    \caption{\textit{Приказ рецепата из категорије "Главно јело" (лево), претрага рецепта по стрингу "М" (десно)}}
+    \label{slika:приказ_избора_категорије_претраге_рецепата}
+\end{figure}
+
+\indent Слика \ref{slika:приказ_сортирања} приказује изглед почетног екрана када су рецепти сортирани по времену припреме (растуће на левој слици и опадајуће на десној). Када је корисник изабрао жељени рецепт, биће му приказан детаљан опис рецепта приказан на слици \ref{slika:детаљан_приказ_рецепта} (лево), а на истој слици десно је детаљан приказ тог рецепта за 6 особа уз пропратне промене (повећана количина потребних састојака и времена припреме). На слици \ref{slika:приказ_омиљених_рецепата} су приказана преостала два главна дела апликације, "Омиљени рецепти" лево и "Моји рецепти" десно.
+
+% сортирање
+\begin{figure} [H]
+    \centering
+    \captionsetup{justification=centering}
+    \includegraphics[width=0.475\textwidth]{images/simulators/testing images/sorting asc.png}
+    \hfill
+    \includegraphics[width=0.475\textwidth]{images/simulators/testing images/sorting desc.png}
+    \caption{\textit{Сортирање по времену припреме - растуће (лево) и опарајуће (десно)}}
+    \label{slika:приказ_сортирања}
+\end{figure}
+
+% детаљан приказ рецепта
+% манипулисање бројем особа
+\begin{figure} [H]
+    \centering
+    \captionsetup{justification=centering}
+    \includegraphics[width=0.475\textwidth]{images/simulators/testing images/detail recipe 4.png}
+    \hfill
+    \includegraphics[width=0.475\textwidth]{images/simulators/testing images/detail recipe 6.png}
+    \caption{\textit{Детаљан приказ рецепта}}
+    \label{slika:детаљан_приказ_рецепта}
+\end{figure}
+
+% приказ омилјених рецепата
+% приказ мојих рецепата
+\begin{figure} [H]
+    \centering
+    \captionsetup{justification=centering}
+    \includegraphics[width=0.475\textwidth]{images/simulators/testing images/favorite recipes.png}
+    \hfill
+    \includegraphics[width=0.475\textwidth]{images/simulators/testing images/my recipes.png}
+    \caption{\textit{Омиљени рецепти (лево) и моји рецепти (десно)}}
+    \label{slika:приказ_омиљених_рецепата}
+\end{figure}
+
+\indent У делу "Моји рецепти" корисник може додати нов рецепт. Креирање новог рецепта и његов детаљан приказ може се видети на слици \ref{slika:приказ_креирања_рецепта}. Уз додавање нових рецепата, тренутни корисник може изменити рецепте које је већ додао што је и приказано на слици \ref{slika:приказ_измењеног_рецепта}, лево се може видети измењено време припреме, број особа и додат нови састојак (2 прстохвата першуна), док је на десној слици приказан нови корак припреме (додати першун). Још једна могућност корисника је да обрише рецепт који је додао, приказано на слици \ref{slika:приказ_брисања_рецепта}, где се може видети да након брисања рецепта "Кокице" (лево), рецепт се више не налази у листи "Моји рецепти" (десно).
+
+% додавање новог рецепта
+\begin{figure} [H]
+    \centering
+    \captionsetup{justification=centering}
+    \includegraphics[width=0.475\textwidth]{images/simulators/testing images/create recipe.png}
+    \hfill
+    \includegraphics[width=0.475\textwidth]{images/simulators/testing images/new recipe.png}
+    \caption{\textit{Креирање новог рецепта}}
+    \label{slika:приказ_креирања_рецепта}
+\end{figure}
+
+% измена постојећег рецепта (основно, састојци, кораци)
+\begin{figure} [H]
+    \centering
+    \captionsetup{justification=centering}
+    \includegraphics[width=0.475\textwidth]{images/simulators/testing images/detail recipe change 1.png}
+    \hfill
+    \includegraphics[width=0.475\textwidth]{images/simulators/testing images/detail recipe change 2.png}
+    \caption{\textit{Измена рецепта}}
+    \label{slika:приказ_измењеног_рецепта}
+\end{figure}
+
+
+% брисање рецепта
+\begin{figure} [H]
+    \centering
+    \captionsetup{justification=centering}
+    \includegraphics[width=0.475\textwidth]{images/simulators/testing images/delete recipe.png}
+    \hfill
+    \includegraphics[width=0.475\textwidth]{images/simulators/testing images/deleted recipe.png}
+    \caption{\textit{Брисање рецепта}}
+    \label{slika:приказ_брисања_рецепта}
+\end{figure}
+
+% измена конфигурације виџета
+
+\indent Када корисник дода виџет средње величине на почетни екран подразумевани рецепт ће бити приказан, у овом случају то је "Омлет", док је примарни параметар "Састојци". Приказ додатог виџета на почетни екран може се видети на слици \ref{slika:приказ_конфигурације_виџета} (лево). Корисник може променити који ће рецепт бити приказан и изабрати неки из листе омиљених рецепата, приказано на истој слици у средини. Такође може променити и примарни параметар и поставити да то буде "Припрема", приказано на слици десно.
+
+\begin{figure} [H]
+    \centering
+    \captionsetup{justification=centering}
+    \includegraphics[width=0.3\textwidth]{images/simulators/testing images/added widget.png}
+    \hfill
+    \includegraphics[width=0.3\textwidth]{images/simulators/testing images/changed recipe widget.png}
+    \hfill
+    \includegraphics[width=0.3\textwidth]{images/simulators/testing images/changed parameter widget.png}
+    \caption{\textit{Конфигурација виџета}}
+    \label{slika:приказ_конфигурације_виџета}
 \end{figure}
 
 %\subsection{Даљи планови и могућа унапређења}

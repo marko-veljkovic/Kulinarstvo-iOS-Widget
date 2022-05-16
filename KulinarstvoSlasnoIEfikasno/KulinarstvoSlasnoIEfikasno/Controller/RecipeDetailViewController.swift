@@ -232,7 +232,7 @@ class RecipeDetailViewController: UIViewController {
     
     @IBAction func isFavoritedRecipeSwitched(_ sender: Any) {
         // If user click on switch and add/remove recipe from favorites, recipe data will be refreshed
-        let newRecipe = self.recipe
+        var newRecipe = self.recipe
         newRecipe.isFavorite = !(newRecipe.isFavorite ?? true)
         guard let oldRecipeIndex = Datafeed.shared.recipes.firstIndex(where: {
             $0.name == self.recipe.name

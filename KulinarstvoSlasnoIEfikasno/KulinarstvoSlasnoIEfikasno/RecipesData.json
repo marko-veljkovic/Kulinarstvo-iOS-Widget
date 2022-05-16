@@ -12,7 +12,7 @@
             "numOfPersons": 4
         },
         {
-            "name": "Spagete karbonara",
+            "name": "Špagete karbonara",
             "prepTime": 45,
             "cookTime": 15,
             "ingredients": ["200_grama_slanina", "400_grama_pilece belo", "400_grama_testenina", "250_ml_pavlaka za kuvanje"],
@@ -23,7 +23,7 @@
             "numOfPersons": 4
         },
         {
-            "name": "Pirinac",
+            "name": "Pirinač",
             "prepTime": 2,
             "cookTime": 15,
             "ingredients": ["200_grama_Pirinac"],
@@ -34,7 +34,7 @@
             "numOfPersons": 4
         },
         {
-            "name": "Mesano povrce",
+            "name": "Mešano povrće",
             "prepTime": 5,
             "cookTime": 25,
             "ingredients": [],
@@ -45,7 +45,7 @@
             "numOfPersons": 4
         },
         {
-            "name": "Sendvic sa pecenicom",
+            "name": "Sendvič sa pečenicom",
             "prepTime": 10,
             "cookTime": 0,
             "ingredients": [],
@@ -59,15 +59,15 @@
             "name": "Cezar salata",
             "prepTime": 45,
             "cookTime": 35,
-            "ingredients": ["400_grama_slanina", "1_kilogram_pilece belo", "2_glavice_zelena salata", "400_grama_cheri paradajz", "6_kriski_hleba", "600_grama_cezar preliva"],
-            "steps": ["Iseckati slaninu na kockice", "Proprziti slaninu", "Iseckati pilece belo na kockice", "Proprziti pilece belo", "Iseckati hleba na kockice", "Umedjuvremenu nacepkati listove zelene salate u ciniju", "Naseci cheri paradajz i dodati u ciniju", "Kada hleb zapece skloniti sa ringle i sve dodati u ciniju", "Dodati cezar preliv", "Promesati sve i uzivati"],
+            "ingredients": ["400_grama_slanina", "1_kilogram_pileće belo", "2_glavice_zelena salata", "400_grama_cheri paradajz", "6_kriški_hleba", "600_grama_cezar preliva"],
+            "steps": ["Iseckati slaninu na kockice", "Propržiti slaninu", "Iseckati pileće belo na kockice", "Propržiti pileće belo", "Iseckati hleba na kockice", "U međuvremenu nacepkati listove zelene salate u činiju", "Naseći cheri paradajz i dodati u činiju", "Kada hleb zapeče skloniti sa ringle i sve dodati u činiju", "Dodati cezar preliv", "Promešati sve i uživati"],
             "isFavorite": true,
             "isMyRecipe": true,
             "category": 7,
             "numOfPersons": 4
         },
         {
-            "name": "Peceni krompir",
+            "name": "Pečeni krompir",
             "prepTime": 10,
             "cookTime": 45,
             "ingredients": [],
@@ -111,7 +111,7 @@
             "numOfPersons": 4
         },
         {
-            "name": "Rizoto sa sampinjonima",
+            "name": "Rižoto sa šampinjonima",
             "prepTime": 35,
             "cookTime": 20,
             "ingredients": [],
@@ -133,7 +133,7 @@
             "numOfPersons": 4
         },
         {
-            "name": "Rizoto sa piletinom i cetiri vrste sira",
+            "name": "Rižoto sa piletinom i četiri vrste sira",
             "prepTime": 30,
             "cookTime": 30,
             "ingredients": [],

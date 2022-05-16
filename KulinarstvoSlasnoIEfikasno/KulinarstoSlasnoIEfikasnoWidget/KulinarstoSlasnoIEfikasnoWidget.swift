@@ -18,13 +18,10 @@ struct Provider: IntentTimelineProvider {
         self.loadDataFile()
         var entries: [SimpleEntry] = []
 
-        // Generate a timeline consisting of five entries an hour apart, starting from the current date.
+        // Generate a timeline, starting from the current date.
         let currentDate = Date()
-        for hourOffset in 0 ..< 5 {
-            let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
-            let entry = SimpleEntry(date: entryDate, configuration: configuration, recipe: recipe(for: configuration), parameterToShow: parametereToShow(for: configuration))
-            entries.append(entry)
-        }
+        let entry = SimpleEntry(date: currentDate, configuration: configuration, recipe: recipe(for: configuration), parameterToShow: parametereToShow(for: configuration))
+        entries.append(entry)
 
         let timeline = Timeline(entries: entries, policy: .atEnd)
         completion(timeline)
@@ -56,36 +53,29 @@ struct Provider: IntentTimelineProvider {
             Datafeed.shared.recipeModel.loadFile()
         }
     }
-    
-//    func firstRecipeInSecondWidget(for configuration: ConfigurationIntent) -> Recipe {
-//        self.loadDataFile()
-//        return Datafeed.shared.favRecipes.first(where: {
-//            $0.name == configuration.Recipe?.identifier
-//        }) ?? Datafeed.shared.favRecipes[0]
-//    }
 }
 
-struct SecondProvider : TimelineProvider {
+struct RandomRecipeProvider : TimelineProvider {
     func loadDataFile() {
         if !Datafeed.shared.recipeModel.isLoaded {
             Datafeed.shared.recipeModel.loadFile()
         }
     }
     
-    func placeholder(in context: Context) -> SecondEntry {
+    func placeholder(in context: Context) -> RandomRecipeEntry {
         self.loadDataFile()
-        return SecondEntry(date: Date(), firstRecipe: Datafeed.shared.favRecipes[0], secondRecipe: Datafeed.shared.favRecipes[0], thirdRecipe: Datafeed.shared.favRecipes[0], fourthRecipe: Datafeed.shared.favRecipes[0])
+        return RandomRecipeEntry(date: Date(), firstRecipe: Datafeed.shared.favRecipes[0], secondRecipe: Datafeed.shared.favRecipes[0], thirdRecipe: Datafeed.shared.favRecipes[0], fourthRecipe: Datafeed.shared.favRecipes[0])
     }
     
-    func getSnapshot(in context: Context, completion: @escaping (SecondEntry) -> Void) {
+    func getSnapshot(in context: Context, completion: @escaping (RandomRecipeEntry) -> Void) {
         self.loadDataFile()
-        let entry = SecondEntry(date: Date(), firstRecipe: Datafeed.shared.favRecipes[0], secondRecipe: Datafeed.shared.favRecipes[0], thirdRecipe: Datafeed.shared.favRecipes[0], fourthRecipe: Datafeed.shared.favRecipes[0])
+        let entry = RandomRecipeEntry(date: Date(), firstRecipe: Datafeed.shared.favRecipes[0], secondRecipe: Datafeed.shared.favRecipes[0], thirdRecipe: Datafeed.shared.favRecipes[0], fourthRecipe: Datafeed.shared.favRecipes[0])
         completion(entry)
     }
     
-    func getTimeline(in context: Context, completion: @escaping (Timeline<SecondEntry>) -> Void) {
+    func getTimeline(in context: Context, completion: @escaping (Timeline<RandomRecipeEntry>) -> Void) {
         self.loadDataFile()
-        var entries: [SecondEntry] = []
+        var entries: [RandomRecipeEntry] = []
         
         let currentDate = Date()
         for hourOffset in 0 ..< 5 {
@@ -122,7 +112,7 @@ struct SecondProvider : TimelineProvider {
                 tmpFavoriteRecipesArray.remove(at: fourthRandomInt)
             }
             
-            let entry = SecondEntry(date: entryDate, firstRecipe: firstRecipe, secondRecipe: secondRecipe, thirdRecipe: thirdRecipe, fourthRecipe: fourthRecipe)
+            let entry = RandomRecipeEntry(date: entryDate, firstRecipe: firstRecipe, secondRecipe: secondRecipe, thirdRecipe: thirdRecipe, fourthRecipe: fourthRecipe)
             entries.append(entry)
         }
         
@@ -138,7 +128,7 @@ struct SimpleEntry: TimelineEntry {
     let parameterToShow: String
 }
 
-struct SecondEntry: TimelineEntry {
+struct RandomRecipeEntry: TimelineEntry {
     public let date: Date
     let firstRecipe: Recipe
     let secondRecipe: Recipe
@@ -192,8 +182,8 @@ struct Kulinarstvo_widgetEntryView : View {
 }
 
 // Main view that is presented to user relative to selected widget size
-struct KulinarstvoSecondWidgetEntryView : View {
-    var entry: SecondProvider.Entry
+struct KulinarstvoRandomRecipeWidgetEntryView : View {
+    var entry: RandomRecipeProvider.Entry
     
     @Environment(\.widgetFamily) var widgetFamily
     @Environment(\.colorScheme) var colorScheme
@@ -202,7 +192,7 @@ struct KulinarstvoSecondWidgetEntryView : View {
     var body: some View {
         switch widgetFamily {
         case .systemLarge:
-            RecipeSecondLargeView(firstRecipe: entry.firstRecipe, secondRecipe: entry.secondRecipe, thirdRecipe: entry.thirdRecipe, fourthRecipe: entry.fourthRecipe)
+            RandomRecipeLargeView(firstRecipe: entry.firstRecipe, secondRecipe: entry.secondRecipe, thirdRecipe: entry.thirdRecipe, fourthRecipe: entry.fourthRecipe)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(colorScheme == .dark ? Color(AppTheme.backgroundUniversalGreen) : .white)
         default:
@@ -360,7 +350,7 @@ struct RecipeLargeView: View {
     }
 }
 
-struct RecipeSecondLargeView: View {
+struct RandomRecipeLargeView: View {
     var firstRecipe: Recipe
     var secondRecipe: Recipe
     var thirdRecipe: Recipe
@@ -404,18 +394,18 @@ struct KulinarstvoWidget: Widget {
     }
 }
 
-// Main struct for second widget type
-struct KulinarstvoSecondWidget: Widget {
+// Main struct for random recipe widget type
+struct KulinarstvoRandomRecipeWidget: Widget {
     @Environment(\.colorScheme) var colorScheme
     
-    let kind: String = "KulinarstvoSlasnoIEfikasnoSecondWidget"
+    let kind: String = "KulinarstvoSlasnoIEfikasnoRandomRecipeWidget"
     
     var body: some WidgetConfiguration {
-        StaticConfiguration(kind: kind, provider: SecondProvider()) { entry in
-            KulinarstvoSecondWidgetEntryView(entry: entry)
+        StaticConfiguration(kind: kind, provider: RandomRecipeProvider()) { entry in
+            KulinarstvoRandomRecipeWidgetEntryView(entry: entry)
         }
         .configurationDisplayName("Nasumični recepti")
-        .description("Nemaš ideju šta da jedeš danas? Neka ti aplikacija kaže")
+        .description("Nemaš ideju šta da jedeš danas? Neka ti aplikacija preporuči")
         .supportedFamilies([.systemLarge])
     }
 }
@@ -425,7 +415,7 @@ struct KulinarstvoWidgetBundle : WidgetBundle {
     @WidgetBundleBuilder
     var body: some Widget {
         KulinarstvoWidget()
-        KulinarstvoSecondWidget()
+        KulinarstvoRandomRecipeWidget()
     }
 }
 
@@ -438,7 +428,7 @@ struct Kulinarstvo_widget_Previews: PreviewProvider {
                 .previewContext(WidgetPreviewContext(family: .systemLarge))
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
 //                .preferredColorScheme(.dark)
-            KulinarstvoSecondWidgetEntryView(entry: SecondEntry(date: Date(), firstRecipe: RecipeModel.testData[0], secondRecipe: RecipeModel.testData[0], thirdRecipe: RecipeModel.testData[0], fourthRecipe: RecipeModel.testData[0]))
+            KulinarstvoRandomRecipeWidgetEntryView(entry: RandomRecipeEntry(date: Date(), firstRecipe: RecipeModel.testData[0], secondRecipe: RecipeModel.testData[0], thirdRecipe: RecipeModel.testData[0], fourthRecipe: RecipeModel.testData[0]))
                 .previewContext(WidgetPreviewContext(family: .systemLarge))
             
 //            KulinarstvoSecondWidgetEntryView(entry: SecondEntry(date: Date(), firstRecipe: RecipeModel.testData[0], secondRecipe: RecipeModel.testData[1], thirdRecipe: RecipeModel.testData[2], fourthRecipe: RecipeModel.testData[3]))

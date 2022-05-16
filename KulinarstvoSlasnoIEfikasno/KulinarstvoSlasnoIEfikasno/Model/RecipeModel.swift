@@ -20,7 +20,7 @@ public struct Ingredient : Codable {
     }
 }
 
-public class Recipe : Codable {
+public struct Recipe : Codable {
     var name: String
     var prepTime: Int // In minutes
     var cookTime: Int // In minutes
@@ -163,7 +163,7 @@ extension RecipeModel {
             return Recipe(name: "", prepTime: 0, cookTime: 0, ingredients: [], steps: [], isFavorite: false, category: .snack)
         }
         
-        let rec = Recipe(name: "", prepTime: 0, cookTime: 0, ingredients: [], steps: [], isFavorite: false, category: .snack)
+        var rec = Recipe(name: "", prepTime: 0, cookTime: 0, ingredients: [], steps: [], isFavorite: false, category: .snack)
         for recipeKey in r.keys {
             switch recipeKey {
             case "name":

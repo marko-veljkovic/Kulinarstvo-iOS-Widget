@@ -20,13 +20,16 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tabBar contentMode="scaleToFill" barStyle="black" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zvY-hL-GVk">
-                    <rect key="frame" x="0.0" y="779" width="414" height="83"/>
+                    <rect key="frame" x="0.0" y="813" width="414" height="49"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <items>
                         <tabBarItem title="Pregled" id="X6o-7Z-wWI">
                             <imageReference key="selectedImage" image="list.dash" catalog="system" symbolScale="medium" renderingMode="original"/>
                         </tabBarItem>
-                        <tabBarItem systemItem="favorites" id="Jr8-kT-Zg8"/>
+                        <tabBarItem title="Omiljeni recepti" id="PsZ-hh-rr3">
+                            <imageReference key="selectedImage" image="star.fill" catalog="system" symbolScale="medium" renderingMode="original"/>
+                        </tabBarItem>
+                        <tabBarItem title="Moji recepti" selectedImage="person.fill" catalog="system" id="Jr8-kT-Zg8"/>
                     </items>
                 </tabBar>
             </subviews>
@@ -42,6 +45,8 @@
     </objects>
     <resources>
         <image name="list.dash" catalog="system" width="128" height="85"/>
+        <image name="person.fill" catalog="system" width="128" height="120"/>
+        <image name="star.fill" catalog="system" width="128" height="116"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

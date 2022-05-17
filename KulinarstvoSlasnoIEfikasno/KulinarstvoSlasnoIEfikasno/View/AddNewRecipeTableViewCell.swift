@@ -47,4 +47,8 @@ extension AddNewRecipeTableViewCell : UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
         self.delegate?.textFieldDidEndEditingInCell(self, self.superview as? UITableView, textField.text, textField, isMeasure: textField === self.cellTextField, isIngredient: textField === self.ingredientTextField)
     }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+    }
 }

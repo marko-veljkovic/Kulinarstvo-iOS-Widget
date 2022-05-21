@@ -65,11 +65,18 @@ class IngrediantsStepsViewController: UIViewController {
         self.stepsNumber = self.stepsMap.count
         
         self.setColors()
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
+        self.view.addGestureRecognizer(tap)
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         self.itemsTableView.reloadData()
+    }
+    
+    @objc func dismissKeyboard() {
+        self.view.endEditing(true)
     }
     
     func setColors() {
@@ -94,6 +101,7 @@ class IngrediantsStepsViewController: UIViewController {
     
     @IBAction func saveButtonClicked(_ sender: Any) {
         self.isSaveButtonClicked = true
+        
         (self.itemsTableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? AddNewRecipeTableViewCell)?.cellTextField?.becomeFirstResponder()
         (self.itemsTableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? AddNewRecipeTableViewCell)?.cellTextField?.resignFirstResponder()
         // Added this line so that eventualy current selected text field in table view will lose focus and its value will be saved in map and sent further
@@ -123,6 +131,7 @@ extension IngrediantsStepsViewController : UITableViewDataSource {
             cell.ingredientTextField.placeholder = "Sastojak"
             
             [cell.quantityTextField, cell.cellTextField, cell.ingredientTextField].forEach {
+//                $0?.delegate = self
                 $0?.textColor = AppTheme.setTextColor()
             }
             
@@ -145,6 +154,7 @@ extension IngrediantsStepsViewController : UITableViewDataSource {
             else {
                 cell.cellTextField.placeholder = "Korak"
             }
+//            cell.cellTextField.delegate = self
             cell.cellTextField.textColor = AppTheme.setTextColor()
             cell.cellStackView.spacing = 0
         }
@@ -219,5 +229,11 @@ extension IngrediantsStepsViewController : AddNewRecipeTableViewCellDelegate {
             self.navigationController?.popViewController(animated: true)
             self.dismiss(animated: true, completion: nil)
         }
+    }
+}
+
+extension IngrediantsStepsViewController : UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
     }
 }

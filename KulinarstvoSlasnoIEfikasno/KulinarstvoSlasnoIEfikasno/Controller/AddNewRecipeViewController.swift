@@ -89,6 +89,9 @@ class AddNewRecipeViewController : UIViewController {
         }
         
         self.setColors()
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
+        self.view.addGestureRecognizer(tap)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -99,6 +102,10 @@ class AddNewRecipeViewController : UIViewController {
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         self.setColors()
+    }
+    
+    @objc func dismissKeyboard() {
+        self.view.endEditing(true)
     }
     
     private func setColors() {
@@ -294,5 +301,9 @@ extension AddNewRecipeViewController : UITextFieldDelegate {
         if self.existingRecipe != nil || textField === self.recipeNameTextField {
             self.addNewRecipeButton.isEnabled = true
         }
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
     }
 }

@@ -143,6 +143,11 @@ class GeneralViewController: UIViewController {
             self.clearCategoryButton.isHidden = false
             self.searchBar.isHidden = true
             self.sortData()
+            
+            self.searchBar.resignFirstResponder()
+            if self.oldSearchText.count == 0 {
+                self.searchBar.showsCancelButton = false
+            }
         }))
         alert.addAction(UIAlertAction(title: "Poništi", style: .cancel, handler: {_ in
             self.filterByCategoryCanceled()
@@ -320,6 +325,13 @@ extension GeneralViewController : UISearchBarDelegate {
         let searchBarCancelButton = self.searchBar.value(forKey: "cancelButton") as! UIButton
         searchBarCancelButton.tintColor = AppTheme.setTextColor()
         searchBarCancelButton.setTitle("Poništi", for: .normal)
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+        if self.oldSearchText.count == 0 {
+            searchBar.showsCancelButton = false
+        }
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {

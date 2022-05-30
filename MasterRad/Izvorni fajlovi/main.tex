@@ -117,6 +117,43 @@
 
 \indent \textit{Swift} је моћан и интуитиван језик за програмирање апликација намењених платформама компаније \textit{Apple}. Писање кода у \textit{Swift}-у је забавно и лако, синтакса је веома концизна, али у исто време веома изражајна. Програмски језик \textit{Swift} је безбедан, брз и интерактиван, и као такав погодан за људе који уче основе програмирања. К\^{o}д писан у \textit{Swift}-у се преводи и оптимизује тако да извуче максимум из хардверских компоненти. Детаљнији опис особина и примери кодирања биће дати у наредним поглављима. 
 
+\section{Модерне карактеристике, безбедност и ефикасност}
+
+\indent Програмски језик \textit{Swift} је креиран са намером да буде модеран, безбедан и ефикасан. Детаљан опис ових особина као и објашњење зашто је \textit{Swift} одличан програмски језик за почетнике, када је пројекат \textit{Swift} постао пројекат отвореног кода и компатибилност програмског језика \textit{Swift} са \textit{Objective-C}-ом је дат у наставку поглавља. 
+
+\subsection{Модеран језик}
+\label{sec:Модеран}
+
+\indent \textit{Swift} је настао као резултат најновијих истраживања програмских језика.
+Именовани параметри су изражајни (енг. \textit{expressive}) што к\^{o}д позивања функција чини лаким за читање и разумевање (као читање реченице). Као и у свим модерним језицима употреба знака тачка-зарез на крају наредби није неопходна и по установљеној конвенцији се не пише. Претпостављање типова променљивих чини к\^{o}д чистијим и отпорнијим на грешке. Меморијом се управља аутоматски, коришћењем аутоматског бројача референци (енг. \textit{Automatic Reference Counting, ARC}), детаљно објашњен у делу \ref{subsec:Аутоматски бројач референци} - \nameref{subsec:Аутоматски бројач референци}.
+
+\subsection{Безбедан начин програмирања}
+
+\indent У току развијања језика уложени су огромни напори да би он био што безбеднији. На пример, променљиве су увек иницијализоване пре употребе, низови и целобројне променљиве се увек проверавају да не би дошло до прекорачења, меморијом се управља аутоматски.
+Још једна безбедоносна одлика је да \textit{Swift} објекти подразумевано никада не могу бити \textit{nil}\footnote{У програмском језику \textit{Swift}, \textit{nil} представља специјалну вредност која може бити додељена опционој променљивој и означава стање без вредности (одсуство вредности).}. \textit{Swift} компајлер ће спречити покушај да се направи или искористи \textit{nil} објекат, избацивањем грешке у време превођења програма.
+Међутим, постоје случајеви када је коришћење вредности \textit{nil} валидно. За те случајеве користе се опционе променљиве.
+
+\subsection{Ефикасно извршавање}
+
+\indent \textit{Swift} је наследник програмских језика \textit{C} i \textit{Objective-C} и као такав од почетка је дизајниран да буде концизан и ефикасан. Коришћењем технологије \textit{LLVM} компајлера, \textit{Swift} к\^{o}д се трансформише у оптимизовани извршни к\^{o}д који извлачи највише из модерног хардвера. 
+% Синтакса и стандардна библиотека су направљени тако да учине да се најочитији начин кодирања извршава најбоље без обзира на ком је уређају програм покренут.
+
+\subsection{Друге важне особине програмског језика \textit{Swift}}
+
+\indent \textit{Swift} је дизајниран да буде лак за савладавање, чак и људима који тек почињу да уче програмирање. У циљу подучавања \textit{Apple} је направио бесплатан наставни план и програм који може свако користити \cite{Swift_Education}. Најбоља апликација за почетнике је \textit{Swift Playgrounds} \cite{Swift_Playground}, која је у почетку била намењена уређајима \textit{iPad}. Касније је иста апликација развијена и за употребу на уређајима са оперативним системом \textit{macOS}. 
+\\
+\indent Крајем 2015. године програмски језик \textit{Swift} је под лиценцом \textit{Apache} 2.0 постао пројекат отвореног кода. Заједно са пројектом језика, отвореног кода су постале и пратеће библиотеке, дибагер и менаџер пакета. Изворни к\^{o}д се налази на \textit{GitHub}-у где је свакоме лако доступан за преузимање и евентуалну дораду и допуну. Пројекат \textit{Swift} се састоји од неколико засебних пројеката: 
+\begin{itemize}
+    \item \textit{Swift} компајлер,
+    \item стандардна библиотека,
+    \item \textit{Core} библиотека,
+    \item \textit{LLDB} дибагер,
+    \item \textit{Swift} менаџер пакета,
+    \item \textit{Xcode} подршка за \textit{Swift Playgrounds}.
+\end{itemize}
+
+\indent Цела апликација може бити написана у \textit{Swift}-у, или се \textit{Swift} може користити за додавање нових функционалности у већ постојећи програм написан у \textit{Objective-C}-у. \textit{Swift} и \textit{Objective-C} могу узајамно постојати у апликацији, и корисник без проблема може користити делове кода написаног у једном језику унутар другог и обратно, уз само мало додатног подешавања пројекта које се може пронаћи на \textit{Apple}-овом сајту посвећеном развијаоцима софтвера (енг. \textit{software developers}) \cite{Apple_Developer}, конкретно на адресама \href{https://developer.apple.com/documentation/swift/imported_c_and_objective-c_apis/importing_objective-c_into_swift}{\textit{Importing Objective-C into Swift}} \cite{Importing_Objective-C_into_Swift} и \href{https://developer.apple.com/documentation/swift/imported_c_and_objective-c_apis/importing_swift_into_objective-c}{\textit{Importing Swift into Objective-C}} \cite{Importing_Swift_into_Objective-C}.
+
 \section{Основни концепти језика}
 \label{sec:Концепти}
 
@@ -128,7 +165,7 @@
 \\ 
 \indent Поред основних типова који су наслеђени из \textit{Objective-C}-а постоје и неколико ново уведених, као што је \textit{Tuples} (торка) који омогућава креирање груписаних вредности и \textit{Optionals} помоћу којег се рукује \textit{nil} вредношћу на безбедан начин.
 \\
-\indent Константе се декларишу коришћењем кључне речи \textit{let}, након чега следи име константе и њена иницијализација. Декларисање променљиве се постиже употребом кључне речи \textit{var}. Када се декларише променљива може се одмах и иницијализовати или јој може бити додељен тип употребом анотације. Конкретна примена се може видети у примеру \ref{lst:Декларисање променљивих и константи} --- \nameref{lst:Декларисање променљивих и константи}.
+\indent Константе се декларишу коришћењем кључне речи \textit{let}\footnote{Појам констане која следи након кључне речи \textit{let} је мало шири и биће објашњен у делу \ref{subsec:Класе и структуре} - \nameref{subsec:Класе и структуре}}, након чега следи име константе и њена иницијализација. Декларисање променљиве се постиже употребом кључне речи \textit{var}. Када се декларише променљива може се одмах и иницијализовати или јој може бити додељен тип употребом анотације. Конкретна примена се може видети у примеру \ref{lst:Декларисање променљивих и константи} --- \nameref{lst:Декларисање променљивих и константи}.
 
 \begin{lstlisting}[caption=\textit{Декларисање променљивих и константи}, label={lst:Декларисање променљивих и константи}, language=Swift, frame=single]
 // Deklarisanje konstante
@@ -173,8 +210,10 @@ let urednijaCena = urednijaNamirnicaSaCenom.cena
 \begin{lstlisting}[caption=\textit{{Провере коришћењем функције assert}}, label={lst:Провере коришћењем функције assert}, language=Swift, frame=single]
 var cenaPrvogProizvoda = 100
 var cenaDrugogProizvoda = -100
-assert(cenaPrvogProizvoda >= 0, "Cena proizvoda ne moze biti negativna") //true
-assert(cenaDrugogProizvoda >= 0, "Cena proizvoda ne moze biti negativna") //false
+assert(cenaPrvogProizvoda >= 0, 
+       "Cena proizvoda ne moze biti negativna") //true
+assert(cenaDrugogProizvoda >= 0, 
+       "Cena proizvoda ne moze biti negativna") //false
 \end{lstlisting}
 
 \subsection{Оператори}
@@ -240,7 +279,7 @@ if pseudoNasumicanBroj % 2 == 0 {
 let b = a ?? 5
 \end{lstlisting}
     
-    \item Оператори распона
+    \item Оператори распона, чија је повратна вредност типа генеричке структуре \textit{Range}, структура која представља генерички (објашњено у делу \ref{subsec:Колекције} - \nameref{subsec:Колекције}) интервал вредности
     
 \begin{itemize}
     \item затворен распон (а...b), распон од 'а' до 'b' укључујући обе вредности,
@@ -257,7 +296,8 @@ let b = a ?? 5
 \begin{lstlisting}[caption=\textit{{Операције над стринговима}}, label={lst:Операције над стринговима}, language=Swift, frame=single]
     var prazanString = ""
     var drugiPrazanString = String()
-    var treciString: String?
+    // Definisanje promenljive opcionog tipa 'String'
+    var treciString: String? 
     
     if !prazanString.isEmpty {
         prazanString = "Zdravo"
@@ -290,7 +330,7 @@ let b = a ?? 5
 
 \begin{lstlisting}[caption=\textit{{If наредбa контроле тока}}, label={lst:If наредба контроле тока}, language=Swift, frame=single]
     var recept = Recept("Cezar salata")
-    recept.sastojci = ["Zelena salata", "Pilece grudi", "Slanina", "Paradajz", "Hleb", "Cezar premaz"]
+    recept.sastojci = ["Zelena salata", "Pilece grudi", "Slanina",    "Paradajz", "Hleb", "Cezar premaz"]
     var brojSastojaka = recept.sastojci.count
     
     if brojSastojaka < 6 {
@@ -322,7 +362,7 @@ let b = a ?? 5
     }
 \end{lstlisting}
 
-\indent \textit{For-in} је наредба понављања која се користи за пролаз кроз елементе неке колекције (низа, скупа, речника). Променљива која се користи за пролаз кроз колекцију је константа и њену вредност није могуће мењати у телу наредбе. Један од начина како се могу мењати елементи колекције (уколико је колекција није константа) је истовременим пролажењем кроз елементе колекције и њихове индексе и променом елемента колекције на одговарајућем индексу. Још једна могућност \textit{for-in} петље је пролаз кроз задати интервал бројева. Описани начини употребе \textit{for-in} петље могу се видети у примеру \ref{lst:Наредба контроле тока for-in} --- \nameref{lst:Наредба контроле тока for-in}.
+\indent \textit{For-in} је наредба понављања која се користи за пролаз кроз елементе неке колекције (низа, скупа, речника), колекције су објашњене у делу \ref{subsec:Колекције} - \nameref{subsec:Колекције}. Променљива која се користи за пролаз кроз колекцију је константа и њену вредност није могуће мењати у телу наредбе. Један од начина како се могу мењати елементи колекције (уколико је колекција није константа) је истовременим пролажењем кроз елементе колекције и њихове индексе и променом елемента колекције на одговарајућем индексу. Ово се постиже употребом функције \textit{enumerated()}, која се примењује на низ елемената, а повратна вредност ове функције је низ 2-торки, чији је први члан индекс елемента у низу, а други члан је сам елеменат низа. Још једна могућност \textit{for-in} петље је пролаз кроз задати интервал бројева. Описани начини употребе \textit{for-in} петље могу се видети у примеру \ref{lst:Наредба контроле тока for-in} --- \nameref{lst:Наредба контроле тока for-in}.
 \begin{lstlisting}[caption=\textit{{Наредба контроле тока for-in}}, label={lst:Наредба контроле тока for-in}, language=Swift, frame=single]
     let sastojci = ["Jaja", "Pecenica", "Maslinovo ulje", "Persun"]
     // For-in naredba
@@ -334,13 +374,16 @@ let b = a ?? 5
         print("Potreban sastojak: \(sastojci[i])")
     }
     
-    let sastojciSaKolicinom = ["Jaja": "3 komada", "Pecenica": "50 grama", "Maslinovo ulje": "Koliko je potrebno da pokrije tiganj", "Persun": "Prstohvat"]
+    let sastojciSaKolicinom = ["Jaja": "3 komada", "Pecenica":  
+        "50 grama", "Maslinovo ulje": "Koliko je potrebno da 
+        pokrije tiganj", "Persun": "Prstohvat"]
     // For-in naredba za prolaz kroz recnik
     for (sastojak, kolicina) in sastojciSaKolicinom {
-        print("Potreban sastojak: \(sastojak), u kolicini: \(kolicina)")
+        print("Potreban sastojak: \(sastojak), u kolicini: 
+              \(kolicina)")
     }
     
-    var promenljiviElementi = ["Jaja", "Pecenica", "Maslinovo ulje", "Persun"]
+    var promenljiviElementi = ["Jaja", "Pecenica", "Maslinovo ulje",  "Persun"]
     // For-in naredba sa indeksiranjem
     for (indeks, element) in promenljiviElementi.enumerated() {
         if element == "Persun" {
@@ -380,6 +423,108 @@ let b = a ?? 5
             break
         }
         print(broj)
+    }
+\end{lstlisting}
+
+\subsection{Колекције}
+\label{subsec:Колекције}
+
+\indent \textit{Swift} дефинише три примарна типа колекција: низове, скупове и речнике. Сва три типа су дефинисана као генеричке\footnote{Генерички к\^{o}д омогућава писање флексибилних и поновно искористивих функција и типова, помоћу којих се избегава дуплирање кода.} колекције. Уколико се дефинисана колекција додели променљивој, она се може мењати (додавање, брисање и измена чланова у њој); међутим уколико се она додели некој константи, манипулација њеним члановима неће бити могућа. \\
+\indent Низови се користе за уређено чување елемената истог типа. Један елемент се може појавити у низу више пута, са различитим индексима. Конкретан пример дефинисања, иницијализације и управљања подацима низа може се видети у коду \ref{lst:Рад са низовима} --- \nameref{lst:Рад са низовима}.
+
+\begin{lstlisting}[caption=\textit{{Рад са низовима}}, label={lst:Рад са низовима}, language=Swift, frame=single]
+    // Definisanje niza sa elementima tipa 'Recept'
+    var recepti: [Recept] = []
+    // Dodavanje novog elementa
+    recepti.append(Recept("Domaca kafa"))
+    // Pristupanje prvom clanu niza
+    var prviRecept = recepti[0]
+    // Kreiranje niza sa 3 inicijalna elementa tipa 'String'
+    var koraci = Array(repeating: "", count: 3)
+    // Foreach petlja kojom prolazimo kroz niz uz pamcenje indeksa
+    for (index, korak) in prviRecept.koraci.enumerated() {
+        if index < 3 {
+            koraci[index] = korak
+        }
+        else {
+            koraci.append(korak)
+        }
+    }
+    // Brisanje poslednjeg clana niza
+    koraci.popLast()
+\end{lstlisting}
+
+\indent Скупови су колекције које не гарантују чување редоследа елемената и у којима један елемент може да се појави највише једанпут. За разлику од већине других програмских језика, елементи унутар \textit{Swift} скупова нису уређени, већ се ефикасност провере постојања елемента гарантује употребом хеш вредности. Тип елемента скупа мора бити могуће кодирати\footnote{Тип који се може кодирати мора имати дефинисану функцију за одређивање хеш вредности за сваку инстанцу: два елемента могу имати исту хеш вредност ако и само ако су једнаки.} (енг. \textit{hashable}). Рад са скуповима приказан је у примеру \ref{lst:Рад са скуповима} --- \nameref{lst:Рад са скуповима}.
+
+\begin{lstlisting}[caption=\textit{{Рад са скуповима}}, label={lst:Рад са скуповима}, language=Swift, frame=single]
+    // Kreiranje skupa sa elementima tipa 'String'
+    var sastojci = Set<String>()
+    // Dodavanje novog elementa
+    sastojci.insert("Mlevena kafa")
+    
+    // Provera broja elemenata skupa
+    if sastojci.count == 1 {
+        sastojci.insert("Obicna voda")
+    }
+    
+    // Provera da li odredjeni element postoji u skupu
+    if sastojci.contains("Secer") {
+        sastojci.remove("Secer")
+    }
+    else {
+        sastojci.insert("Mleko")
+    }
+    
+    var dodatniSastojci = Set<String>()
+    dodatniSastojci.insert("Mleko")
+    
+    // Rad sa skupovnim operacijama
+    
+    // Unija
+    sastojci.union(dodatniSastojci)
+    // Mlevena kafa, Obicna voda, Mleko
+    
+    // Presek
+    sastojci.intersection(dodatniSastojci)
+    // Mleko
+    
+    // Razlika
+    sastojci.subtracting(dodatniSastojci)
+    // Mlevena kafa, Obicna voda
+    
+    // Simetricna razlika
+    sastojci.symmetricDifference(dodatniSastojci)
+    // Mlevena kafa, Obicna voda
+\end{lstlisting}
+
+\indent Речници се користе за чување скупа парова кључ-вредност, без очувања редоследа. Свака вредност је додељена јединственом кључу, који мора бити погодан за кодирање (енг. \textit{hashable}). Речници се најчешће користе за чување вредности којима је могуће брзо приступити коришћењем одговарајућег кључа. Рад са речницима приказан је у прмеру \ref{lst:Рад са речницима} --- \nameref{lst:Рад са речницима}.
+
+\begin{lstlisting}[caption=\textit{{Рад са речницима}}, label={lst:Рад са речницима}, language=Swift, frame=single]
+    // Kreiranje recnika tipa [String : String]
+    var kategorijeRecepata: [String : String] = [:]
+    
+    // Dodeljivanje recnika promenljivoj 'namirniceSaCenama'
+    kategorijeRecepata = ["Cezar salata": "Salata", "Piletina sa cetiri vrste sira": "Glavno jelo", "Omlet": "Toplo predjelo"]
+    
+    // Dodavanje novog elementa ukoliko ne postoji, odnosno promena postojeceg
+    kategorijeRecepata["Vocni kolac"] = "Dezert"
+    
+    // Brisanje elementa iz recnika
+    if let izbrisanaVrednost = kategorijeRecepata.removeValue(forKey: "Omlet") {
+        print("Vrednost izbrisana iz recnika: \(izbrisanaVrednost)")
+    }
+    
+    // Razlicite vrste iteracija kroz recnik
+    for recept in kategorijeRecepata.keys {
+        print(recept)
+    }
+    
+    for kategorija in kategorijeRecepata.values {
+        print(kategorija)
+    }
+
+    for (recept, kategorija) in kategorijeRecepata {
+        print("\(recept): \(kategorija)")
     }
 \end{lstlisting}
 
@@ -508,111 +653,7 @@ func ime_funkcije (parametri_funkcije) {-> tip_povratne_vrednosti}
 
 \section{Напредни концепти језика}
 
-\indent У овом делу ће бити приказани неки од напредних концепата програмског језика \textit{Swift}. Коцепти који ће бити представљени су: колекције, типови колекција и рад са њима, дефинисање генеричких фунцкија и употреба затворења, као и опис класа и структура у програмском језику \textit{Swift}.
-
-\subsection{Колекције}
-\label{subsec:Колекције}
-
-\indent \textit{Swift} дефинише три примарна типа колекција: низове, скупове и речнике. Сва три типа су дефинисана као генеричке\footnote{Генерички к\^{o}д омогућава писање флексибилних и поновно искористивих функција и типова, помоћу којих се избегава дуплирање кода.} колекције. Уколико се дефинисана колекција додели променљивој, она се може мењати (додавање, брисање и измена чланова у њој); међутим уколико се она додели некој константи, манипулација њеним члановима неће бити могућа. \\
-\indent Низови се користе за уређено чување елемената истог типа. Један елемент се може појавити у низу више пута, са различитим индексима. Конкретан пример дефинисања, иницијализације и управљања подацима низа може се видети у коду \ref{lst:Рад са низовима} --- \nameref{lst:Рад са низовима}.
-
-\begin{lstlisting}[caption=\textit{{Рад са низовима}}, label={lst:Рад са низовима}, language=Swift, frame=single]
-    // Definisanje niza sa elementima tipa 'Recept'
-    var recepti: [Recept] = []
-    // Dodavanje novog elementa
-    recepti.append(Recept("Domaca kafa"))
-    // Pristupanje prvom clanu niza
-    var prviRecept = recepti[0]
-    // Kreiranje niza sa 3 inicijalna elementa tipa 'String'
-    var koraci = Array(repeating: "", count: 3)
-    // Foreach petlja kojom prolazimo kroz niz uz pamcenje indeksa
-    for (index, korak) in prviRecept.koraci.enumerated() {
-        if index < 3 {
-            koraci[index] = korak
-        }
-        else {
-            koraci.append(korak)
-        }
-    }
-    // Brisanje prvog clana niza, ukoliko niz nije prazan
-    if !koraci.isEmpty {
-        koraci.remove(at: 0)
-    }
-\end{lstlisting}
-
-\indent Скупови су колекције које не гарантују чување редоследа елемената и у којима један елемент може да се појави највише једанпут. Тип елемента скупа мора бити могуће кодирати\footnote{Тип који се може кодирати мора имати дефинисану функцију за одређивање \textit{hash} вредности за сваку инстанцу: два елемента могу имати исту hash вредност ако и само ако су једнаки.} (енг. \textit{hashable}). Рад са скуповима приказан је у примеру \ref{lst:Рад са скуповима} --- \nameref{lst:Рад са скуповима}.
-
-\begin{lstlisting}[caption=\textit{{Рад са скуповима}}, label={lst:Рад са скуповима}, language=Swift, frame=single]
-    // Kreiranje skupa sa elementima tipa 'String'
-    var sastojci = Set<String>()
-    // Dodavanje novog elementa
-    sastojci.insert("Mlevena kafa")
-    
-    // Provera broja elemenata skupa
-    if sastojci.count == 1 {
-        sastojci.insert("Obicna voda")
-    }
-    
-    // Provera da li odredjeni element postoji u skupu
-    if sastojci.contains("Secer") {
-        sastojci.remove("Secer")
-    }
-    else {
-        sastojci.insert("Mleko")
-    }
-    
-    var dodatniSastojci = Set<String>()
-    dodatniSastojci.insert("Mleko")
-    
-    // Rad sa skupovnim operacijama
-    
-    // Unija
-    sastojci.union(dodatniSastojci)
-    // Mlevena kafa, Obicna voda, Mleko
-    
-    // Presek
-    sastojci.intersection(dodatniSastojci)
-    // Mleko
-    
-    // Razlika
-    sastojci.subtracting(dodatniSastojci)
-    // Mlevena kafa, Obicna voda
-    
-    // Simetricna razlika
-    sastojci.symmetricDifference(dodatniSastojci)
-    // Mlevena kafa, Obicna voda
-\end{lstlisting}
-
-\indent Речници се користе за чување скупа парова кључ-вредност, без очувања редоследа. Свака вредност је додељена јединственом кључу, који мора бити погодан за кодирање (енг. \textit{hashable}). Речници се најчешће користе за чување вредности којима је могуће брзо приступити коришћењем одговарајућег кључа. Рад са речницима приказан је у прмеру \ref{lst:Рад са речницима} --- \nameref{lst:Рад са речницима}.
-
-\begin{lstlisting}[caption=\textit{{Рад са речницима}}, label={lst:Рад са речницима}, language=Swift, frame=single]
-    // Kreiranje recnika tipa [String : String]
-    var kategorijeRecepata: [String : String] = [:]
-    
-    // Dodeljivanje recnika promenljivoj 'namirniceSaCenama'
-    kategorijeRecepata = ["Cezar salata": "Salata", "Piletina sa cetiri vrste sira": "Glavno jelo", "Omlet": "Toplo predjelo"]
-    
-    // Dodavanje novog elementa ukoliko ne postoji, odnosno promena postojeceg
-    kategorijeRecepata["Vocni kolac"] = "Dezert"
-    
-    // Brisanje elementa iz recnika
-    if let izbrisanaVrednost = kategorijeRecepata.removeValue(forKey: "Omlet") {
-        print("Vrednost izbrisana iz recnika: \(izbrisanaVrednost)")
-    }
-    
-    // Razlicite vrste iteracija kroz recnik
-    for recept in kategorijeRecepata.keys {
-        print(recept)
-    }
-    
-    for kategorija in kategorijeRecepata.values {
-        print(kategorija)
-    }
-
-    for (recept, kategorija) in kategorijeRecepata {
-        print("\(recept): \(kategorija)")
-    }
-\end{lstlisting}
+\indent У овом делу ће бити приказани неки од напредних концепата програмског језика \textit{Swift}. Концепти који ће бити представљени су: дефинисање генеричких фунцкија и употреба затворења, као и опис класа и структура у програмском језику \textit{Swift}.
 
 \subsection{Генеричке функције и затворења}
 
@@ -721,10 +762,13 @@ func ime_funkcije (parametri_funkcije) {-> tip_povratne_vrednosti}
 \end{lstlisting}
 
 \subsection{Класе и структуре}
+\label{subsec:Класе и структуре}
 
 \indent Класе и структуре су конструкције опште намене које имају своја својства и методе. За разлику од већине других програмских језика, класе и структуре у \textit{Swift}-у су сличне по функционалности (биће објашњено у наставку поглавља), па се често за објекат класе и инстанцу структуре користи заједнички назив --- инстанца. 
 \\
-\indent У поређењу класа и структура могућности које обе конструкције омогућавају су: дефинисање својстава, дефинисање метода, дефинисање иницијализатора, надограђивање коришћењем проширења (енг. \textit{extensions}), имплементација протокола. Функционалности које поседују само класе су: наслеђивање друге класе, провера типа инстанце у времену извршавања програма, деиницијализација.
+\indent У поређењу класа и структура могућности које обе конструкције омогућавају су: дефинисање својстава, дефинисање метода, дефинисање иницијализатора, надограђивање коришћењем проширења (енг. \textit{extensions}), имплементација протокола. Функционалности које поседују само класе су: наслеђивање друге класе, провера типа инстанце у времену извршавања програма, деиницијализација. 
+\\
+\indent Још једна разлика између класа и структура може се видети приликом дефинисања константне (употребом кључне речи \textit{let}) инстанце класе или структуре. Уколико је дефинисана константна инстанца класе, корисник и даље има могућност промене поља те инстанце која нису дефинисана као константна, јер је константна референца инстанце, али не и вредност за коју је та референца везана. Уколико је дефинисана константна инстанца структуре, корисник нема могућност промене ниједног од њених поља.
 \\
 \indent Уколико неко својство класе или структуре нема унапред дефинисану вредност, оно мора бити: 
 \begin{itemize}
@@ -815,10 +859,12 @@ func ime_funkcije (parametri_funkcije) {-> tip_povratne_vrednosti}
     // Ukupna cena recepta: 725
     print("Vreme pripreme recepta: \(lazanje.vremePripreme)")
     // Vreme pripreme recepta: 45
-    print("Staro ukupno vreme pripreme: \(lazanje.ukupnoVremeSpremanja)")
+    print("Staro ukupno vreme pripreme: 
+          \(lazanje.ukupnoVremeSpremanja)")
     // Staro ukupno vreme pripreme: 70
     lazanje.vremePripreme = 30 // Umesto 45
-    print("Novo ukupno vreme pripreme: \(lazanje.ukupnoVremeSpremanja)")
+    print("Novo ukupno vreme pripreme: 
+          \(lazanje.ukupnoVremeSpremanja)")
     // Novo ukupno vreme pripreme: 55
 \end{lstlisting}
 
@@ -895,47 +941,6 @@ func ime_funkcije (parametri_funkcije) {-> tip_povratne_vrednosti}
     }
 \end{lstlisting}
 
-\section{Модерне карактеристике, безбедност и ефикасност}
-
-\indent Програмски језик \textit{Swift} је креиран са намером да буде модеран, безбедан и ефикасан. Детаљан опис ових особина као и објашњење зашто је \textit{Swift} одличан програмски језик за почетнике, када је пројекат \textit{Swift} постао пројекат отвореног кода и компатибилност програмског језика \textit{Swift} са \textit{Objective-C}-ом је дат у наставку поглавља. 
-
-\subsection{Модеран језик}
-\label{sec:Модеран}
-
-\indent \textit{Swift} је настао као резултат најновијих истраживања програмских језика.
-Именовани параметри су изражајни (енг. \textit{expressive}) што к\^{o}д позивања функција чини лаким за читање и разумевање (као читање реченице). Као и у свим модерним језицима употреба знака тачка-зарез на крају наредби није неопходна и по установљеној конвенцији се не пише. Претпостављање типова променљивих чини к\^{o}д чистијим и отпорнијим на грешке. Меморијом се управља аутоматски, коришћењем аутоматског бројача референци (енг. \textit{Automatic Reference Counting, ARC}).
-
-\indent \textit{ARC} се користи за праћење и управљање меморијом коју апликација користи. Бројач референци води рачуна само о инстанцама класе, док инстанце структуре и набрајања игнорише јер оне представљају тип вредности, а не референтни тип. Сваки пут када се креира нова инстанца класе, \textit{ARC} одвоји део меморије потребан за смештање информација о инстанци. За сваку инстанцу \textit{ARC} води рачуна о броју својстава, константи и променљивих које реферишу на посматрану инстанцу. \textit{ARC} ће деалоцирати део меморије у којој је смештена инстанца тек када све јаке (енг. \textit{strong}) референце ка њој нестану. Када се инстанца класе додели својству, константи или променљивој уколико се експлицитно не наведе другачије, аутоматски ће бити креирана јака референца ка инстанци. \\
-\indent Ретка ситуација где програмер мора водити рачуна о управљању меморијом унутар програмског језика \textit{Swift} је избегавање креирања две инстанце неких класа које међусобно држе јаке референце једна ка другој, јер у овој ситуацији долази до формирања циклуса јаких референци (енг. \textit{strong reference cycle}) што онемогућује \textit{ARC} да деалоцира меморију у којој се налазе ове две инстанце (увек ће једна ка другој имати јаку референцу) и долази до цурења меморије. Циклус јаких референци се може спречити употребом \textit{weak} или \textit{unowned} референци које \textit{ARC} не узима у обзир. Пример употребе слабе (енг. \textit{weak}) референце приказан је у коду \ref{lst:Слаба референца} --- \nameref{lst:Слаба референца}.
-
-\begin{lstlisting}[caption=\textit{{Слаба референца}}, label={lst:Слаба референца}, language=Swift, frame=single]
-    protocol NoviReceptDelegate : AnyObject {
-        func receptJeKreiran(_ viewController: NoviReceptController, _ recept: Recept)
-    }
-    
-    class NoviReceptController() : UIViewController {
-        // Definisanje promenljive sa slabom referencom
-        weak delegate: NoviReceptDelegate?
-        ...
-        func sacuvajRecept(_ recept: Recept) {
-            ...
-            self.delegate?.receptJeKreiran(self, recept)
-        }
-    }
-    class ReceptController : UIViewController {
-        var novRecept = NoviReceptController()
-        override viewDidLoad() {
-            ...
-            self.novRecept.delegate = self
-        }
-        ...
-    }
-    extension ReceptController : NoviReceptDelegate {
-        func receptJeKreiran(_ viewController: NoviReceptController, _ recept: Recept) {
-        }
-    }
-\end{lstlisting}
-
 \indent Приликом дефинисања класе, конвенција у \textit{Swift}-у је да се за једноставније структуре користи кључна реч \textit{Struct}, а не кључна реч \textit{Class}. Надоградња типа се користи да би се типови одвојили у смислене целине, на пример наслеђивање неке надкласе или имплементација протокола, што се може видети у примеру \ref{lst:Надоградња} --- \nameref{lst:Надоградња}. Такође се могу надоградити већ постојећи (системски) типови унутар којих ће бити имплементиране нове функције, чиме се елиминише потреба да иста логика буде имплементирана више пута у коду, приказано у примеру \ref{lst:Надоградња Swift класе} --- \nameref{lst:Надоградња Swift класе}. Ограничење код екстензије је да се не могу додавати нова поља и променљиве унутар типа који се надограђује.
 
 \begin{lstlisting}[caption=\textit{{Надоградња постојећег типа (класе, структуре)}}, label={lst:Надоградња}, language=Swift, frame=single]
@@ -977,32 +982,39 @@ extension UIImage {
 self.recept.slika = UIImage.slikaRecepta(self.recept.ime)
 \end{lstlisting}
 
-\subsection{Безбедан начин програмирања}
+\subsection{Аутоматски бројач референци}
+\label{subsec:Аутоматски бројач референци}
 
-\indent У току развијања језика уложени су огромни напори да би он био што безбеднији. На пример, променљиве су увек иницијализоване пре употребе, низови и целобројне променљиве се увек проверавају да не би дошло до прекорачења, меморијом се управља аутоматски.
-Још једна безбедоносна одлика је да \textit{Swift} објекти подразумевано никада не могу бити \textit{nil}. \textit{Swift} компајлер ће спречити покушај да се направи или искористи \textit{nil} објекат, избацивањем грешке у време превођења програма.
-Међутим, постоје случајеви када је коришћење вредности \textit{nil} валидно. За те случајеве користе се опционе променљиве.
+\indent \textit{ARC} се користи за праћење и управљање меморијом коју апликација користи. Бројач референци води рачуна само о инстанцама класе, док инстанце структуре и набрајања игнорише јер оне представљају тип вредности, а не референтни тип. Сваки пут када се креира нова инстанца класе, \textit{ARC} одвоји део меморије потребан за смештање информација о инстанци. За сваку инстанцу \textit{ARC} води рачуна о броју својстава, константи и променљивих које реферишу на посматрану инстанцу. \textit{ARC} ће деалоцирати део меморије у којој је смештена инстанца тек када све јаке (енг. \textit{strong}) референце ка њој нестану. Када се инстанца класе додели својству, константи или променљивој уколико се експлицитно не наведе другачије, аутоматски ће бити креирана јака референца ка инстанци. \\
+\indent Ретка ситуација где програмер мора водити рачуна о управљању меморијом унутар програмског језика \textit{Swift} је избегавање креирања две инстанце неких класа које међусобно држе јаке референце једна ка другој, јер у овој ситуацији долази до формирања циклуса јаких референци (енг. \textit{strong reference cycle}) што онемогућује \textit{ARC} да деалоцира меморију у којој се налазе ове две инстанце (увек ће једна ка другој имати јаку референцу) и долази до цурења меморије. Циклус јаких референци се може спречити употребом \textit{weak} или \textit{unowned} референци које \textit{ARC} не узима у обзир. Пример употребе слабе (енг. \textit{weak}) референце приказан је у коду \ref{lst:Слаба референца} --- \nameref{lst:Слаба референца}.
 
-\subsection{Ефикасно извршавање}
-
-\indent \textit{Swift} је наследник програмских језика \textit{C} i \textit{Objective-C} и као такав од почетка је дизајниран да буде концизан и ефикасан. Коришћењем технологије \textit{LLVM} компајлера, \textit{Swift} к\^{o}д се трансформише у оптимизовани извршни к\^{o}д који извлачи највише из модерног хардвера. 
-% Синтакса и стандардна библиотека су направљени тако да учине да се најочитији начин кодирања извршава најбоље без обзира на ком је уређају програм покренут.
-
-\subsection{Друге важне особине програмског језика \textit{Swift}}
-
-\indent \textit{Swift} је дизајниран да буде лак за савладавање, чак и људима који тек почињу да уче програмирање. У циљу подучавања \textit{Apple} је направио бесплатан наставни план и програм који може свако користити \cite{Swift_Education}. Најбоља апликација за почетнике је \textit{Swift Playgrounds} \cite{Swift_Playground}, која је у почетку била намењена уређајима \textit{iPad}. Касније је иста апликација развијена и за употребу на уређајима са оперативним системом \textit{macOS}. 
-\\
-\indent Крајем 2015. године програмски језик \textit{Swift} је под лиценцом \textit{Apache} 2.0 постао пројекат отвореног кода. Заједно са пројектом језика, отвореног кода су постале и пратеће библиотеке, дибагер и менаџер пакета. Изворни к\^{o}д се налази на \textit{GitHub}-у где је свакоме лако доступан за преузимање и евентуалну дораду и допуну. Пројекат \textit{Swift} се састоји од неколико засебних пројеката: 
-\begin{itemize}
-    \item \textit{Swift} компајлер,
-    \item стандардна библиотека,
-    \item \textit{Core} библиотека,
-    \item \textit{LLDB} дибагер,
-    \item \textit{Swift} менаџер пакета,
-    \item \textit{Xcode} подршка за \textit{Swift Playgrounds}.
-\end{itemize}
-
-\indent Цела апликација може бити написана у \textit{Swift}-у, или се \textit{Swift} може користити за додавање нових функционалности у већ постојећи програм написан у \textit{Objective-C}-у. \textit{Swift} и \textit{Objective-C} могу узајамно постојати у апликацији, и корисник без проблема може користити делове кода написаног у једном језику унутар другог и обратно, уз само мало додатног подешавања пројекта које се може пронаћи на \textit{Apple}-овом сајту посвећеном развијаоцима софтвера (енг. \textit{software developers}) \cite{Apple_Developer}, конкретно на адресама \href{https://developer.apple.com/documentation/swift/imported_c_and_objective-c_apis/importing_objective-c_into_swift}{\textit{Importing Objective-C into Swift}} \cite{Importing_Objective-C_into_Swift} и \href{https://developer.apple.com/documentation/swift/imported_c_and_objective-c_apis/importing_swift_into_objective-c}{\textit{Importing Swift into Objective-C}} \cite{Importing_Swift_into_Objective-C}.
+\begin{lstlisting}[caption=\textit{{Слаба референца}}, label={lst:Слаба референца}, language=Swift, frame=single]
+    protocol NoviReceptDelegate : AnyObject {
+        func receptJeKreiran(_ viewController: NoviReceptController, _ recept: Recept)
+    }
+    
+    class NoviReceptController() : UIViewController {
+        // Definisanje promenljive sa slabom referencom
+        weak delegate: NoviReceptDelegate?
+        ...
+        func sacuvajRecept(_ recept: Recept) {
+            ...
+            self.delegate?.receptJeKreiran(self, recept)
+        }
+    }
+    class ReceptController : UIViewController {
+        var novRecept = NoviReceptController()
+        override viewDidLoad() {
+            ...
+            self.novRecept.delegate = self
+        }
+        ...
+    }
+    extension ReceptController : NoviReceptDelegate {
+        func receptJeKreiran(_ viewController: NoviReceptController, _ recept: Recept) {
+        }
+    }
+\end{lstlisting}
 
 \section{Развојно окружење \textit{Xcode}}
 \label{sec:Xcode}
@@ -1014,7 +1026,7 @@ self.recept.slika = UIImage.slikaRecepta(self.recept.ime)
 \indent ИРО \textit{Xcode} се користи за развој софтвера намењених оперативним системима \textit{iOS}, \textit{iPadOS}, \textit{watchOS}, \textit{tvOS} и \textit{macOS}. Прва верзија \textit{Xcode}-а објављена је 2003. године, а последња стабилна верзија је \textit{Xcode}13. \textit{Xcode} укључује алат командне линије (енг. \textit{command line tools}) који омогућавa развоја софтвера помоћу терминала, начин развоја софтвера који одговара стилу развоја на \textit{UNIX}-у. На слици \ref{slika:xcode13_logo} може се видети званични лого ИРО-а \textit{Xcode}13.
 
 \begin{figure}[H]
-\includegraphics[width=1\textwidth]{images/Xcode_logo.jpg}
+\includegraphics[width=0.8\textwidth]{images/Xcode_logo.jpg}
 \centering
 \caption{\textit{Званични лого ИРО-а Xcode13}}
 \label{slika:xcode13_logo}

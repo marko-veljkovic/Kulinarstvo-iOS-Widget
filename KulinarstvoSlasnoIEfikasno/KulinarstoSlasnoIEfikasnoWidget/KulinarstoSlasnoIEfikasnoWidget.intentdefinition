@@ -70,7 +70,7 @@
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
-					<string>sastojci</string>
+					<string>Sastojci</string>
 					<key>INEnumValueDisplayNameID</key>
 					<string>adXmyN</string>
 					<key>INEnumValueIndex</key>
@@ -80,7 +80,7 @@
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
-					<string>priprema</string>
+					<string>Priprema</string>
 					<key>INEnumValueDisplayNameID</key>
 					<string>ss3SeG</string>
 					<key>INEnumValueIndex</key>
@@ -96,7 +96,7 @@
 	<key>INIntentDefinitionNamespace</key>
 	<string>88xZPY</string>
 	<key>INIntentDefinitionSystemVersion</key>
-	<string>20G165</string>
+	<string>21E258</string>
 	<key>INIntentDefinitionToolsBuildVersion</key>
 	<string>13A233</string>
 	<key>INIntentDefinitionToolsVersion</key>
@@ -170,6 +170,11 @@
 					<string>Enum1</string>
 					<key>INIntentParameterEnumTypeNamespace</key>
 					<string>88xZPY</string>
+					<key>INIntentParameterMetadata</key>
+					<dict>
+						<key>INIntentParameterMetadataDefaultValue</key>
+						<string>sastojci</string>
+					</dict>
 					<key>INIntentParameterName</key>
 					<string>ParameterToShow</string>
 					<key>INIntentParameterPromptDialogs</key>

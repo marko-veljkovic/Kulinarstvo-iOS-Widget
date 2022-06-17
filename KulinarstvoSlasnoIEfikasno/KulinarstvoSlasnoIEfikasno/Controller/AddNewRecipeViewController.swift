@@ -122,7 +122,7 @@ class AddNewRecipeViewController : UIViewController {
             $0?.setTitleColor(AppTheme.setTextColor(), for: .normal)
         }
         
-        self.isFavoritesSwitch.onTintColor = AppTheme.setTextColor()
+//        self.isFavoritesSwitch.onTintColor = AppTheme.setTextColor()
         self.navigationController?.navigationBar.tintColor = AppTheme.setTextColor()
     }
     

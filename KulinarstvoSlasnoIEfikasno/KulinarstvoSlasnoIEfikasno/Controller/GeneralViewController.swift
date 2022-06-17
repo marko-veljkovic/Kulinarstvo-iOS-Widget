@@ -183,11 +183,7 @@ extension GeneralViewController : UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let recipesCount = self.recipes.count
-//        if recipesCount == 0 {
-//            self.recipes = self.categoryPicked == nil ? self.unfilteredRecipes : self.categoryRecipes
-//        }
-        return recipesCount
+        return self.recipes.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

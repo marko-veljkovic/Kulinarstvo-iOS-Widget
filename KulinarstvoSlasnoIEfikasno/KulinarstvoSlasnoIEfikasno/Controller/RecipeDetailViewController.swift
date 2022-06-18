@@ -201,10 +201,10 @@ class RecipeDetailViewController: UIViewController {
     func updatePrepAndCookTime(isDecrease: Bool = false) {
         if isDecrease {
             // Prep time is decreased for small value every time user decrease number of persons for recipe (each prep time descrease is larger then the last one)
-            self.localPrepTime = self.localPrepTime - Int(Double(self.recipe.prepTime) * self.localPrepTimeFactor)
             if self.localPrepTimeFactor > 0.025 {
-                self.localPrepTimeFactor -= 0.025
+                self.localPrepTimeFactor += 0.025
             }
+            self.localPrepTime = self.localPrepTime - Int(Double(self.recipe.prepTime) * self.localPrepTimeFactor)
             // Cook time is decreased for small value when number of persons drop to 14 or 6
             if localNumberOfPersons == 6 {
                 self.localCookTime -= Int(Double(self.recipe.cookTime) * 0.25)

@@ -11,30 +11,33 @@ enum SortByPrepTime {
     case Unsorted, Ascending, Descending
 }
 
+enum RecipeShowType : Int {
+    case List, Grid
+}
+
 class GeneralViewController: UIViewController {
     
-    var addNewRecipeViewController: AddNewRecipeViewController?
-    
-    var isFavorites: Bool
-    var isMyRecipes: Bool
-    
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var addNewRecipeButton: UIButton!
     @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var changeShowTypeButton: UIButton!
     @IBOutlet weak var categoryButton: UIButton!
     @IBOutlet weak var clearCategoryButton: UIButton!
+    
+    var addNewRecipeViewController: AddNewRecipeViewController?
+    var isFavorites: Bool
+    var isMyRecipes: Bool
     
     var recipes: [Recipe] = []
     var unfilteredRecipes: [Recipe] = []
     var unsortedRecipes: [Recipe] = []
     var categoryRecipes: [Recipe] = []
     
+    var recipeShwoingType: RecipeShowType = .List
     var categoryPicked: RecipeCategory?
-    
     var refreshControl: UIRefreshControl?
-    
     var sortByPrepTime = SortByPrepTime.Unsorted
-    
     var oldSearchText = ""
     
     init(isFavorites: Bool = false, isMyRecipes: Bool = false) {
@@ -60,15 +63,23 @@ class GeneralViewController: UIViewController {
         self.searchBar.delegate = self
         
         self.categoryButton.setTitle("Izaberi kategoriju", for: .normal)
+        self.changeShowTypeButton.setTitle("Izaberi prikaz", for: .normal)
         
-        self.categoryButton.layer.cornerRadius = 10
-        self.categoryButton.layer.borderWidth = 2
-        self.categoryButton.layer.borderColor = AppTheme.backgroundUniversalGreen.cgColor
+        [self.categoryButton, self.changeShowTypeButton].forEach {
+            $0?.layer.cornerRadius = 10
+            $0?.layer.borderWidth = 2
+            $0?.layer.borderColor = AppTheme.backgroundUniversalGreen.cgColor
+        }
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.tableView.register(UINib(nibName: "RecipeTableViewCell", bundle: nil), forCellReuseIdentifier: "RecipeCell")
+        self.tableView.register(UINib(nibName: "RecipeImageTableViewCell", bundle: nil), forCellReuseIdentifier: "RecipeImageCell")
         self.tableView.register(UINib(nibName: "RecipeTableViewHeaderCell", bundle: nil), forHeaderFooterViewReuseIdentifier: "RecipeHeaderCell")
+        
+        self.collectionView.delegate = self
+        self.collectionView.dataSource = self
+        self.collectionView.register(UINib(nibName: "RecipeCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "RecipeCollectionViewCell")
         
         self.refreshControl = UIRefreshControl()
         self.refreshControl!.addTarget(self, action: #selector(self.refreshTable), for: .valueChanged)
@@ -88,11 +99,16 @@ class GeneralViewController: UIViewController {
         self.unfilteredRecipes = self.recipes
         self.unsortedRecipes = self.recipes
         self.sortData()
+        
+        self.tableView.isHidden = true
+        self.collectionView.isHidden = false
     }
     
     func setColor() {
-        self.categoryButton.backgroundColor = AppTheme.setBackgroundColor()
-        self.categoryButton.setTitleColor(AppTheme.setTextColor(), for: .normal)
+        [self.categoryButton, self.changeShowTypeButton].forEach {
+            $0?.backgroundColor = AppTheme.setBackgroundColor()
+            $0?.setTitleColor(AppTheme.setTextColor(), for: .normal)
+        }
         self.addNewRecipeButton.tintColor = AppTheme.setTextColor()
         self.clearCategoryButton.tintColor = AppTheme.setTextColor()
         self.navigationController?.navigationBar.tintColor = AppTheme.setTextColor()
@@ -104,10 +120,12 @@ class GeneralViewController: UIViewController {
         super.traitCollectionDidChange(previousTraitCollection)
         self.setColor()
         self.tableView.reloadData()
+        self.collectionView.reloadData()
     }
     
     @objc func refreshTable() {
         self.tableView.reloadData()
+        self.collectionView.reloadData()
         self.refreshControl?.endRefreshing()
     }
     
@@ -124,6 +142,7 @@ class GeneralViewController: UIViewController {
         let categoryPickerViewController = UIPickerView(frame: CGRect(x: -60, y: 0, width: 400, height: 200))
         categoryPickerViewController.delegate = self
         categoryPickerViewController.dataSource = self
+        categoryPickerViewController.tag = 1
         vc.view.addSubview(categoryPickerViewController)
         
         let alert = UIAlertController(title: "Izaberi kategoriju recepata", message: "", preferredStyle: .alert)
@@ -173,6 +192,31 @@ class GeneralViewController: UIViewController {
         self.searchBar.isHidden = false
         self.sortData()
     }
+    
+    @IBAction func changeShowTypeButtonClicked(_ sender: Any) {
+        let vc = UIViewController()
+        vc.preferredContentSize = CGSize(width: 400, height: 200)
+        let showTypePickerViewController = UIPickerView(frame: CGRect(x: -60, y: 0, width: 400, height: 200))
+        showTypePickerViewController.delegate = self
+        showTypePickerViewController.dataSource = self
+        showTypePickerViewController.tag = 2
+        vc.view.addSubview(showTypePickerViewController)
+        
+        let alert = UIAlertController(title: "Izaberi način prikaza recepata", message: "", preferredStyle: .alert)
+        alert.setValue(vc, forKey: "contentViewController")
+        alert.addAction(UIAlertAction(title: "Izaberi", style: .default, handler: {_ in
+            switch self.recipeShwoingType {
+            case .List:
+                self.tableView.isHidden = false
+                self.collectionView.isHidden = true
+            case .Grid:
+                self.tableView.isHidden = true
+                self.collectionView.isHidden = false
+            }
+        }))
+        alert.addAction(UIAlertAction(title: "Poništi", style: .cancel, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
 }
 
 //MARK: - UITableViewDataSource
@@ -183,24 +227,52 @@ extension GeneralViewController : UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.recipes.count
+        return self.recipeShwoingType == .List ? self.recipes.count : self.recipes.count/2
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if self.recipeShwoingType == .List {
+            return self.recipeListTypeCell(tableView, cellForRowAt: indexPath)
+        }
+        else {
+            return self.recipeGridTypeCell(tableView, cellForRowAt: indexPath)
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return self.recipeShwoingType == .List ? 40 : 200
+    }
+    
+    func recipeListTypeCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "RecipeCell") as! RecipeTableViewCell
-        
+
         let record = self.recipes[indexPath.row]
-        
+
         cell.titleLabel?.text = record.name
         cell.titleLabel?.textColor = AppTheme.setTextColor()
         cell.prepTimeLabel.text = "\(record.prepTime + record.cookTime)"
         cell.prepTimeLabel.textColor = AppTheme.setTextColor()
-        
+        cell.prepTimeLabel.font = UIFont.monospacedSystemFont(ofSize: 15.0, weight: .black)
+
         var recipeImage = UIImage(named: record.imageName)
         if recipeImage == nil, let imageData = UserDefaults(suiteName: Datafeed.shared.kAppGroup)?.object(forKey: record.imageName) as? Data {
             recipeImage = UIImage(data: imageData)
         }
-        cell.recipeImageView.image = recipeImage
+        
+        return cell
+    }
+    
+    func recipeGridTypeCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "RecipeImageCell") as! RecipeImageTableViewCell
+        
+        let firstRecord = self.recipes[indexPath.row * 2]
+        let secondRecord = self.recipes[indexPath.row * 2 + 1]
+        
+        cell.recipeLeftImageView.image = UIImage(named: firstRecord.imageName)
+        cell.recipeRightImageView.image = UIImage(named: secondRecord.imageName)
+        
+        cell.recipeLeftLabel.text = firstRecord.name
+        cell.recipeLeftLabel.backgroundColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.2)
         
         return cell
     }
@@ -215,10 +287,14 @@ extension GeneralViewController : UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard self.recipeShwoingType == .List else {
+            return nil
+        }
+        
         let cell = tableView.dequeueReusableHeaderFooterView(withIdentifier: "RecipeHeaderCell") as! RecipeTableViewHeaderCell
 
         cell.delegate = self
-        [cell.titleLabel, cell.prepTimeLabel, cell.imageLabel].forEach {
+        [cell.titleLabel, cell.prepTimeLabel].forEach {
             $0?.textColor = AppTheme.setTextColor()
         }
         cell.sortArrowImage.tintColor = AppTheme.setTextColor()
@@ -227,9 +303,42 @@ extension GeneralViewController : UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 45.0
+        return self.recipeShwoingType == .List ? 45.0 : 0.0
     }
 }
+
+//MARK: - UICollectionViewDataSource
+extension GeneralViewController : UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return self.recipes.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RecipeCollectionViewCell", for: indexPath) as? RecipeCollectionViewCell
+        let record = self.recipes[indexPath.row]
+        
+        cell?.recipeImageView.image = UIImage(named: record.imageName)
+        cell?.recipeNameLabel.text = record.name
+        
+        return cell ?? UICollectionViewCell()
+    }
+}
+
+//MARK: - UICollectionViewDelegate
+extension GeneralViewController : UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        self.collectionView.deselectItem(at: indexPath, animated: false)
+        let destination = RecipeDetailViewController(recipe: self.recipes[indexPath.row])
+        self.navigationController?.pushViewController(destination, animated: true)
+    }
+}
+
+//MARK: - UICollectionViewDelegateFlowLayout
+//extension GeneralViewController : UICollectionViewDelegateFlowLayout {
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+//        return CGSize(width: self.view.frame.width/4 - 5, height: self.view.frame.height/5 - 5)
+//    }
+//}
 
 //MARK: - RecipeTableViewHeaderCellDelegate
 extension GeneralViewController : RecipeTableViewHeaderCellDelegate {
@@ -264,6 +373,7 @@ extension GeneralViewController : RecipeTableViewHeaderCellDelegate {
             self.recipes = self.unsortedRecipes
         }
         self.tableView.reloadData()
+        self.collectionView.reloadData()
     }
 }
 
@@ -286,6 +396,7 @@ extension GeneralViewController : NewRecipeViewControllerDelegate {
 extension GeneralViewController : DatafeedDelegate {
     func recipesDataParsed() {
         self.tableView.reloadData()
+        self.collectionView.reloadData()
     }
 }
 
@@ -344,12 +455,35 @@ extension GeneralViewController : UISearchBarDelegate {
 //MARK: - UIPickerViewDelegate
 extension GeneralViewController : UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        let category = RecipeCategory(rawValue: row) ?? .snack
-        return Datafeed.shared.recipeCategoryName(currentCategory: category)
+        // Category picker view
+        if pickerView.tag == 1 {
+            let category = RecipeCategory(rawValue: row) ?? .snack
+            return Datafeed.shared.recipeCategoryName(currentCategory: category)
+        }
+        // Show type picker view
+        else if pickerView.tag == 2 {
+            switch row {
+            case 0:
+                return "Lista"
+            default:
+                return "Slike" //TODO: change this title to something with more sense
+            }
+        }
+        // Default case
+        return ""
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        self.categoryPicked = RecipeCategory(rawValue: row) ?? .snack
+        // Category picker view
+        if pickerView.tag == 1 {
+            self.categoryPicked = RecipeCategory(rawValue: row) ?? .snack
+        }
+        // Show type picker view
+        else if pickerView.tag == 2 {
+            self.recipeShwoingType = RecipeShowType(rawValue: row) ?? .List
+        }
+        // Default case
+        return
     }
 }
 
@@ -360,6 +494,6 @@ extension GeneralViewController : UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return RecipeCategory.allCases.count
+        return pickerView.tag == 1 ? RecipeCategory.allCases.count : 2
     }
 }

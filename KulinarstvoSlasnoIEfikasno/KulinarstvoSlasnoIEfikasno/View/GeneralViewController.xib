@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -12,7 +13,9 @@
             <connections>
                 <outlet property="addNewRecipeButton" destination="Uei-XV-0Xu" id="pGr-EB-KKQ"/>
                 <outlet property="categoryButton" destination="UmV-vL-yB3" id="29U-iS-irn"/>
+                <outlet property="changeShowTypeButton" destination="DHC-BL-vGP" id="zTk-2U-FeH"/>
                 <outlet property="clearCategoryButton" destination="ZlG-hh-Kel" id="som-RU-xho"/>
+                <outlet property="collectionView" destination="vXx-3t-GTT" id="vNg-F9-HM8"/>
                 <outlet property="searchBar" destination="vz9-3c-syW" id="OVY-kD-0Ty"/>
                 <outlet property="tableView" destination="LX9-VR-ktn" id="umG-Rd-qBr"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -24,13 +27,22 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="-2" translatesAutoresizingMaskIntoConstraints="NO" id="zjh-aL-8RO">
-                    <rect key="frame" x="0.0" y="44" width="414" height="80"/>
+                    <rect key="frame" x="0.0" y="48" width="414" height="88.5"/>
                     <subviews>
-                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="Akk-th-FDD">
-                            <rect key="frame" x="8" y="0.0" width="398" height="31"/>
+                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Akk-th-FDD">
+                            <rect key="frame" x="8" y="0.0" width="398" height="34.5"/>
                             <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DHC-BL-vGP" userLabel="Show Type Button">
+                                    <rect key="frame" x="0.0" y="0.0" width="107.5" height="34.5"/>
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                    <state key="normal" title="Button"/>
+                                    <connections>
+                                        <action selector="changeShowTypeButtonClicked:" destination="-1" eventType="touchUpInside" id="ahg-pj-bVZ"/>
+                                    </connections>
+                                </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UmV-vL-yB3" userLabel="Category Button">
-                                    <rect key="frame" x="0.0" y="0.0" width="323" height="31"/>
+                                    <rect key="frame" x="112.5" y="0.0" width="205.5" height="34.5"/>
                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                     <state key="normal" title="Button"/>
@@ -39,7 +51,7 @@
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZlG-hh-Kel">
-                                    <rect key="frame" x="323" y="0.0" width="75" height="31"/>
+                                    <rect key="frame" x="323" y="0.0" width="75" height="34.5"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="75" id="VXI-65-8vp"/>
                                     </constraints>
@@ -52,7 +64,7 @@
                             </subviews>
                         </stackView>
                         <searchBar contentMode="redraw" searchBarStyle="minimal" translatesAutoresizingMaskIntoConstraints="NO" id="vz9-3c-syW">
-                            <rect key="frame" x="8" y="29" width="398" height="51"/>
+                            <rect key="frame" x="8" y="32.5" width="398" height="56"/>
                             <directionalEdgeInsets key="directionalLayoutMargins" top="0.0" leading="0.0" bottom="0.0" trailing="0.0"/>
                             <textInputTraits key="textInputTraits"/>
                         </searchBar>
@@ -60,9 +72,19 @@
                     <directionalEdgeInsets key="directionalLayoutMargins" top="0.0" leading="8" bottom="0.0" trailing="8"/>
                 </stackView>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="LX9-VR-ktn">
-                    <rect key="frame" x="0.0" y="124" width="414" height="738"/>
+                    <rect key="frame" x="0.0" y="136.5" width="414" height="725.5"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </tableView>
+                <collectionView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="vXx-3t-GTT">
+                    <rect key="frame" x="0.0" y="136.5" width="414" height="725.5"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="JP4-xk-7cm">
+                        <size key="itemSize" width="128" height="128"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    </collectionViewFlowLayout>
+                </collectionView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uei-XV-0Xu" userLabel="Add New Recipe Button">
                     <rect key="frame" x="339" y="787" width="55" height="55"/>
                     <constraints>
@@ -86,10 +108,14 @@
                 <constraint firstItem="zjh-aL-8RO" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="8MN-Nt-Upv"/>
                 <constraint firstItem="LX9-VR-ktn" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Eud-Sr-mMH"/>
                 <constraint firstItem="zjh-aL-8RO" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="MWf-xn-Mzp"/>
+                <constraint firstItem="vXx-3t-GTT" firstAttribute="top" secondItem="zjh-aL-8RO" secondAttribute="bottom" id="Xc6-az-ZNk"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="Uei-XV-0Xu" secondAttribute="bottom" constant="20" id="b5d-u0-Qqk"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="vXx-3t-GTT" secondAttribute="bottom" id="dFd-kI-MRA"/>
                 <constraint firstItem="zjh-aL-8RO" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="fKF-xx-YCW"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="vXx-3t-GTT" secondAttribute="trailing" id="iNo-N7-FjS"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Uei-XV-0Xu" secondAttribute="trailing" constant="20" id="kRu-Fm-aX1"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="LX9-VR-ktn" secondAttribute="bottom" id="pFr-fq-Gvv"/>
+                <constraint firstItem="vXx-3t-GTT" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="t6y-II-51d"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="LX9-VR-ktn" secondAttribute="trailing" id="yYu-TF-IEd"/>
                 <constraint firstItem="LX9-VR-ktn" firstAttribute="top" secondItem="zjh-aL-8RO" secondAttribute="bottom" id="zdp-xX-ywO"/>
             </constraints>
@@ -97,7 +123,7 @@
         </view>
     </objects>
     <resources>
-        <image name="plus.circle.fill" catalog="system" width="128" height="121"/>
+        <image name="plus.circle.fill" catalog="system" width="128" height="123"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

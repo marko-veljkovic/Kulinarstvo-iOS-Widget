@@ -51,6 +51,10 @@
 		55EDDD0C27E258DE00BB8364 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EDDD0B27E258DE00BB8364 /* AppTheme.swift */; };
 		55EDDD0D27E258DE00BB8364 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EDDD0B27E258DE00BB8364 /* AppTheme.swift */; };
 		55EDDD0E27E258E400BB8364 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EDDD0B27E258DE00BB8364 /* AppTheme.swift */; };
+		6A95FFDA293D305E0055E59E /* RecipeImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A95FFD8293D305E0055E59E /* RecipeImageTableViewCell.swift */; };
+		6A95FFDB293D305E0055E59E /* RecipeImageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6A95FFD9293D305E0055E59E /* RecipeImageTableViewCell.xib */; };
+		6ABB2C73294506C000BD32BE /* RecipeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ABB2C71294506C000BD32BE /* RecipeCollectionViewCell.swift */; };
+		6ABB2C74294506C000BD32BE /* RecipeCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6ABB2C72294506C000BD32BE /* RecipeCollectionViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -126,6 +130,10 @@
 		55EDDD0B27E258DE00BB8364 /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
 		55FB9D7E277E227900B536F7 /* KulinarstoSlasnoIEfikasnoWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = KulinarstoSlasnoIEfikasnoWidgetExtension.entitlements; sourceTree = "<group>"; };
 		55FB9D7F277E22A500B536F7 /* IntentHandler.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = IntentHandler.entitlements; sourceTree = "<group>"; };
+		6A95FFD8293D305E0055E59E /* RecipeImageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeImageTableViewCell.swift; sourceTree = "<group>"; };
+		6A95FFD9293D305E0055E59E /* RecipeImageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RecipeImageTableViewCell.xib; sourceTree = "<group>"; };
+		6ABB2C71294506C000BD32BE /* RecipeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCollectionViewCell.swift; sourceTree = "<group>"; };
+		6ABB2C72294506C000BD32BE /* RecipeCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RecipeCollectionViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -209,6 +217,10 @@
 				559363F5272F4A1E0071A10D /* AddNewRecipeTableViewCell.xib */,
 				556D903F27A307A400FCB3D3 /* RecipeTableViewHeaderCell.swift */,
 				556D904027A307A400FCB3D3 /* RecipeTableViewHeaderCell.xib */,
+				6A95FFD8293D305E0055E59E /* RecipeImageTableViewCell.swift */,
+				6A95FFD9293D305E0055E59E /* RecipeImageTableViewCell.xib */,
+				6ABB2C71294506C000BD32BE /* RecipeCollectionViewCell.swift */,
+				6ABB2C72294506C000BD32BE /* RecipeCollectionViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -369,6 +381,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6ABB2C74294506C000BD32BE /* RecipeCollectionViewCell.xib in Resources */,
 				559363D3272EFC440071A10D /* RecipeDetailViewController.xib in Resources */,
 				559363F3272F3FC10071A10D /* AddNewRecipeViewController.xib in Resources */,
 				559363F7272F4A1E0071A10D /* AddNewRecipeTableViewCell.xib in Resources */,
@@ -380,6 +393,7 @@
 				55D6172327C17E6F00FBF8B3 /* IngrediantsStepsViewController.xib in Resources */,
 				556D904227A307A400FCB3D3 /* RecipeTableViewHeaderCell.xib in Resources */,
 				559363CD272EE8EC0071A10D /* RecipeTableViewCell.xib in Resources */,
+				6A95FFDB293D305E0055E59E /* RecipeImageTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -416,9 +430,11 @@
 				55D6172227C17E6F00FBF8B3 /* IngrediantsStepsViewController.swift in Sources */,
 				559363A8272EBF740071A10D /* AppDelegate.swift in Sources */,
 				55EDDD0C27E258DE00BB8364 /* AppTheme.swift in Sources */,
+				6ABB2C73294506C000BD32BE /* RecipeCollectionViewCell.swift in Sources */,
 				559363C8272EE26B0071A10D /* GeneralViewController.swift in Sources */,
 				559363CC272EE8EC0071A10D /* RecipeTableViewCell.swift in Sources */,
 				559363F2272F3FC10071A10D /* AddNewRecipeViewController.swift in Sources */,
+				6A95FFDA293D305E0055E59E /* RecipeImageTableViewCell.swift in Sources */,
 				55EDDD0827E257E500BB8364 /* Datafeed.swift in Sources */,
 				559363E6272F05DF0071A10D /* KulinarstoSlasnoIEfikasnoWidget.intentdefinition in Sources */,
 				559363AA272EBF740071A10D /* SceneDelegate.swift in Sources */,

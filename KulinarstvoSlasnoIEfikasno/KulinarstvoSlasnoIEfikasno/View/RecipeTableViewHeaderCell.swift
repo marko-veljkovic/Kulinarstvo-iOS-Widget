@@ -15,7 +15,6 @@ class RecipeTableViewHeaderCell: UITableViewHeaderFooterView {
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var prepTimeLabel: UILabel!
-    @IBOutlet weak var imageLabel: UILabel!
     @IBOutlet weak var sortArrowImage: UIImageView!
     
     weak var delegate: RecipeTableViewHeaderCellDelegate?

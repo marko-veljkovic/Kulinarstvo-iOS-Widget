@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_0" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="RecipeCollectionViewCell" id="gTV-IL-0wX" customClass="RecipeCollectionViewCell" customModule="KulinarstvoSlasnoIEfikasno" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ZgZ-vF-xsA">
+                        <rect key="frame" x="0.0" y="47" width="200" height="93"/>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e34-sO-nD9">
+                        <rect key="frame" x="0.0" y="150" width="200" height="50"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="50" id="Ueq-fw-WuZ"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <constraints>
+                <constraint firstItem="ZTg-uK-7eu" firstAttribute="trailing" secondItem="e34-sO-nD9" secondAttribute="trailing" id="0Hq-YG-725"/>
+                <constraint firstItem="e34-sO-nD9" firstAttribute="leading" secondItem="ZTg-uK-7eu" secondAttribute="leading" id="53N-lW-6lQ"/>
+                <constraint firstItem="ZTg-uK-7eu" firstAttribute="top" secondItem="ZgZ-vF-xsA" secondAttribute="top" id="6Js-kh-6eD"/>
+                <constraint firstItem="ZTg-uK-7eu" firstAttribute="bottom" secondItem="e34-sO-nD9" secondAttribute="bottom" id="Ic0-JP-iRE"/>
+                <constraint firstItem="e34-sO-nD9" firstAttribute="top" secondItem="ZgZ-vF-xsA" secondAttribute="bottom" constant="10" id="Sy5-dx-afa"/>
+                <constraint firstItem="ZTg-uK-7eu" firstAttribute="leading" secondItem="ZgZ-vF-xsA" secondAttribute="leading" id="l9n-Wc-f5i"/>
+                <constraint firstItem="ZgZ-vF-xsA" firstAttribute="trailing" secondItem="ZTg-uK-7eu" secondAttribute="trailing" id="zsc-48-Y8D"/>
+            </constraints>
+            <size key="customSize" width="200" height="200"/>
+            <connections>
+                <outlet property="recipeImageView" destination="ZgZ-vF-xsA" id="HBl-8Q-Caf"/>
+                <outlet property="recipeNameLabel" destination="e34-sO-nD9" id="p3a-4b-cCb"/>
+            </connections>
+            <point key="canvasLocation" x="189.23076923076923" y="73.93364928909952"/>
+        </collectionViewCell>
+    </objects>
+</document>

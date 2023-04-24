@@ -152,7 +152,7 @@
             "isFavorite": true,
             "isMyRecipe": true,
             "category": 3,
-            "numOfPersons": 4
+            "numOfPersons": 4 
         },
     ]
 }

@@ -16,6 +16,8 @@ public class Datafeed {
     static let shared = Datafeed()
     weak var delegate: DatafeedDelegate?
     
+    let repository = RecipeRepository.shared
+    
     lazy var recipeModel: RecipeModel = {
         var model = RecipeModel()
         model.delegate = self

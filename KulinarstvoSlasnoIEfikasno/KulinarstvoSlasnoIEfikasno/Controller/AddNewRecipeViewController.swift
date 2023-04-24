@@ -83,7 +83,7 @@ class AddNewRecipeViewController : UIViewController {
             $0?.autocorrectionType = .no
         }
         
-        // If self.existingRecipe != nil is true, that means that user selected to edit one of his/hers recipes and all fields should be filled with that recipe data
+        // If self.existingRecipe != nil is true, that means that user selected to edit one of recipes and all fields should be filled with that recipe data
         if self.existingRecipe != nil {
             self.fillFields()
         }
@@ -146,7 +146,7 @@ class AddNewRecipeViewController : UIViewController {
             self.ingrediantsMap = localIngredientMap
         }
         else {
-            self.ingrediantsMap = ["0":Ingredient(quantity: 0, measureUnit: "", ingredient: "")]
+            self.ingrediantsMap = ["0":Ingredient(ingredient: "", measureUnit: "", quantity: 0)]
         }
         
         var localStepsMap: [String:String] = [:]
@@ -178,14 +178,15 @@ class AddNewRecipeViewController : UIViewController {
         var stepsArray: [String] = []
         
         for ingrediant in sortedIngrediants ?? [] where ingrediant.value.quantity != 0 {
-            ingrediantsArray.append(Ingredient(quantity: ingrediant.value.quantity, measureUnit: ingrediant.value.measureUnit, ingredient: ingrediant.value.ingredient))
+            ingrediantsArray.append(Ingredient(ingredient: ingrediant.value.ingredient, measureUnit: ingrediant.value.measureUnit, quantity: ingrediant.value.quantity))
         }
         
         for step in sortedSteps ?? [] where step.value != "" {
             stepsArray.append(step.value)
         }
         
-        let newRecipe = Recipe(name: recipeName, prepTime: Int(recipePrepTime) ?? 0, cookTime: Int(recipeCookTime) ?? 0, ingredients: ingrediantsArray, steps: stepsArray, isFavorite: self.isCurrentFavorites, isMyRecipe: true, category: self.recipeCategory, numOfPersons: Int(recipeNumOfPersons) ?? 0)
+        var newRecipe = Recipe(name: recipeName, prepTime: Int(recipePrepTime) ?? 0, cookTime: Int(recipeCookTime) ?? 0, ingredients: ingrediantsArray, steps: stepsArray, isFavorite: self.isCurrentFavorites, isMyRecipe: true, category: self.recipeCategory, numOfPersons: Int(recipeNumOfPersons) ?? 0)
+        newRecipe.id = existingRecipe?.id ?? ""
         
         if self.existingRecipe != nil {
             self.delegate?.didEditRecipe(self, oldRecipe: self.existingRecipe!, newRecipe: newRecipe)

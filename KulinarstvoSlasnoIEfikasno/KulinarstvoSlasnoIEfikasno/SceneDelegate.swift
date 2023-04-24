@@ -2,7 +2,7 @@
 //  SceneDelegate.swift
 //  KulinarstvoSlasnoIEfikasno
 //
-//  Created by Marko Veljkovic private on 31.10.21..
+//  Created by Marko Veljkovic private on 31.10.21.
 //
 
 import UIKit
@@ -10,7 +10,6 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-    var shouldSave = false
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
@@ -27,12 +26,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
-        
-        if !Datafeed.shared.recipeModel.isLoaded {
-            Datafeed.shared.recipeModel.loadFile()
-        }
-        
-        self.shouldSave = true
         
         // This scene is called from widget, when user click on some recipe and want to open Detail recipe view in app
         guard let url = URLContexts.first?.url else {
@@ -52,82 +45,27 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This occurs shortly after the scene enters the background, or when its session is discarded.
         // Release any resources associated with this scene that can be re-created the next time the scene connects.
         // The scene may re-connect later, as its session was not necessarily discarded (see `application:didDiscardSceneSessions` instead).
-        if self.shouldSave {
-            self.saveRecipes()
-            self.shouldSave = false
-        }
     }
 
     func sceneDidBecomeActive(_ scene: UIScene) {
         // Called when the scene has moved from an inactive state to an active state.
         // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
-        self.shouldSave = true
     }
 
     func sceneWillResignActive(_ scene: UIScene) {
         // Called when the scene will move from an active state to an inactive state.
         // This may occur due to temporary interruptions (ex. an incoming phone call).
-        if self.shouldSave {
-            self.saveRecipes()
-            self.shouldSave = false
-        }
     }
 
     func sceneWillEnterForeground(_ scene: UIScene) {
         // Called as the scene transitions from the background to the foreground.
         // Use this method to undo the changes made on entering the background.
-        self.shouldSave = true
+//        self.shouldSave = true
     }
 
     func sceneDidEnterBackground(_ scene: UIScene) {
         // Called as the scene transitions from the foreground to the background.
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
-        if self.shouldSave {
-            self.saveRecipes()
-            self.shouldSave = false
-        }
-    }
-    
-    // When user close app or put it in background, saveRecipes function gets called which save recipe json file on user device
-    private func saveRecipes() {
-        let finalRecipes = Datafeed.shared.recipes
-        var topLevel: [String : Any] = [:]
-        var topLevelRecipes: [Any] = []
-        for recipe in finalRecipes {
-            var recipeDict: [String : Any] = [:]
-            recipeDict["name"] = recipe.name
-            recipeDict["prepTime"] = recipe.prepTime
-            recipeDict["cookTime"] = recipe.cookTime
-            
-            // Ingredients are displayed with three fields, but are saved in json file as 1 string, for simplicity, at least for now
-            var stringIngredients: [String] = []
-            for ingredient in recipe.ingredients {
-                let stringIngredient = "\(ingredient.quantity)_\(ingredient.measureUnit)_\(ingredient.ingredient)"
-                stringIngredients.append(stringIngredient)
-            }
-            recipeDict["ingredients"] = stringIngredients
-            
-            recipeDict["steps"] = recipe.steps
-            recipeDict["isFavorite"] = recipe.isFavorite
-            recipeDict["isMyRecipe"] = recipe.isMyRecipe
-            recipeDict["category"] = recipe.category?.rawValue ?? 0
-            
-            recipeDict["numOfPersons"] = recipe.numOfPersons
-            
-            topLevelRecipes.append(recipeDict)
-        }
-        topLevel = ["recipes" : topLevelRecipes]
-        
-        do {
-            let dir = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: Datafeed.shared.kAppGroup) //FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
-            let fileURL = dir?.appendingPathComponent("RecipesData.json")
-            
-            let jsonData = try JSONSerialization.data(withJSONObject: topLevel, options: .prettyPrinted)
-            try jsonData.write(to: fileURL!)
-        }
-        catch {
-            
-        }
     }
 }

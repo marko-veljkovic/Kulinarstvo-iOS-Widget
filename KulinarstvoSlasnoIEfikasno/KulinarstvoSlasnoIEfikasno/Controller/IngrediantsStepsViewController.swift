@@ -28,7 +28,7 @@ class IngrediantsStepsViewController: UIViewController {
     // When user create new recipe, 3 empty ingredients and 3 empty steps will be added in ingredients/steps list
     var ingrediantsNumber = 3
     var stepsNumber = 3
-    var ingrediantsMap: [String : Ingredient] = ["0":Ingredient(quantity: 0, measureUnit: "", ingredient: ""), "1":Ingredient(quantity: 0, measureUnit: "", ingredient: ""), "2":Ingredient(quantity: 0, measureUnit: "", ingredient: "")]
+    var ingrediantsMap: [String : Ingredient] = ["0":Ingredient(ingredient: "", measureUnit: "", quantity: 0), "1":Ingredient(ingredient: "", measureUnit: "", quantity: 0), "2":Ingredient(ingredient: "", measureUnit: "", quantity: 0)]
     var stepsMap: [String : String] = ["0":"", "1":"", "2":""]
     
     var isSaveButtonClicked = false
@@ -90,7 +90,7 @@ class IngrediantsStepsViewController: UIViewController {
     @IBAction func addNewButtonClicked(_ sender: Any) {
         if type == .ingredients {
             self.ingrediantsNumber += 1
-            self.ingrediantsMap["\(self.ingrediantsNumber-1)"] = Ingredient(quantity: 0, measureUnit: "", ingredient: "")
+            self.ingrediantsMap["\(self.ingrediantsNumber-1)"] = Ingredient(ingredient: "", measureUnit: "", quantity: 0)
         }
         else {
             self.stepsNumber += 1

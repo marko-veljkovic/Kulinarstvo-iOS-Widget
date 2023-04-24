@@ -76,7 +76,7 @@
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </tableView>
                 <collectionView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="vXx-3t-GTT">
-                    <rect key="frame" x="0.0" y="136.5" width="414" height="725.5"/>
+                    <rect key="frame" x="0.0" y="146.5" width="414" height="715.5"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="JP4-xk-7cm">
                         <size key="itemSize" width="128" height="128"/>
@@ -108,7 +108,7 @@
                 <constraint firstItem="zjh-aL-8RO" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="8MN-Nt-Upv"/>
                 <constraint firstItem="LX9-VR-ktn" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Eud-Sr-mMH"/>
                 <constraint firstItem="zjh-aL-8RO" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="MWf-xn-Mzp"/>
-                <constraint firstItem="vXx-3t-GTT" firstAttribute="top" secondItem="zjh-aL-8RO" secondAttribute="bottom" id="Xc6-az-ZNk"/>
+                <constraint firstItem="vXx-3t-GTT" firstAttribute="top" secondItem="zjh-aL-8RO" secondAttribute="bottom" constant="10" id="Xc6-az-ZNk"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="Uei-XV-0Xu" secondAttribute="bottom" constant="20" id="b5d-u0-Qqk"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="vXx-3t-GTT" secondAttribute="bottom" id="dFd-kI-MRA"/>
                 <constraint firstItem="zjh-aL-8RO" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="fKF-xx-YCW"/>

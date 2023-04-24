@@ -37,6 +37,7 @@ class GeneralViewController: UIViewController {
     var recipeShwoingType: RecipeShowType = .List
     var categoryPicked: RecipeCategory?
     var refreshControl: UIRefreshControl?
+    var collectionRefreshControl: UIRefreshControl?
     var sortByPrepTime = SortByPrepTime.Unsorted
     var oldSearchText = ""
     
@@ -55,8 +56,8 @@ class GeneralViewController: UIViewController {
         
         Datafeed.shared.delegate = self
         
-        if !Datafeed.shared.recipeModel.isLoaded {
-            Datafeed.shared.recipeModel.loadFile()
+        if Datafeed.shared.recipes.isEmpty {
+            Datafeed.shared.repository.getRecipes()
         }
         
         self.searchBar.placeholder = "Pretraži recepte"
@@ -85,6 +86,11 @@ class GeneralViewController: UIViewController {
         self.refreshControl!.addTarget(self, action: #selector(self.refreshTable), for: .valueChanged)
         self.refreshControl!.tintColor = AppTheme.textUniversalGreen
         self.tableView.refreshControl = self.refreshControl!
+
+        self.collectionRefreshControl = UIRefreshControl()
+        self.collectionRefreshControl!.addTarget(self, action: #selector(self.refreshTable), for: .valueChanged)
+        self.collectionRefreshControl!.tintColor = AppTheme.textUniversalGreen
+        self.collectionView.refreshControl = self.collectionRefreshControl!
         
         self.addNewRecipeButton.isHidden = !self.isMyRecipes
         self.clearCategoryButton.isHidden = true
@@ -124,9 +130,7 @@ class GeneralViewController: UIViewController {
     }
     
     @objc func refreshTable() {
-        self.tableView.reloadData()
-        self.collectionView.reloadData()
-        self.refreshControl?.endRefreshing()
+        Datafeed.shared.repository.getRecipes()
     }
     
     @IBAction func addNewRecipeButtonClicked(_ sender: Any) {
@@ -215,6 +219,7 @@ class GeneralViewController: UIViewController {
             }
         }))
         alert.addAction(UIAlertAction(title: "Poništi", style: .cancel, handler: nil))
+        self.recipeShwoingType = .List
         self.present(alert, animated: true, completion: nil)
     }
 }
@@ -369,7 +374,7 @@ extension GeneralViewController : RecipeTableViewHeaderCellDelegate {
             self.recipes.sort(by: {
                 return ($0.prepTime + $0.cookTime) > ($1.prepTime + $1.cookTime)
             })
-        case .Unsorted:()
+        case .Unsorted:
             self.recipes = self.unsortedRecipes
         }
         self.tableView.reloadData()
@@ -381,6 +386,7 @@ extension GeneralViewController : RecipeTableViewHeaderCellDelegate {
 extension GeneralViewController : NewRecipeViewControllerDelegate {
     func didAddNewRecipe(_ controller: AddNewRecipeViewController, newRecipe: Recipe) {
         Datafeed.shared.recipes.append(newRecipe)
+        Datafeed.shared.repository.addRecipe(newRecipe)
     }
     
     func controllerIsDismissed(_ controller: AddNewRecipeViewController) {
@@ -395,8 +401,14 @@ extension GeneralViewController : NewRecipeViewControllerDelegate {
 //MARK: - DatafeedDelegate
 extension GeneralViewController : DatafeedDelegate {
     func recipesDataParsed() {
+        self.recipes = self.isFavorites ? Datafeed.shared.favRecipes : self.isMyRecipes ? Datafeed.shared.myRecipes : Datafeed.shared.recipes
+        self.unfilteredRecipes = self.recipes
+        self.unsortedRecipes = self.recipes
+        self.sortData()
         self.tableView.reloadData()
         self.collectionView.reloadData()
+        self.refreshControl?.endRefreshing()
+        self.collectionRefreshControl?.endRefreshing()
     }
 }
 

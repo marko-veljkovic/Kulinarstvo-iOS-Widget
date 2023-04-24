@@ -176,11 +176,12 @@ class RecipeDetailViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "Odustani", style: .default, handler: nil))
         alert.addAction(UIAlertAction(title: "Obriši", style: .destructive, handler: { _ in
             guard let currentRecipeIndex = Datafeed.shared.recipes.firstIndex(where: {
-                $0.name == self.recipe.name
+                $0.id == self.recipe.id
             }) else {
                 return
             }
             Datafeed.shared.recipes.remove(at: currentRecipeIndex)
+            Datafeed.shared.repository.deleteRecipe(self.recipe)
             self.navigationController?.popViewController(animated: true)
             self.dismiss(animated: true, completion: nil)
         }))
@@ -297,11 +298,12 @@ extension RecipeDetailViewController : NewRecipeViewControllerDelegate {
     func didEditRecipe(_ controller: AddNewRecipeViewController, oldRecipe: Recipe, newRecipe: Recipe) {
         // Recipe is being saved in recipe list after user edited it
         guard let oldRecipeIndex = Datafeed.shared.recipes.firstIndex(where: {
-            $0.name == oldRecipe.name
+            $0.id == oldRecipe.id
         }) else {
             return
         }
         self.oldRecipeIndex = oldRecipeIndex
         Datafeed.shared.recipes[oldRecipeIndex] = newRecipe
+        Datafeed.shared.repository.updateRecipe(newRecipe)
     }
 }

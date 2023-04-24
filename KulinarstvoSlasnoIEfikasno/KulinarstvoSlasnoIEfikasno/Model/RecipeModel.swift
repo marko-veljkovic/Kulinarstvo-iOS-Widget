@@ -7,20 +7,22 @@
 
 import Foundation
 import SwiftUI
+import FirebaseFirestoreSwift
 
 public struct Ingredient : Codable {
-    var quantity: Double
-    var measureUnit: String
     var ingredient: String
+    var measureUnit: String
+    var quantity: Double
     
-    init(quantity: Double, measureUnit: String, ingredient: String) {
-        self.quantity = quantity
-        self.measureUnit = measureUnit
+    init(ingredient: String, measureUnit: String, quantity: Double) {
         self.ingredient = ingredient
+        self.measureUnit = measureUnit
+        self.quantity = quantity
     }
 }
 
 public struct Recipe : Codable {
+    @DocumentID var id: String?
     var name: String
     var prepTime: Int // In minutes
     var cookTime: Int // In minutes
@@ -81,9 +83,9 @@ class RecipeModel {
 
     static let testData = [
         Recipe(name: "Omlet", prepTime: 15, cookTime: 15, ingredients: [
-            Ingredient(quantity: 3, measureUnit: "komada", ingredient: "jaja"),
-            Ingredient(quantity: 20, measureUnit: "grama", ingredient: "sira"),
-            Ingredient(quantity: 1, measureUnit: "kasicica", ingredient: "persun")
+            Ingredient(ingredient: "jaja", measureUnit: "komada", quantity: 3),
+            Ingredient(ingredient: "sira", measureUnit: "grama", quantity: 20),
+            Ingredient(ingredient: "persun", measureUnit: "kasicica", quantity: 1)
         ], steps: [
             "Izmutiti jaja sitno i brzo", "Dodati sitno", "Lorem ipsum za proveru duzine i sirine opisa postupka", "Sipati u tiganj i prziti", "Proba", "priprema", "7 korak po redu",
             "Izmutiti jaja sitno i brzo", "Dodati sitno", "Lorem ipsum za proveru duzine i sirine opisa postupka", "Sipati u tiganj i prziti", "Proba", "priprema", "7 korak po redu",
@@ -91,23 +93,23 @@ class RecipeModel {
         ], category: .warmSideDish),
         Recipe(name: "Spagete karbonara", prepTime: 45, cookTime: 15, ingredients: [], steps: [], category: .mainDish),
         Recipe(name: "Pirinac", prepTime: 20, cookTime: 15,
-               ingredients: [Ingredient(quantity: 200, measureUnit: "grama", ingredient: "pirinac"),
-                             Ingredient(quantity: 2, measureUnit: "kasike", ingredient: "zejtin"),
-                             Ingredient(quantity: 1, measureUnit: "prstohvat", ingredient: "soli"),
-                             Ingredient(quantity: 400, measureUnit: "mililitra", ingredient: "voda")],
+               ingredients: [Ingredient(ingredient: "pirinac", measureUnit: "grama", quantity: 200),
+                             Ingredient(ingredient: "zejtin", measureUnit: "kasike", quantity: 2),
+                             Ingredient(ingredient: "soli", measureUnit: "prstohvat", quantity: 1),
+                             Ingredient(ingredient: "voda", measureUnit: "mililitra", quantity: 400)],
                steps: [ "Oprati pirinac", "Dodati vodu", "Dodati zejtin", "Dodati so", "Kuvati 20ak minuta"], category: .warmSideDish),
         Recipe(name: "Mesano povrce", prepTime: 25, cookTime: 15, ingredients: [], steps: [], category: .warmSideDish),
         Recipe(name: "Sendvic", prepTime: 5, cookTime: 15, ingredients: [], steps: [], category: .bread),
         Recipe(name: "Cezar salata", prepTime: 75, cookTime: 15,
-               ingredients: [Ingredient(quantity: 400, measureUnit: "grama", ingredient: "slanina"), Ingredient(quantity: 1, measureUnit: "kilogram", ingredient: "pilece belo"), Ingredient(quantity: 2, measureUnit: "glavice", ingredient: "zelena salata"), Ingredient(quantity: 400, measureUnit: "grama", ingredient: "cheri paradajz"), Ingredient(quantity: 6, measureUnit: "kriski", ingredient: "hleba"), Ingredient(quantity: 600, measureUnit: "grama", ingredient: "cezar preliv")],
+               ingredients: [Ingredient(ingredient: "slanina", measureUnit: "grama", quantity: 400)], //Ingredient(ingredient: 1, measureUnit: "kilogram", quantity: "pilece belo"), Ingredient(ingredient: 2, measureUnit: "glavice", quantity: "zelena salata"), Ingredient(ingredient: 400, measureUnit: "grama", quantity: "cheri paradajz"), Ingredient(ingredient: 6, measureUnit: "kriski", quantity: "hleba"), Ingredient(ingredient: 600, measureUnit: "grama", quantity: "cezar preliv")],
                steps: ["Iseckati slaninu na kockice", "Proprziti slaninu", "Iseckati pilece belo na kockice", "Proprziti pilece belo", "Iseckati hleba na kockice", "Umedjuvremenu nacepkati listove zelene salate u ciniju", "Naseci cheri paradajz i dodati u ciniju", "Kada hleb zapece skloniti sa ringle i sve dodati u ciniju", "Dodati cezar preliv", "Promesati sve i uzivati"],
                isFavorite: true, isMyRecipe: true, category: .salad, numOfPersons: 6)
     ]
 
     static var myTestData = [
         Recipe(name: "Omlet", prepTime: 15, cookTime: 15, ingredients: [
-            Ingredient(quantity: 3, measureUnit: "komada", ingredient: "jaja"),
-            Ingredient(quantity: 20, measureUnit: "grama", ingredient: "sira")
+            Ingredient(ingredient: "jaja", measureUnit: "komada", quantity: 3),
+            Ingredient(ingredient: "sira", measureUnit: "grama", quantity: 20)
         ], steps: [
             "Izmutiti jaja", "Dodati sitno seckan paradajz", "Sipati u tiganj i prziti"
         ], category: .warmSideDish),
@@ -184,7 +186,7 @@ extension RecipeModel {
                     let quantity = parts[0]
                     let measureUnit = parts[1]
                     let ingredient = parts[2]
-                    ingredients.append(Ingredient(quantity: Double(quantity) ?? 0, measureUnit: String(measureUnit), ingredient: String(ingredient)))
+                    ingredients.append(Ingredient(ingredient: String(ingredient), measureUnit: String(measureUnit), quantity: Double(quantity) ?? 0))
                 }
                 rec.ingredients = ingredients
             case "steps":

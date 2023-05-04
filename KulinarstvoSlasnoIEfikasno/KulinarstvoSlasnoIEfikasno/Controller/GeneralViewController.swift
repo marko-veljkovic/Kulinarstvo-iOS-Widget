@@ -322,7 +322,15 @@ extension GeneralViewController : UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RecipeCollectionViewCell", for: indexPath) as? RecipeCollectionViewCell
         let record = self.recipes[indexPath.row]
         
-        cell?.recipeImageView.image = UIImage(named: record.imageName)
+        if let recipeImage = UIImage(named: record.imageName) {
+            cell?.recipeImageView.image = recipeImage
+        }
+        else {
+            cell?.recipeImageView.image = UIImage(systemName: "photo")
+            cell?.recipeImageView.tintColor = AppTheme.backgroundUniversalGreen
+        }
+        
+//        cell?.recipeImageView.image = UIImage(named: record.imageName)
         cell?.recipeNameLabel.text = record.name
         
         return cell ?? UICollectionViewCell()

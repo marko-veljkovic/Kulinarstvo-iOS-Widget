@@ -36,10 +36,29 @@ class TabBarViewController: UITabBarController {
         return navigationController
     }()
     
+//    let accountViewController: UINavigationController = {
+//        let accountViewController = AccountViewController()
+//        accountViewController.navigationItem.title = "Moji nalog"
+//        let navigationController = UINavigationController(rootViewController: accountViewController)
+//        navigationController.title = "Moji nalog"
+//        navigationController.tabBarItem.image = UIImage(systemName: "person.circle.fill")
+//        return navigationController
+//    }()
+    
+    let moreViewController: UINavigationController = {
+        let moreViewController = MoreViewController()
+        moreViewController.navigationItem.title = "Vise"
+        let navigationController = UINavigationController(rootViewController: moreViewController)
+        navigationController.title = "Vise"
+        navigationController.tabBarItem.image = UIImage(systemName: "line.3.horizontal")
+        return navigationController
+    }()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.viewControllers = [generalNavigationController, favoritesNavigationController, myRecipesNavigationController]
+        self.viewControllers = [generalNavigationController, favoritesNavigationController, myRecipesNavigationController, moreViewController]
         
         self.tabBar.tintColor = self.traitCollection.userInterfaceStyle == .dark ? AppTheme.textUniversalGreen : AppTheme.backgroundUniversalGreen
     }

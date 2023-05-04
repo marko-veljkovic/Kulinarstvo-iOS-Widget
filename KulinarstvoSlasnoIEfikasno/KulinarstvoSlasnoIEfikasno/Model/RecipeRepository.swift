@@ -8,12 +8,17 @@
 import Foundation
 import FirebaseFirestore
 import FirebaseFirestoreSwift
+import Combine
 
 class RecipeRepository {
     static let shared = RecipeRepository()
     
     private let store = Firestore.firestore()
     private let path = "recipes"
+    
+    var userID = ""
+    private let authenticationService = AuthenticationService()
+    private var cancellables: Set<AnyCancellable> = []
     
     var recipes: [Recipe] = [] {
         didSet {
@@ -22,7 +27,11 @@ class RecipeRepository {
     }
     
     private init() {
-        
+//        authenticationService.$user.compactMap { user in
+//            user?.uid
+//        }
+//        .assign(to: \.userID, on: self)
+//        .store(in: &cancellables)
     }
     
     func getRecipes() {

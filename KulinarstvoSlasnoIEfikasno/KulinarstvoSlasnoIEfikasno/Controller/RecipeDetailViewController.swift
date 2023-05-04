@@ -119,6 +119,10 @@ class RecipeDetailViewController: UIViewController {
         if recipeImage == nil, let imageData = UserDefaults(suiteName: Datafeed.shared.kAppGroup)?.object(forKey: self.recipe.imageName) as? Data {
             recipeImage = UIImage(data: imageData)
         }
+        else if recipeImage == nil {
+            recipeImage = UIImage(systemName: "photo")
+            self.recipeImageView.tintColor = AppTheme.backgroundUniversalGreen
+        }
 
         self.recipeImageView.image = recipeImage
         self.setNumberOfPersonsField()

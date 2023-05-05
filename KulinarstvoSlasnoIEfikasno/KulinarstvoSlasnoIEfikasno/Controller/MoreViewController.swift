@@ -6,16 +6,27 @@
 //
 
 import UIKit
+import FirebaseAuth
+import Firebase
 
 class MoreViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
+    private var isUserLoggedIn = false {
+        didSet {
+            if oldValue != isUserLoggedIn {
+                self.tableView.reloadData()
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.tableView.delegate = self
         self.tableView.dataSource = self
+        
+        self.isUserLoggedIn = Auth.auth().currentUser != nil
     }
 }
 
@@ -36,9 +47,9 @@ extension MoreViewController : UITableViewDataSource {
         
         switch indexPath.row {
         case 0:
-            contentConfiguration.text = "Ulogujte se"
+            contentConfiguration.text = self.isUserLoggedIn ? "Moji nalog" : "Ulogujte se"
         case 1:
-            contentConfiguration.text = "Napravite nalog"
+            contentConfiguration.text = self.isUserLoggedIn ? "Odjavi se" : "Napravite nalog"
         default:
             contentConfiguration.text = "Ulogujte se"
         }
@@ -56,9 +67,9 @@ extension MoreViewController : UITableViewDelegate {
         
         switch indexPath.row {
         case 0:
-            self.showLogin()
+            self.isUserLoggedIn ? self.showMyAccount() : self.showLogin()
         case 1:
-            self.showSignin()
+            self.isUserLoggedIn ? self.logout() : self.showSignUp()
         default:
             return
         }
@@ -68,14 +79,40 @@ extension MoreViewController : UITableViewDelegate {
 //MARK: - AccountViewController calling
 extension MoreViewController {
     private func showLogin() {
-        let accountViewController = AccountViewController(isSignUp: false)
+        self.createAndPresentConttroller(isSignUp: false)
+    }
+    
+    private func showSignUp() {
+        self.createAndPresentConttroller(isSignUp: true)
+    }
+    
+    private func createAndPresentConttroller(isSignUp: Bool) {
+        let accountViewController = AccountViewController(isSignUp: isSignUp)
+        accountViewController.delegate = self
         accountViewController.modalPresentationStyle = .popover
         self.present(accountViewController, animated: true)
     }
     
-    private func showSignin() {
-        let accountViewController = AccountViewController(isSignUp: true)
-        accountViewController.modalPresentationStyle = .popover
-        self.present(accountViewController, animated: true)
+    private func showMyAccount() {
+        let myAccountViewController = MyAccountViewController()
+        myAccountViewController.modalPresentationStyle = .popover
+        self.present(myAccountViewController, animated: true)
+    }
+    
+    private func logout() {
+        AuthenticationService.singOut()
+        self.isUserLoggedIn = false
+        Datafeed.shared.currentUser = nil
+    }
+}
+
+//MARK: - AccountViewControllerDelegate
+extension MoreViewController : AccountViewControllerDelegate {
+    func userLoggedInSuccesfully(_ controller: AccountViewController) {
+        controller.dismiss(animated: true)
+        self.isUserLoggedIn = Auth.auth().currentUser != nil
+        if self.isUserLoggedIn {
+            self.showMyAccount()
+        }
     }
 }

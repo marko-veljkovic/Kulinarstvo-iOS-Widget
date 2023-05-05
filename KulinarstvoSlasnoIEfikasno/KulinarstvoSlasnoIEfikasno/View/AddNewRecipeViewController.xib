@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -18,8 +19,6 @@
                 <outlet property="categoryPickerView" destination="reG-Ev-ndE" id="maK-yN-0iL"/>
                 <outlet property="chooseImageButton" destination="e9u-V6-9hx" id="KB6-ty-urf"/>
                 <outlet property="cookingTimeTextField" destination="H6u-ue-bXU" id="Pd7-fF-8ZL"/>
-                <outlet property="isFavoritesLabel" destination="faV-FX-0C9" id="woW-Z9-S1w"/>
-                <outlet property="isFavoritesSwitch" destination="ua4-Dt-iZ0" id="Djh-w1-pNd"/>
                 <outlet property="numOfPersonsTextField" destination="8HA-Kk-bUr" id="vVt-63-jxz"/>
                 <outlet property="preparationTimeTextField" destination="ymK-a8-3HD" id="3kc-g8-mzf"/>
                 <outlet property="recipeImageView" destination="3fX-p8-G6d" id="N60-qA-ZYl"/>
@@ -33,7 +32,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="f8z-uI-r2M">
-                    <rect key="frame" x="5" y="44" width="404" height="818"/>
+                    <rect key="frame" x="5" y="48" width="404" height="814"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bve-wM-n4X">
                             <rect key="frame" x="0.0" y="0.0" width="404" height="35"/>
@@ -75,29 +74,8 @@
                                 <constraint firstAttribute="height" constant="30" id="Ke5-uj-2X4"/>
                             </constraints>
                         </stackView>
-                        <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="hnE-Dl-CkU">
-                            <rect key="frame" x="0.0" y="125" width="404" height="30"/>
-                            <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="faV-FX-0C9">
-                                    <rect key="frame" x="0.0" y="0.0" width="345" height="30"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                    <nil key="textColor"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ua4-Dt-iZ0">
-                                    <rect key="frame" x="355" y="0.0" width="51" height="30"/>
-                                    <connections>
-                                        <action selector="isFavoritesSwitchSwitched:" destination="-1" eventType="valueChanged" id="OJF-eX-QR8"/>
-                                    </connections>
-                                </switch>
-                            </subviews>
-                            <constraints>
-                                <constraint firstItem="faV-FX-0C9" firstAttribute="leading" secondItem="hnE-Dl-CkU" secondAttribute="leading" id="dBN-lE-8Xd"/>
-                                <constraint firstAttribute="height" constant="30" id="r9Q-Dv-1GA"/>
-                            </constraints>
-                        </stackView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e9u-V6-9hx">
-                            <rect key="frame" x="0.0" y="165" width="404" height="30"/>
+                            <rect key="frame" x="0.0" y="125" width="404" height="30"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="30" id="Xz7-K5-gHt"/>
                             </constraints>
@@ -110,14 +88,14 @@
                             </connections>
                         </button>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="3fX-p8-G6d">
-                            <rect key="frame" x="0.0" y="205" width="404" height="120"/>
+                            <rect key="frame" x="0.0" y="165" width="404" height="120"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="120" id="bvl-CW-0VD"/>
                             </constraints>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kategorija" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JMQ-Z3-EUz">
-                            <rect key="frame" x="0.0" y="335" width="404" height="35"/>
+                            <rect key="frame" x="0.0" y="295" width="404" height="35"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="35" id="13m-nA-arA"/>
                             </constraints>
@@ -126,10 +104,10 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="reG-Ev-ndE">
-                            <rect key="frame" x="0.0" y="380" width="404" height="348"/>
+                            <rect key="frame" x="0.0" y="340" width="404" height="384"/>
                         </pickerView>
                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="RUh-UM-5vZ">
-                            <rect key="frame" x="0.0" y="738" width="404" height="35"/>
+                            <rect key="frame" x="0.0" y="734" width="404" height="35"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9wy-Vm-cWt">
                                     <rect key="frame" x="0.0" y="0.0" width="197" height="35"/>
@@ -153,7 +131,7 @@
                             </constraints>
                         </stackView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8iZ-Na-3HV">
-                            <rect key="frame" x="0.0" y="783" width="404" height="35"/>
+                            <rect key="frame" x="0.0" y="779" width="404" height="35"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="35" id="b4h-rQ-TBY"/>
                             </constraints>

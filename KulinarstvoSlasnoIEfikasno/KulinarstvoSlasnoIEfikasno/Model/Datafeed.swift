@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import FirebaseAuth
 
 protocol DatafeedDelegate : AnyObject {
     func recipesDataParsed()
@@ -16,7 +17,8 @@ public class Datafeed {
     static let shared = Datafeed()
     weak var delegate: DatafeedDelegate?
     
-    let repository = RecipeRepository.shared
+    let recipeRepository = RecipeRepository.shared
+    let userRepository = UserRepository.shared
     
     lazy var recipeModel: RecipeModel = {
         var model = RecipeModel()
@@ -30,10 +32,12 @@ public class Datafeed {
         }
     }
     
+    var currentUser: LocalUser? = nil
+    
     var favRecipes: [Recipe] {
         get {
             let filtered = self.recipes.filter {
-                $0.isFavorite ?? false
+                Datafeed.shared.currentUser?.favoriteRecipes?.contains($0.id ?? "") ?? false
             }
             return filtered
         }
@@ -51,7 +55,9 @@ public class Datafeed {
     let kAppGroup = "group.com.kulinarstvo_slasno_i_efikasno"
     
     private init() {
-        
+        if let currentUser = Auth.auth().currentUser {
+            self.userRepository.getCurrentUser(uuid: currentUser.uid)
+        }
     }
     
     func recipeCategoryName(currentCategory: RecipeCategory?) -> String {

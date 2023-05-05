@@ -41,6 +41,7 @@ class RecipeDetailViewController: UIViewController {
     }
     
     var recipe: Recipe
+    var hasRecipeChangedInThisView = false
     
     init(recipe: Recipe) {
         self.recipe = recipe
@@ -86,6 +87,15 @@ class RecipeDetailViewController: UIViewController {
         self.setRecipeData()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        // Back button is pressed
+        if self.isMovingFromParent, self.hasRecipeChangedInThisView, Datafeed.shared.currentUser != nil {
+            UserRepository.shared.updateUser(Datafeed.shared.currentUser!)
+        }
+    }
+    
     func setColors() {
         [self.increaseNumOfPersons, self.decreaseNumOfPersons, changeRecipeButton].forEach {
             $0?.backgroundColor = AppTheme.setBackgroundColor()
@@ -129,7 +139,7 @@ class RecipeDetailViewController: UIViewController {
         self.setPrepAndCookTime()
         self.tableView.reloadData()
         
-        self.isFavoritesSwitch.isOn = self.recipe.isFavorite ?? false
+        self.isFavoritesSwitch.isOn = Datafeed.shared.currentUser?.favoriteRecipes?.contains(self.recipe.id ?? "") ?? false //self.recipe.isFavorite ?? false
     }
     
     func setNumberOfPersonsField() {
@@ -185,7 +195,7 @@ class RecipeDetailViewController: UIViewController {
                 return
             }
             Datafeed.shared.recipes.remove(at: currentRecipeIndex)
-            Datafeed.shared.repository.deleteRecipe(self.recipe)
+            Datafeed.shared.recipeRepository.deleteRecipe(self.recipe)
             self.navigationController?.popViewController(animated: true)
             self.dismiss(animated: true, completion: nil)
         }))
@@ -224,7 +234,7 @@ class RecipeDetailViewController: UIViewController {
             if self.localPrepTimeFactor > 0.025 {
                 self.localPrepTimeFactor -= 0.025
             }
-            // Cook time is increased for small value when number of persons goes to 15 or 7
+            // Cook time is increased for small value when number of persons goes to 7 or 15
             if localNumberOfPersons == 7 {
                 self.localCookTime += Int(Double(self.recipe.cookTime) * 0.25)
             }
@@ -237,14 +247,20 @@ class RecipeDetailViewController: UIViewController {
     
     @IBAction func isFavoritedRecipeSwitched(_ sender: Any) {
         // If user click on switch and add/remove recipe from favorites, recipe data will be refreshed
-        var newRecipe = self.recipe
-        newRecipe.isFavorite = !(newRecipe.isFavorite ?? true)
-        guard let oldRecipeIndex = Datafeed.shared.recipes.firstIndex(where: {
-            $0.name == self.recipe.name
-        }) else {
-            return
+        if (sender as? UISwitch)?.isOn ?? false {
+            Datafeed.shared.currentUser?.favoriteRecipes?.append(self.recipe.id ?? "")
         }
-        Datafeed.shared.recipes[oldRecipeIndex] = newRecipe
+        else {
+            guard let oldRecipeIndex = Datafeed.shared.currentUser?.favoriteRecipes?.firstIndex(where: {
+                $0 == self.recipe.id
+            }) else {
+                return
+            }
+            Datafeed.shared.currentUser?.favoriteRecipes?.remove(at: oldRecipeIndex)
+        }
+        
+        //making sure that hasRecipeChangedInThisView has correct value
+        self.hasRecipeChangedInThisView = !self.hasRecipeChangedInThisView
     }
 }
 
@@ -308,6 +324,6 @@ extension RecipeDetailViewController : NewRecipeViewControllerDelegate {
         }
         self.oldRecipeIndex = oldRecipeIndex
         Datafeed.shared.recipes[oldRecipeIndex] = newRecipe
-        Datafeed.shared.repository.updateRecipe(newRecipe)
+        Datafeed.shared.recipeRepository.updateRecipe(newRecipe)
     }
 }

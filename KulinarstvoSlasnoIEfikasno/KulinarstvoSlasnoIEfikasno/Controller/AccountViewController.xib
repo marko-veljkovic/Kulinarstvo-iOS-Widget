@@ -11,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AccountViewController" customModule="KulinarstvoSlasnoIEfikasno" customModuleProvider="target">
             <connections>
+                <outlet property="closeButton" destination="5wZ-F0-lSk" id="giv-f7-9q5"/>
                 <outlet property="emailLabel" destination="bKh-V8-rYm" id="bRi-Zc-hX3"/>
                 <outlet property="emailTextField" destination="joI-G2-Q4B" id="3Kl-cG-WAP"/>
                 <outlet property="loginButton" destination="4Lq-Gu-TWH" id="Ajc-uG-yXL"/>
@@ -27,6 +28,19 @@
             <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5wZ-F0-lSk">
+                    <rect key="frame" x="-5" y="62" width="100" height="25"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="100" id="FWt-mE-7RA"/>
+                        <constraint firstAttribute="height" constant="25" id="ev9-lk-H5e"/>
+                    </constraints>
+                    <state key="normal" title="Button"/>
+                    <buttonConfiguration key="configuration" style="plain" title="Zatvori"/>
+                    <connections>
+                        <action selector="closeButtonDidClicked:" destination="-1" eventType="touchUpInside" id="Ijn-fZ-1S5"/>
+                        <action selector="loginButtonClicked:" destination="-1" eventType="touchUpInside" id="5E3-g6-I76"/>
+                    </connections>
+                </button>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="CHA-jQ-luC">
                     <rect key="frame" x="20" y="97" width="350" height="383"/>
                     <subviews>
@@ -124,8 +138,10 @@
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="CHA-jQ-luC" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="50" id="H7e-0e-Lw6"/>
+                <constraint firstItem="5wZ-F0-lSk" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="-5" id="SZt-UC-yfb"/>
                 <constraint firstItem="CHA-jQ-luC" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="UXV-ny-yFs"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="CHA-jQ-luC" secondAttribute="trailing" constant="20" id="V06-ps-2dZ"/>
+                <constraint firstItem="5wZ-F0-lSk" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="15" id="xgr-wK-Yb7"/>
             </constraints>
             <point key="canvasLocation" x="140" y="21"/>
         </view>

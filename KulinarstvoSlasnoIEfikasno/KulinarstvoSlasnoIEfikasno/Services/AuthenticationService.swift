@@ -7,15 +7,12 @@
 
 import Foundation
 import Firebase
-import FirebaseCore
 import FirebaseAuth
 
 class AuthenticationService {
-    @Published var user: User?
-    private var authenticationStateHandle: AuthStateDidChangeListenerHandle?
     
     init() {
-        self.addListeners()
+        
     }
     
     static func signIn(email: String, password: String, completion: @escaping (AuthDataResult?, Error?) -> Void) {
@@ -36,15 +33,5 @@ class AuthenticationService {
             //TODO: Handle error
             print(error.localizedDescription)
         }
-    }
-    
-    private func addListeners() {
-        if let handle = self.authenticationStateHandle {
-            Auth.auth().removeStateDidChangeListener(handle)
-        }
-        
-        self.authenticationStateHandle = Auth.auth().addStateDidChangeListener({ auth, user in
-            self.user = user
-        })
     }
 }

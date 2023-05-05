@@ -6,9 +6,15 @@
 //
 
 import UIKit
+import FirebaseAuth
+
+protocol AccountViewControllerDelegate : AnyObject {
+    func userLoggedInSuccesfully(_ controller: AccountViewController)
+}
 
 class AccountViewController: UIViewController {
 
+    @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var emailLabel: UILabel!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordLabel: UILabel!
@@ -17,6 +23,8 @@ class AccountViewController: UIViewController {
     @IBOutlet weak var repeatPasswordTextField: UITextField!
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var signUpButton: UIButton!
+    
+    weak var delegate: AccountViewControllerDelegate?
     
     var isSingUp: Bool = false
     
@@ -71,7 +79,10 @@ class AccountViewController: UIViewController {
             $0?.setTitleColor(AppTheme.setTextColor(), for: .normal)
         }
     }
-
+    @IBAction func closeButtonDidClicked(_ sender: Any) {
+        self.dismiss(animated: true)
+    }
+    
     @IBAction func loginButtonClicked(_ sender: Any) {
         
         let email = self.emailTextField.text ?? ""
@@ -83,7 +94,11 @@ class AccountViewController: UIViewController {
                 return
             }
             
+            guard authResult?.user != nil else {
+                return
+            }
             
+            self.userLoggedIn()
         }
     }
     
@@ -102,7 +117,18 @@ class AccountViewController: UIViewController {
                 return
             }
             
+            guard authResult?.user != nil else {
+                return
+            }
             
+            self.userLoggedIn()
+        }
+    }
+    
+    private func userLoggedIn() {
+        self.delegate?.userLoggedInSuccesfully(self)
+        if let currentUser = Auth.auth().currentUser {
+            Datafeed.shared.userRepository.getCurrentUser(uuid: currentUser.uid)
         }
     }
     

@@ -20,10 +20,8 @@ class AddNewRecipeViewController : UIViewController {
     @IBOutlet weak var preparationTimeTextField: UITextField!
     @IBOutlet weak var cookingTimeTextField: UITextField!
     @IBOutlet weak var numOfPersonsTextField: UITextField!
-    @IBOutlet weak var isFavoritesLabel: UILabel!
     
     @IBOutlet weak var addNewRecipeButton: UIButton!
-    @IBOutlet weak var isFavoritesSwitch: UISwitch!
     
     @IBOutlet weak var chooseImageButton: UIButton!
     @IBOutlet weak var recipeImageView: UIImageView!
@@ -40,8 +38,6 @@ class AddNewRecipeViewController : UIViewController {
     
     var ingrediantsMap: [String : Ingredient]? // ["0":Ingredient(quantity: 0, measureUnit: "", ingredient: ""), "1":Ingredient(quantity: 0, measureUnit: "", ingredient: ""), "2":Ingredient(quantity: 0, measureUnit: "", ingredient: "")]
     var stepsMap: [String : String]? // ["0":"", "1":"", "2":""]
-    
-    var isCurrentFavorites = true
     
     var recipeCategory = RecipeCategory.snack
     
@@ -61,7 +57,6 @@ class AddNewRecipeViewController : UIViewController {
         
         // This controller is used for both editing existing recipe and creating new recipe
         self.addNewRecipeLabel.text = self.existingRecipe != nil ? "Izmeni recept" : "Dodaj novi recept"
-        self.isFavoritesLabel.text = "Dodati u omiljene?"
         self.chooseImageButton.setTitle("Izaberi sliku jela", for: .normal)
         
         self.categoryPickerView.delegate = self
@@ -113,7 +108,7 @@ class AddNewRecipeViewController : UIViewController {
             $0?.textColor = AppTheme.setTextColor()
         }
         
-        [self.addNewRecipeLabel, self.isFavoritesLabel, self.categoryLabel].forEach {
+        [self.addNewRecipeLabel, self.categoryLabel].forEach {
             $0?.textColor = AppTheme.setTextColor()
         }
         
@@ -122,7 +117,6 @@ class AddNewRecipeViewController : UIViewController {
             $0?.setTitleColor(AppTheme.setTextColor(), for: .normal)
         }
         
-//        self.isFavoritesSwitch.onTintColor = AppTheme.setTextColor()
         self.navigationController?.navigationBar.tintColor = AppTheme.setTextColor()
     }
     
@@ -131,8 +125,6 @@ class AddNewRecipeViewController : UIViewController {
         self.preparationTimeTextField.text = String(self.existingRecipe!.prepTime)
         self.cookingTimeTextField.text = String(self.existingRecipe!.cookTime)
         self.numOfPersonsTextField.text = String(self.existingRecipe!.numOfPersons)
-        self.isCurrentFavorites = self.existingRecipe!.isFavorite ?? false
-        self.isFavoritesSwitch.isOn = self.existingRecipe!.isFavorite ?? false
         self.recipeImageView.image = UIImage(named: self.existingRecipe!.imageName)
         
         let selectedCategoryIndex = self.existingRecipe!.category?.rawValue ?? 0
@@ -185,7 +177,7 @@ class AddNewRecipeViewController : UIViewController {
             stepsArray.append(step.value)
         }
         
-        var newRecipe = Recipe(name: recipeName, prepTime: Int(recipePrepTime) ?? 0, cookTime: Int(recipeCookTime) ?? 0, ingredients: ingrediantsArray, steps: stepsArray, isFavorite: self.isCurrentFavorites, isMyRecipe: true, category: self.recipeCategory, numOfPersons: Int(recipeNumOfPersons) ?? 0)
+        var newRecipe = Recipe(name: recipeName, prepTime: Int(recipePrepTime) ?? 0, cookTime: Int(recipeCookTime) ?? 0, ingredients: ingrediantsArray, steps: stepsArray, isFavorite: false, isMyRecipe: true, category: self.recipeCategory, numOfPersons: Int(recipeNumOfPersons) ?? 0)
         newRecipe.id = existingRecipe?.id ?? ""
         
         if self.existingRecipe != nil {
@@ -197,11 +189,6 @@ class AddNewRecipeViewController : UIViewController {
         
         self.navigationController?.popViewController(animated: true)
         self.delegate?.controllerIsDismissed(self)
-    }
-    
-    @IBAction func isFavoritesSwitchSwitched(_ sender: Any) {
-        self.isCurrentFavorites = !isCurrentFavorites
-        self.addNewRecipeButton.isEnabled = true
     }
     
     @IBAction func chooseImageButtonClicked(_ sender: Any) {

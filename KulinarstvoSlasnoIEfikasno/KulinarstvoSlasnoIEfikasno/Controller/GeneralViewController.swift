@@ -57,7 +57,7 @@ class GeneralViewController: UIViewController {
         Datafeed.shared.delegate = self
         
         if Datafeed.shared.recipes.isEmpty {
-            Datafeed.shared.repository.getRecipes()
+            Datafeed.shared.recipeRepository.getRecipes()
         }
         
         self.searchBar.placeholder = "Pretraži recepte"
@@ -130,7 +130,7 @@ class GeneralViewController: UIViewController {
     }
     
     @objc func refreshTable() {
-        Datafeed.shared.repository.getRecipes()
+        Datafeed.shared.recipeRepository.getRecipes()
     }
     
     @IBAction func addNewRecipeButtonClicked(_ sender: Any) {
@@ -394,7 +394,7 @@ extension GeneralViewController : RecipeTableViewHeaderCellDelegate {
 extension GeneralViewController : NewRecipeViewControllerDelegate {
     func didAddNewRecipe(_ controller: AddNewRecipeViewController, newRecipe: Recipe) {
         Datafeed.shared.recipes.append(newRecipe)
-        Datafeed.shared.repository.addRecipe(newRecipe)
+        Datafeed.shared.recipeRepository.addRecipe(newRecipe)
     }
     
     func controllerIsDismissed(_ controller: AddNewRecipeViewController) {

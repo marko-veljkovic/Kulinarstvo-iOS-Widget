@@ -177,7 +177,7 @@ class AddNewRecipeViewController : UIViewController {
             stepsArray.append(step.value)
         }
         
-        var newRecipe = Recipe(name: recipeName, prepTime: Int(recipePrepTime) ?? 0, cookTime: Int(recipeCookTime) ?? 0, ingredients: ingrediantsArray, steps: stepsArray, isFavorite: false, isMyRecipe: true, category: self.recipeCategory, numOfPersons: Int(recipeNumOfPersons) ?? 0)
+        var newRecipe = Recipe(name: recipeName, prepTime: Int(recipePrepTime) ?? 0, cookTime: Int(recipeCookTime) ?? 0, ingredients: ingrediantsArray, steps: stepsArray, category: self.recipeCategory, numOfPersons: Int(recipeNumOfPersons) ?? 0, creatorID: Datafeed.shared.currentUser?.id ?? "")
         newRecipe.id = existingRecipe?.id ?? ""
         
         if self.existingRecipe != nil {

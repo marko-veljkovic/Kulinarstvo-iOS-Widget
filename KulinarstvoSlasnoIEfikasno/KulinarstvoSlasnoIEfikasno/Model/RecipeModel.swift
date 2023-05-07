@@ -30,8 +30,7 @@ public struct Recipe : Codable {
     var ingredients: [Ingredient]
     var steps: [String]
     
-    var isFavorite: Bool?
-    var isMyRecipe: Bool?
+    var creatorID: String?
     
     var category: RecipeCategory?
     
@@ -56,16 +55,15 @@ public struct Recipe : Codable {
         return name
     }
     
-    init(name: String, prepTime: Int, cookTime: Int, ingredients: [Ingredient], steps: [String], isFavorite: Bool? = false, isMyRecipe: Bool? = false, category: RecipeCategory, numOfPersons: Int = 0) {
+    init(name: String, prepTime: Int, cookTime: Int, ingredients: [Ingredient], steps: [String], category: RecipeCategory, numOfPersons: Int = 0, creatorID: String? = nil) {
         self.name = name
         self.prepTime = prepTime
         self.cookTime = cookTime
         self.ingredients = ingredients
         self.steps = steps
-        self.isFavorite = isFavorite
-        self.isMyRecipe = isMyRecipe
         self.category = category
         self.numOfPersons = numOfPersons
+        self.creatorID = creatorID
     }
 }
 
@@ -103,7 +101,7 @@ class RecipeModel {
         Recipe(name: "Cezar salata", prepTime: 75, cookTime: 15,
                ingredients: [Ingredient(ingredient: "slanina", measureUnit: "grama", quantity: 400)], //Ingredient(ingredient: 1, measureUnit: "kilogram", quantity: "pilece belo"), Ingredient(ingredient: 2, measureUnit: "glavice", quantity: "zelena salata"), Ingredient(ingredient: 400, measureUnit: "grama", quantity: "cheri paradajz"), Ingredient(ingredient: 6, measureUnit: "kriski", quantity: "hleba"), Ingredient(ingredient: 600, measureUnit: "grama", quantity: "cezar preliv")],
                steps: ["Iseckati slaninu na kockice", "Proprziti slaninu", "Iseckati pilece belo na kockice", "Proprziti pilece belo", "Iseckati hleba na kockice", "Umedjuvremenu nacepkati listove zelene salate u ciniju", "Naseci cheri paradajz i dodati u ciniju", "Kada hleb zapece skloniti sa ringle i sve dodati u ciniju", "Dodati cezar preliv", "Promesati sve i uzivati"],
-               isFavorite: true, isMyRecipe: true, category: .salad, numOfPersons: 6)
+               category: .salad, numOfPersons: 6)
     ]
 
     static var myTestData = [
@@ -158,14 +156,15 @@ extension RecipeModel {
     }
 }
 
+// TODO: Investigate and delete this extension
 // Parsing recipe data
 extension RecipeModel {
     func parseRecipe(recipe: Any) -> Recipe {
         guard let r = recipe as? [String:Any] else {
-            return Recipe(name: "", prepTime: 0, cookTime: 0, ingredients: [], steps: [], isFavorite: false, category: .snack)
+            return Recipe(name: "", prepTime: 0, cookTime: 0, ingredients: [], steps: [], category: .snack)
         }
         
-        var rec = Recipe(name: "", prepTime: 0, cookTime: 0, ingredients: [], steps: [], isFavorite: false, category: .snack)
+        var rec = Recipe(name: "", prepTime: 0, cookTime: 0, ingredients: [], steps: [], category: .snack)
         for recipeKey in r.keys {
             switch recipeKey {
             case "name":
@@ -191,10 +190,6 @@ extension RecipeModel {
                 rec.ingredients = ingredients
             case "steps":
                 rec.steps = (r["steps"] as? [String] ?? [])
-            case "isFavorite":
-                rec.isFavorite = (r["isFavorite"] as? Bool ?? false)
-            case "isMyRecipe":
-                rec.isMyRecipe = (r["isMyRecipe"] as? Bool ?? false)
             case "category":
                 rec.category = RecipeCategory(rawValue: (r["category"] as? Int ?? 0))
             case "numOfPersons":

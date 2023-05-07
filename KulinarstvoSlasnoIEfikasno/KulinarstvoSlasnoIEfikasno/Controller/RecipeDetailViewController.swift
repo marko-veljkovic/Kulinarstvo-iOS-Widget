@@ -59,10 +59,10 @@ class RecipeDetailViewController: UIViewController {
         self.tableView.delegate = self
         
         self.changeRecipeButton.setTitle("Izmeni recept", for: .normal)
-        self.changeRecipeButton.isHidden = !(self.recipe.isMyRecipe ?? false)
+        self.changeRecipeButton.isHidden = !(self.recipe.creatorID == Datafeed.shared.currentUser?.id)
         
         self.deleteRecipeButton.setTitle("Obriši recept", for: .normal)
-        self.deleteRecipeButton.isHidden = !(self.recipe.isMyRecipe ?? false)
+        self.deleteRecipeButton.isHidden = !(self.recipe.creatorID == Datafeed.shared.currentUser?.id)
         self.deleteRecipeButton.backgroundColor = .red
         self.deleteRecipeButton.layer.cornerRadius = 10
         self.deleteRecipeButton.layer.borderWidth = 2

@@ -46,7 +46,7 @@ public class Datafeed {
     var myRecipes: [Recipe] {
         get {
             let filtered = self.recipes.filter {
-                $0.isMyRecipe ?? false
+                $0.creatorID == Datafeed.shared.currentUser?.id
             }
             return filtered
         }

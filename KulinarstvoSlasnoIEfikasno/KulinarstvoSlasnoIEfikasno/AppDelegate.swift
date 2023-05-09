@@ -7,6 +7,7 @@
 
 import UIKit
 import FirebaseCore
+import FirebaseAuth
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,6 +17,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         FirebaseApp.configure()
 //        AuthenticationService.signIn()
+        
+        // When user install app no account will be present, so we log user in as anonymous
+        if Auth.auth().currentUser == nil {
+            AuthenticationService.signInAnonymous()
+        }
         
         return true
     }

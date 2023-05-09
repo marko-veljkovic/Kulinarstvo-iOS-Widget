@@ -122,6 +122,8 @@ class AccountViewController: UIViewController {
             }
             
             self.userLoggedIn()
+            // Adding new user to 'users' Firestore collection 
+            Datafeed.shared.userRepository.addUser(authResult?.user.uid ?? "")
         }
     }
     

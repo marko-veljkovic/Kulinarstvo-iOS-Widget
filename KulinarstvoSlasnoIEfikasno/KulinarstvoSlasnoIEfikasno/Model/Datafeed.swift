@@ -55,7 +55,7 @@ public class Datafeed {
     let kAppGroup = "group.com.kulinarstvo_slasno_i_efikasno"
     
     private init() {
-        if let currentUser = Auth.auth().currentUser {
+        if let currentUser = Auth.auth().currentUser, !currentUser.isAnonymous {
             self.userRepository.getCurrentUser(uuid: currentUser.uid)
         }
     }

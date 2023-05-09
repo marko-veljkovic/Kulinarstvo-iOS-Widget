@@ -47,9 +47,9 @@ class TabBarViewController: UITabBarController {
     
     let moreViewController: UINavigationController = {
         let moreViewController = MoreViewController()
-        moreViewController.navigationItem.title = "Vise"
+        moreViewController.navigationItem.title = "Više"
         let navigationController = UINavigationController(rootViewController: moreViewController)
-        navigationController.title = "Vise"
+        navigationController.title = "Više"
         navigationController.tabBarItem.image = UIImage(systemName: "line.3.horizontal")
         return navigationController
     }()

@@ -26,7 +26,7 @@ class MoreViewController: UIViewController {
         self.tableView.delegate = self
         self.tableView.dataSource = self
         
-        self.isUserLoggedIn = Auth.auth().currentUser != nil
+        self.isUserLoggedIn = (Auth.auth().currentUser != nil && !(Auth.auth().currentUser?.isAnonymous ?? false))
     }
 }
 
@@ -37,7 +37,7 @@ extension MoreViewController : UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return self.isUserLoggedIn ? 3 : 2
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -50,6 +50,8 @@ extension MoreViewController : UITableViewDataSource {
             contentConfiguration.text = self.isUserLoggedIn ? "Moji nalog" : "Ulogujte se"
         case 1:
             contentConfiguration.text = self.isUserLoggedIn ? "Odjavi se" : "Napravite nalog"
+        case 2:
+            contentConfiguration.text = self.isUserLoggedIn ? "Obriši nalog" : "" // TODO: Make text red
         default:
             contentConfiguration.text = "Ulogujte se"
         }
@@ -70,6 +72,8 @@ extension MoreViewController : UITableViewDelegate {
             self.isUserLoggedIn ? self.showMyAccount() : self.showLogin()
         case 1:
             self.isUserLoggedIn ? self.logout() : self.showSignUp()
+        case 2:
+            self.isUserLoggedIn ? self.deleteAccount() : ()
         default:
             return
         }
@@ -103,6 +107,15 @@ extension MoreViewController {
         AuthenticationService.singOut()
         self.isUserLoggedIn = false
         Datafeed.shared.currentUser = nil
+    }
+    
+    private func deleteAccount() {
+        guard Datafeed.shared.currentUser != nil else {
+            return
+        }
+//        Datafeed.shared.userRepository.deleteUser(Datafeed.shared.currentUser!)
+        AuthenticationService.deleteUser()
+        self.isUserLoggedIn = false
     }
 }
 

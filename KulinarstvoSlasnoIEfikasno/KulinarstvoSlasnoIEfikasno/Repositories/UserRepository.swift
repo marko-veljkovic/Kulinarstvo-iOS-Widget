@@ -2,7 +2,7 @@
 //  UserRepository.swift
 //  KulinarstvoSlasnoIEfikasno
 //
-//  Created by Marko Veljkovic private on 4.5.23..
+//  Created by Marko Veljkovic private on 4.5.23.
 //
 
 import Foundation
@@ -39,6 +39,7 @@ class UserRepository {
     }
     
     func getCurrentUser(uuid: String) {
+        
         self.store.collection(self.path).document(uuid).addSnapshotListener { querySnapshot, error in
             if let error = error {
                 print("Get users request error: \(error)")
@@ -53,11 +54,14 @@ class UserRepository {
         }
     }
 
-    func addUser(_ user: LocalUser) {
-        do {
-            _ = try self.store.collection(self.path).addDocument(from: user)
-        } catch {
-            fatalError("Unable to add user: \(error.localizedDescription)")
+    func addUser(_ userID: String) {
+        self.store.collection(self.path).document(userID).setData([
+            "uuid": userID,
+            "favoriteRecipes": []
+        ]) { error in
+            if let error = error {
+                print("Error while creating user: \(error)")
+            }
         }
     }
     
@@ -72,12 +76,12 @@ class UserRepository {
         }
     }
     
-    func deleteUser(_ user: LocalUser) {
-        guard let userID = user.id else {
-            return
-        }
+    func deleteUser(_ userID: String) {
         self.store.collection(self.path).document(userID).delete { error in
-            print("Unable to delete user: \(error?.localizedDescription ?? "")")
+            if let error = error {
+                print("Unable to delete user: \(error.localizedDescription)")
+                return
+            }
         }
     }
 }

@@ -13,10 +13,8 @@ import FirebaseAuth
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
         
         FirebaseApp.configure()
-//        AuthenticationService.signIn()
         
         // When user install app no account will be present, so we log user in as anonymous
         if Auth.auth().currentUser == nil {

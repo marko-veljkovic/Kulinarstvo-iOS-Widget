@@ -7,9 +7,11 @@
 
 import UIKit
 import FirebaseAuth
+import FirebaseStorage
 
 protocol AccountViewControllerDelegate : AnyObject {
     func userLoggedInSuccesfully(_ controller: AccountViewController)
+    func userPhotoUrlSuccesfullySaved(_ controller: AccountViewController)
 }
 
 class AccountViewController: UIViewController {
@@ -23,10 +25,13 @@ class AccountViewController: UIViewController {
     @IBOutlet weak var repeatPasswordTextField: UITextField!
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var signUpButton: UIButton!
+    @IBOutlet weak var profileImageView: UIImageView!
+    @IBOutlet weak var profileImageButton: UIButton!
     
     weak var delegate: AccountViewControllerDelegate?
     
     var isSingUp: Bool = false
+    let storageRef = Storage.storage().reference(forURL: "gs://culinary-dande.appspot.com")
     
     init(isSignUp: Bool) {
         self.isSingUp = isSignUp
@@ -48,8 +53,17 @@ class AccountViewController: UIViewController {
         self.repeatPasswordTextField.placeholder = "Ponovo unesite lozinku"
         self.loginButton.setTitle("Ulogujte se", for: .normal)
         self.signUpButton.setTitle("Napravite nalog", for: .normal)
+        self.profileImageButton.setTitle("Izaberite profilnu sliku", for: .normal)
         
-        [self.repeatPasswordLabel, self.repeatPasswordTextField, self.signUpButton].forEach {
+        self.profileImageView.isHidden = true
+        self.profileImageView.layer.borderWidth = 1
+        self.profileImageView.layer.masksToBounds = false
+        self.profileImageView.layer.borderColor = UIColor.black.cgColor
+        self.profileImageView.layer.cornerRadius = self.profileImageView.frame.height / 2
+        self.profileImageView.clipsToBounds = true
+        self.profileImageView.contentMode = .scaleAspectFill
+        
+        [self.repeatPasswordLabel, self.repeatPasswordTextField, self.signUpButton, self.profileImageButton].forEach {
             $0?.isHidden = !self.isSingUp
         }
         self.loginButton.isHidden = self.isSingUp
@@ -79,8 +93,16 @@ class AccountViewController: UIViewController {
             $0?.setTitleColor(AppTheme.setTextColor(), for: .normal)
         }
     }
+    
     @IBAction func closeButtonDidClicked(_ sender: Any) {
         self.dismiss(animated: true)
+    }
+    
+    @IBAction func profileImageButtonDidClicked(_ sender: Any) {
+        let picker = UIImagePickerController()
+        picker.allowsEditing = true
+        picker.delegate = self
+        self.present(picker, animated: true)
     }
     
     @IBAction func loginButtonClicked(_ sender: Any) {
@@ -106,6 +128,19 @@ class AccountViewController: UIViewController {
         let email = self.emailTextField.text ?? ""
         let password = self.passwordTextField.text ?? ""
         let confirmPassword = self.repeatPasswordTextField.text ?? ""
+        let profileImage = self.profileImageView.image
+        
+        guard let profileImage = profileImage else {
+            let alert = self.createAlert(title: "Neuspesno kreiranje naloga", message: "Nepostojeca profilna slika")
+            self.present(alert, animated: false)
+            return
+        }
+        
+        guard let profileImageData = profileImage.jpegData(compressionQuality: 0.5) else {
+            let alert = self.createAlert(title: "Neuspesno kreiranje naloga", message: "Neuspesna kompresija profilne slike")
+            self.present(alert, animated: false)
+            return
+        }
         
         guard self.checkSignUpForm(email: email, password: password, confirmPassword: confirmPassword) else {
             return
@@ -121,9 +156,37 @@ class AccountViewController: UIViewController {
                 return
             }
             
-            self.userLoggedIn()
-            // Adding new user to 'users' Firestore collection 
-            Datafeed.shared.userRepository.addUser(authResult?.user.uid ?? "")
+            let storageProfileRef = self.storageRef.child("profile").child(authResult?.user.uid ?? "")
+            let metadata = StorageMetadata()
+            metadata.contentType = "image/jpg"
+            var profilePictureUrl = ""
+
+            storageProfileRef.putData(profileImageData, metadata: metadata, completion: { (storageMetadata, error) in
+                if let error = error {
+                    print(error)
+                    // Adding new user to 'users' Firestore collection without profile picture url string
+                    Datafeed.shared.userRepository.addUser(authResult?.user.uid ?? "", profilePictureUrl)
+                    return
+                }
+                
+                // Downloading profile picture url
+                storageProfileRef.downloadURL(completion: { (url, error) in
+                    if let metadataUrl = url?.absoluteString {
+                        profilePictureUrl = metadataUrl
+                        
+                        if let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest() {
+                            changeRequest.photoURL = URL(string: metadataUrl)
+                            changeRequest.commitChanges(completion: { error in
+                                self.delegate?.userPhotoUrlSuccesfullySaved(self)
+                            })
+                        }
+                    }
+                    
+                    self.userLoggedIn()
+                    // Adding new user to 'users' Firestore collection
+                    Datafeed.shared.userRepository.addUser(authResult?.user.uid ?? "", profilePictureUrl)
+                })
+            })
         }
     }
     
@@ -165,12 +228,7 @@ class AccountViewController: UIViewController {
     
     //TODO: Change password rules in the future
     private func isPasswordValid(_ password: String) -> Bool {
-        
-        if password.count < 8 || password.count > 15 {
-            return false
-        }
-        
-        return true
+        return !(password.count < 8 || password.count > 15)
     }
     
     private func createAlert(title: String, message: String) -> UIAlertController {
@@ -178,5 +236,16 @@ class AccountViewController: UIViewController {
         let action = UIAlertAction(title: "OK", style: .cancel)
         alert.addAction(action)
         return alert
+    }
+}
+
+//MARK: - UIImagePickerControllerDelegate
+extension AccountViewController : UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        self.profileImageView.image = info[.originalImage] as? UIImage
+        self.profileImageView.backgroundColor = .clear
+        self.profileImageView.isHidden = false
+        self.dismiss(animated: true, completion: nil)
     }
 }

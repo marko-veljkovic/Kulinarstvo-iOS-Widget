@@ -17,6 +17,8 @@
                 <outlet property="loginButton" destination="4Lq-Gu-TWH" id="Ajc-uG-yXL"/>
                 <outlet property="passwordLabel" destination="2jG-tY-RhK" id="fAp-2i-R0O"/>
                 <outlet property="passwordTextField" destination="CgB-qQ-Uwd" id="ho6-4Z-7NZ"/>
+                <outlet property="profileImageButton" destination="GYy-9c-eHR" id="8Tr-wb-hXR"/>
+                <outlet property="profileImageView" destination="spq-YZ-i4z" id="y5V-g5-Xs3"/>
                 <outlet property="repeatPasswordLabel" destination="kQv-oK-gdv" id="RSi-DU-WbG"/>
                 <outlet property="repeatPasswordTextField" destination="Xo7-9w-IY1" id="IJS-MY-Se6"/>
                 <outlet property="signUpButton" destination="7bp-Dj-0AI" id="9TB-hA-Xwz"/>
@@ -42,7 +44,7 @@
                     </connections>
                 </button>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="CHA-jQ-luC">
-                    <rect key="frame" x="20" y="97" width="350" height="383"/>
+                    <rect key="frame" x="20" y="97" width="350" height="774"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bKh-V8-rYm">
                             <rect key="frame" x="0.0" y="0.0" width="350" height="30"/>
@@ -89,8 +91,25 @@
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits"/>
                         </textField>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="spq-YZ-i4z" userLabel="Profile Image Image View">
+                            <rect key="frame" x="0.0" y="305" width="350" height="350"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="spq-YZ-i4z" secondAttribute="height" multiplier="1:1" id="6Bf-is-0yU"/>
+                            </constraints>
+                        </imageView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GYy-9c-eHR" userLabel="Profile Image Button">
+                            <rect key="frame" x="79.666666666666671" y="663" width="190.66666666666657" height="25"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="25" id="cfP-Yh-g0I"/>
+                            </constraints>
+                            <state key="normal" title="Button"/>
+                            <buttonConfiguration key="configuration" style="plain" title="Izaberite profilnu sliku"/>
+                            <connections>
+                                <action selector="profileImageButtonDidClicked:" destination="-1" eventType="touchUpInside" id="mNd-gx-ThL"/>
+                            </connections>
+                        </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Lq-Gu-TWH">
-                            <rect key="frame" x="0.0" y="305" width="350" height="35"/>
+                            <rect key="frame" x="0.0" y="696" width="350" height="35"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="35" id="IEe-Hk-qRR"/>
                             </constraints>
@@ -101,7 +120,7 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7bp-Dj-0AI">
-                            <rect key="frame" x="0.0" y="348" width="350" height="35"/>
+                            <rect key="frame" x="0.0" y="739" width="350" height="35"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="35" id="nqd-2b-Ljm"/>
                             </constraints>

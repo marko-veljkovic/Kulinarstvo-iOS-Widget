@@ -12,6 +12,7 @@ import Firebase
 class MoreViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
+    
     private var isUserLoggedIn = false {
         didSet {
             if oldValue != isUserLoggedIn {
@@ -19,6 +20,8 @@ class MoreViewController: UIViewController {
             }
         }
     }
+    
+    lazy var myAccountViewController = MyAccountViewController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -98,9 +101,8 @@ extension MoreViewController {
     }
     
     private func showMyAccount() {
-        let myAccountViewController = MyAccountViewController()
-        myAccountViewController.modalPresentationStyle = .popover
-        self.present(myAccountViewController, animated: true)
+        self.myAccountViewController.modalPresentationStyle = .popover
+        self.present(self.myAccountViewController, animated: true)
     }
     
     private func logout() {
@@ -127,5 +129,9 @@ extension MoreViewController : AccountViewControllerDelegate {
         if self.isUserLoggedIn {
             self.showMyAccount()
         }
+    }
+    
+    func userPhotoUrlSuccesfullySaved(_ controller: AccountViewController) {
+        self.myAccountViewController.getUserProfileImage()
     }
 }

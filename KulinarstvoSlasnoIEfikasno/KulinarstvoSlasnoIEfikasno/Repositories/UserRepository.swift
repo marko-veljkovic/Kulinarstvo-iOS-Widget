@@ -54,10 +54,11 @@ class UserRepository {
         }
     }
 
-    func addUser(_ userID: String) {
+    func addUser(_ userID: String, _ profilePictureUrl: String) {
         self.store.collection(self.path).document(userID).setData([
             "uuid": userID,
-            "favoriteRecipes": []
+            "favoriteRecipes": [],
+            "profilePictureUrl": profilePictureUrl
         ]) { error in
             if let error = error {
                 print("Error while creating user: \(error)")

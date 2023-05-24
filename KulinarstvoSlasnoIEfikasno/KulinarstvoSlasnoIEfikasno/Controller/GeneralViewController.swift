@@ -11,8 +11,12 @@ enum SortByPrepTime {
     case Unsorted, Ascending, Descending
 }
 
-enum RecipeShowType : Int {
-    case List, Grid
+enum RecipeShowType : Int, CaseIterable {
+    case List, Grid, LargeGrid
+}
+
+enum UserDefaultsKeys : String {
+    case ShowingType
 }
 
 class GeneralViewController: UIViewController {
@@ -100,14 +104,35 @@ class GeneralViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        self.loadUserDefaultsData()
+        self.loadShowingType()
+        
         self.setColor()
         self.recipes =  self.isFavorites ? Datafeed.shared.favRecipes : self.isMyRecipes ? Datafeed.shared.myRecipes : Datafeed.shared.recipes
         self.unfilteredRecipes = self.recipes
         self.unsortedRecipes = self.recipes
         self.sortData()
         
-        self.tableView.isHidden = true
-        self.collectionView.isHidden = false
+//        self.tableView.isHidden = true
+//        self.collectionView.isHidden = false
+    }
+    
+    private func loadUserDefaultsData() {
+        let selectedTypeRawValue = UserDefaults.standard.integer(forKey: UserDefaultsKeys.ShowingType.rawValue)
+        self.recipeShwoingType = RecipeShowType(rawValue: selectedTypeRawValue) ?? .List
+    }
+    
+    private func loadShowingType() {
+        switch self.recipeShwoingType {
+        case .List:
+            self.tableView.isHidden = false
+            self.collectionView.isHidden = true
+        case .Grid, .LargeGrid:
+            self.tableView.isHidden = true
+            self.collectionView.isHidden = false
+        default:
+            ()
+        }
     }
     
     func setColor() {
@@ -204,6 +229,7 @@ class GeneralViewController: UIViewController {
         showTypePickerViewController.delegate = self
         showTypePickerViewController.dataSource = self
         showTypePickerViewController.tag = 2
+        showTypePickerViewController.selectRow(self.recipeShwoingType.rawValue, inComponent: 0, animated: true)
         vc.view.addSubview(showTypePickerViewController)
         
         let alert = UIAlertController(title: "Izaberi način prikaza recepata", message: "", preferredStyle: .alert)
@@ -213,10 +239,16 @@ class GeneralViewController: UIViewController {
             case .List:
                 self.tableView.isHidden = false
                 self.collectionView.isHidden = true
-            case .Grid:
+                self.tableView.reloadData()
+            case .Grid, .LargeGrid:
                 self.tableView.isHidden = true
                 self.collectionView.isHidden = false
+                self.collectionView.reloadData()
+            default:
+                ()
             }
+            
+            UserDefaults.standard.set(self.recipeShwoingType.rawValue, forKey: UserDefaultsKeys.ShowingType.rawValue)
         }))
         alert.addAction(UIAlertAction(title: "Poništi", style: .cancel, handler: nil))
         self.recipeShwoingType = .List
@@ -327,11 +359,17 @@ extension GeneralViewController : UICollectionViewDataSource {
         }
         else {
             cell?.recipeImageView.image = UIImage(systemName: "photo")
+            cell?.recipeImageView.contentMode = .scaleAspectFit
             cell?.recipeImageView.tintColor = AppTheme.backgroundUniversalGreen
         }
         
-//        cell?.recipeImageView.image = UIImage(named: record.imageName)
         cell?.recipeNameLabel.text = record.name
+        cell?.recipeNameLabel.font = .systemFont(ofSize: 16.0, weight: .bold)
+        cell?.recipeNameLabel.textColor = .white
+        cell?.recipeNameLabel.backgroundColor = AppTheme.backgroundUniversalGreen.withAlphaComponent(0.65)
+        
+        cell?.layer.borderWidth = 0.5
+        cell?.layer.borderColor = AppTheme.backgroundUniversalGreen.cgColor
         
         return cell ?? UICollectionViewCell()
     }
@@ -347,11 +385,13 @@ extension GeneralViewController : UICollectionViewDelegate {
 }
 
 //MARK: - UICollectionViewDelegateFlowLayout
-//extension GeneralViewController : UICollectionViewDelegateFlowLayout {
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        return CGSize(width: self.view.frame.width/4 - 5, height: self.view.frame.height/5 - 5)
-//    }
-//}
+extension GeneralViewController : UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return self.recipeShwoingType == .LargeGrid ?
+            CGSize(width: (self.view.frame.width-4)/2.1, height: self.view.frame.height/3) :
+            CGSize(width: (self.view.frame.width-4)/3.2, height: self.view.frame.height/5 - 5)
+    }
+}
 
 //MARK: - RecipeTableViewHeaderCellDelegate
 extension GeneralViewController : RecipeTableViewHeaderCellDelegate {
@@ -485,12 +525,16 @@ extension GeneralViewController : UIPickerViewDelegate {
             switch row {
             case 0:
                 return "Lista"
+            case 1:
+                return "Slike"
+            case 2:
+                return "Velike Slike"
             default:
                 return "Slike" //TODO: change this title to something with more sense
             }
         }
         // Default case
-        return ""
+        return nil
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
@@ -514,6 +558,6 @@ extension GeneralViewController : UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return pickerView.tag == 1 ? RecipeCategory.allCases.count : 2
+        return pickerView.tag == 1 ? RecipeCategory.allCases.count : RecipeShowType.allCases.count
     }
 }

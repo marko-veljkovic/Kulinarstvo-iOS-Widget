@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -76,7 +76,7 @@
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </tableView>
                 <collectionView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="vXx-3t-GTT">
-                    <rect key="frame" x="0.0" y="146.5" width="414" height="715.5"/>
+                    <rect key="frame" x="2" y="146.5" width="410" height="715.5"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="JP4-xk-7cm">
                         <size key="itemSize" width="128" height="128"/>
@@ -112,10 +112,10 @@
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="Uei-XV-0Xu" secondAttribute="bottom" constant="20" id="b5d-u0-Qqk"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="vXx-3t-GTT" secondAttribute="bottom" id="dFd-kI-MRA"/>
                 <constraint firstItem="zjh-aL-8RO" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="fKF-xx-YCW"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="vXx-3t-GTT" secondAttribute="trailing" id="iNo-N7-FjS"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="vXx-3t-GTT" secondAttribute="trailing" constant="2" id="iNo-N7-FjS"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Uei-XV-0Xu" secondAttribute="trailing" constant="20" id="kRu-Fm-aX1"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="LX9-VR-ktn" secondAttribute="bottom" id="pFr-fq-Gvv"/>
-                <constraint firstItem="vXx-3t-GTT" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="t6y-II-51d"/>
+                <constraint firstItem="vXx-3t-GTT" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="2" id="t6y-II-51d"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="LX9-VR-ktn" secondAttribute="trailing" id="yYu-TF-IEd"/>
                 <constraint firstItem="LX9-VR-ktn" firstAttribute="top" secondItem="zjh-aL-8RO" secondAttribute="bottom" id="zdp-xX-ywO"/>
             </constraints>

@@ -24,6 +24,7 @@ class GeneralViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var addNewRecipeButton: UIButton!
+    @IBOutlet weak var searchBarButton: UIButton!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var changeShowTypeButton: UIButton!
     @IBOutlet weak var categoryButton: UIButton!
@@ -66,11 +67,14 @@ class GeneralViewController: UIViewController {
         
         self.searchBar.placeholder = "Pretraži recepte"
         self.searchBar.delegate = self
+        self.searchBar.isHidden = true
+        
+        self.searchBarButton.setTitle("", for: .normal)
         
         self.categoryButton.setTitle("Izaberi kategoriju", for: .normal)
-        self.changeShowTypeButton.setTitle("Izaberi prikaz", for: .normal)
+        self.changeShowTypeButton.setTitle(" Izaberi prikaz", for: .normal)
         
-        [self.categoryButton, self.changeShowTypeButton].forEach {
+        [self.categoryButton, self.changeShowTypeButton, self.searchBarButton].forEach {
             $0?.layer.cornerRadius = 10
             $0?.layer.borderWidth = 2
             $0?.layer.borderColor = AppTheme.backgroundUniversalGreen.cgColor
@@ -120,6 +124,7 @@ class GeneralViewController: UIViewController {
     private func loadUserDefaultsData() {
         let selectedTypeRawValue = UserDefaults.standard.integer(forKey: UserDefaultsKeys.ShowingType.rawValue)
         self.recipeShwoingType = RecipeShowType(rawValue: selectedTypeRawValue) ?? .List
+        self.changeRecipeShowingTypeButtonImage()
     }
     
     private func loadShowingType() {
@@ -136,12 +141,13 @@ class GeneralViewController: UIViewController {
     }
     
     func setColor() {
-        [self.categoryButton, self.changeShowTypeButton].forEach {
+        [self.categoryButton, self.changeShowTypeButton, self.searchBarButton].forEach {
             $0?.backgroundColor = AppTheme.setBackgroundColor()
             $0?.setTitleColor(AppTheme.setTextColor(), for: .normal)
         }
-        self.addNewRecipeButton.tintColor = AppTheme.setTextColor()
-        self.clearCategoryButton.tintColor = AppTheme.setTextColor()
+        [self.addNewRecipeButton, self.clearCategoryButton, self.searchBarButton, self.changeShowTypeButton].forEach {
+            $0?.tintColor = AppTheme.setTextColor()
+        }
         self.navigationController?.navigationBar.tintColor = AppTheme.setTextColor()
         (self.searchBar?.value(forKey: "cancelButton") as? UIButton)?.tintColor = AppTheme.setTextColor()
     }
@@ -196,6 +202,10 @@ class GeneralViewController: UIViewController {
             if self.oldSearchText.count == 0 {
                 self.searchBar.showsCancelButton = false
             }
+            
+            self.searchBarButton.isEnabled = false
+            self.searchBarButton.backgroundColor = .gray
+            self.searchBarButton.layer.borderColor = UIColor.gray.cgColor
         }))
         alert.addAction(UIAlertAction(title: "Poništi", style: .cancel, handler: {_ in
             self.filterByCategoryCanceled()
@@ -210,6 +220,10 @@ class GeneralViewController: UIViewController {
     
     @IBAction func clearCategoryButtonClicked(_ sender: Any) {
         self.filterByCategoryCanceled()
+        
+        self.searchBarButton.isEnabled = true
+        self.searchBarButton.backgroundColor = AppTheme.setBackgroundColor()
+        self.searchBarButton.layer.borderColor = AppTheme.backgroundUniversalGreen.cgColor
     }
     
     func filterByCategoryCanceled() {
@@ -218,7 +232,7 @@ class GeneralViewController: UIViewController {
         self.unsortedRecipes = self.unfilteredRecipes
         self.categoryButton.setTitle(self.setCategoryButtonTitle(), for: .normal)
         self.clearCategoryButton.isHidden = true
-        self.searchBar.isHidden = false
+//        self.searchBar.isHidden = false
         self.sortData()
     }
     
@@ -235,6 +249,9 @@ class GeneralViewController: UIViewController {
         let alert = UIAlertController(title: "Izaberi način prikaza recepata", message: "", preferredStyle: .alert)
         alert.setValue(vc, forKey: "contentViewController")
         alert.addAction(UIAlertAction(title: "Izaberi", style: .default, handler: {_ in
+        
+//        self.changeRecipeShowingType()
+        
             switch self.recipeShwoingType {
             case .List:
                 self.tableView.isHidden = false
@@ -244,15 +261,41 @@ class GeneralViewController: UIViewController {
                 self.tableView.isHidden = true
                 self.collectionView.isHidden = false
                 self.collectionView.reloadData()
-            default:
-                ()
             }
             
             UserDefaults.standard.set(self.recipeShwoingType.rawValue, forKey: UserDefaultsKeys.ShowingType.rawValue)
+        
+            self.changeRecipeShowingTypeButtonImage()
         }))
         alert.addAction(UIAlertAction(title: "Poništi", style: .cancel, handler: nil))
-        self.recipeShwoingType = .List
+//        self.recipeShwoingType = .List
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    private func changeRecipeShowingType() {
+        switch self.recipeShwoingType {
+        case .List:
+            self.recipeShwoingType = .Grid
+        case .Grid:
+            self.recipeShwoingType = .LargeGrid
+        case .LargeGrid:
+            self.recipeShwoingType = .List
+        }
+    }
+    
+    private func changeRecipeShowingTypeButtonImage() {
+        switch self.recipeShwoingType {
+        case .List:
+            self.changeShowTypeButton.setImage(UIImage(systemName: "list.bullet"), for: .normal)
+        case .Grid:
+            self.changeShowTypeButton.setImage(UIImage(systemName: "square.grid.3x3.fill"), for: .normal)
+        case .LargeGrid:
+            self.changeShowTypeButton.setImage(UIImage(systemName: "square.grid.2x2.fill"), for: .normal)
+        }
+    }
+    
+    @IBAction func searchBarButtonClicked(_ sender: Any) {
+        self.searchBar.isHidden = !self.searchBar.isHidden
     }
 }
 
@@ -287,7 +330,7 @@ extension GeneralViewController : UITableViewDataSource {
 
         cell.titleLabel?.text = record.name
         cell.titleLabel?.textColor = AppTheme.setTextColor()
-        cell.prepTimeLabel.text = "\(record.prepTime + record.cookTime)"
+        cell.prepTimeLabel.text = "\(record.prepTime + record.cookTime) minuta"
         cell.prepTimeLabel.textColor = AppTheme.setTextColor()
         cell.prepTimeLabel.font = UIFont.monospacedSystemFont(ofSize: 15.0, weight: .black)
 

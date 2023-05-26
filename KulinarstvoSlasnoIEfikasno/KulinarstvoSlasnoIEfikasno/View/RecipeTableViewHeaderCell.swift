@@ -22,7 +22,7 @@ class RecipeTableViewHeaderCell: UITableViewHeaderFooterView {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        self.prepTimeLabel.text = "Vreme pripreme \n u minutima"
+        self.prepTimeLabel.text = "Vreme pripreme"
         
         [self.prepTimeLabel, self.sortArrowImage].forEach {
             $0?.isUserInteractionEnabled = true

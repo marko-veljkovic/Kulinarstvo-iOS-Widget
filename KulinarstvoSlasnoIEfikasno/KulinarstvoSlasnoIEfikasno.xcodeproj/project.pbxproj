@@ -797,7 +797,7 @@
 				CODE_SIGN_ENTITLEMENTS = KulinarstoSlasnoIEfikasnoWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = L493S5S723;
+				DEVELOPMENT_TEAM = YVS93G6D5H;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = KulinarstoSlasnoIEfikasnoWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = KulinarstoSlasnoIEfikasnoWidget;
@@ -825,7 +825,7 @@
 				CODE_SIGN_ENTITLEMENTS = KulinarstoSlasnoIEfikasnoWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = L493S5S723;
+				DEVELOPMENT_TEAM = YVS93G6D5H;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = KulinarstoSlasnoIEfikasnoWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = KulinarstoSlasnoIEfikasnoWidget;
@@ -851,7 +851,7 @@
 				CODE_SIGN_ENTITLEMENTS = IntentHandler/IntentHandler.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = L493S5S723;
+				DEVELOPMENT_TEAM = YVS93G6D5H;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = IntentHandler/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = IntentHandler;
@@ -877,7 +877,7 @@
 				CODE_SIGN_ENTITLEMENTS = IntentHandler/IntentHandler.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = L493S5S723;
+				DEVELOPMENT_TEAM = YVS93G6D5H;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = IntentHandler/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = IntentHandler;

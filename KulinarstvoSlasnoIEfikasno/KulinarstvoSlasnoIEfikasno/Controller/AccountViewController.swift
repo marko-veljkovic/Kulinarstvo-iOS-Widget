@@ -17,14 +17,22 @@ protocol AccountViewControllerDelegate : AnyObject {
 class AccountViewController: UIViewController {
 
     @IBOutlet weak var closeButton: UIButton!
+    
     @IBOutlet weak var emailLabel: UILabel!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordLabel: UILabel!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var repeatPasswordLabel: UILabel!
     @IBOutlet weak var repeatPasswordTextField: UITextField!
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var nameTextField: UITextField!
+    @IBOutlet weak var surnameLabel: UILabel!
+    @IBOutlet weak var surnameTextField: UITextField!
+    @IBOutlet weak var nicknameLabel: UILabel!
+    @IBOutlet weak var nicknameTextField: UITextField!
+    
     @IBOutlet weak var loginButton: UIButton!
-    @IBOutlet weak var signUpButton: UIButton!
+    
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var profileImageButton: UIButton!
     
@@ -51,8 +59,14 @@ class AccountViewController: UIViewController {
         self.passwordTextField.placeholder = "Unesite lozinku"
         self.repeatPasswordLabel.text = "Potvrda lozinke"
         self.repeatPasswordTextField.placeholder = "Ponovo unesite lozinku"
-        self.loginButton.setTitle("Ulogujte se", for: .normal)
-        self.signUpButton.setTitle("Napravite nalog", for: .normal)
+        self.nameLabel.text = "Ime"
+        self.nameTextField.placeholder = "Unesite ime"
+        self.surnameLabel.text = "Prezime"
+        self.surnameTextField.placeholder = "Unesite prezime"
+        self.nicknameLabel.text = "Korisničko ime"
+        self.nicknameTextField.placeholder = "Unesite korisničko ime"
+        
+        self.loginButton.setTitle(self.isSingUp ? "Napravite nalog" : "Ulogujte se", for: .normal)
         self.profileImageButton.setTitle("Izaberite profilnu sliku", for: .normal)
         
         self.profileImageView.isHidden = true
@@ -63,16 +77,26 @@ class AccountViewController: UIViewController {
         self.profileImageView.clipsToBounds = true
         self.profileImageView.contentMode = .scaleAspectFill
         
-        [self.repeatPasswordLabel, self.repeatPasswordTextField, self.signUpButton, self.profileImageButton].forEach {
+        [self.repeatPasswordLabel, self.repeatPasswordTextField, self.profileImageButton, self.nameLabel, self.nameTextField, self.surnameLabel, self.surnameTextField, self.nicknameLabel, self.nicknameTextField].forEach {
             $0?.isHidden = !self.isSingUp
         }
-        self.loginButton.isHidden = self.isSingUp
         
         [self.passwordTextField, self.repeatPasswordTextField].forEach {
             $0?.isSecureTextEntry = true
         }
         
+        [self.emailTextField, self.nameTextField, self.surnameTextField, self.passwordTextField, self.repeatPasswordTextField, self.nicknameTextField].forEach {
+            $0?.delegate = self
+        }
+        
         self.setColors()
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
+        self.view.addGestureRecognizer(tap)
+    }
+    
+    @objc func dismissKeyboard() {
+        self.view.endEditing(true)
     }
     
     // Device color appearance has changed (light/dark)
@@ -82,13 +106,13 @@ class AccountViewController: UIViewController {
     }
     
     private func setColors() {
-        [self.loginButton, self.signUpButton].forEach {
+        [self.loginButton].forEach {
             $0?.layer.cornerRadius = 10
             $0?.layer.borderWidth = 2
             $0?.layer.borderColor = AppTheme.backgroundUniversalGreen.cgColor
         }
         
-        [self.loginButton, self.signUpButton].forEach {
+        [self.loginButton].forEach {
             $0?.backgroundColor = AppTheme.setBackgroundColor()
             $0?.setTitleColor(AppTheme.setTextColor(), for: .normal)
         }
@@ -106,7 +130,10 @@ class AccountViewController: UIViewController {
     }
     
     @IBAction func loginButtonClicked(_ sender: Any) {
-        
+        self.isSingUp ? self.singUp() : self.login()
+    }
+    
+    private func login() {
         let email = self.emailTextField.text ?? ""
         let password = self.passwordTextField.text ?? ""
         
@@ -124,19 +151,20 @@ class AccountViewController: UIViewController {
         }
     }
     
-    @IBAction func singUpButtonClicked(_ sender: Any) {
+    private func singUp() {
         let email = self.emailTextField.text ?? ""
         let password = self.passwordTextField.text ?? ""
         let confirmPassword = self.repeatPasswordTextField.text ?? ""
-        let profileImage = self.profileImageView.image
+        let name = self.nameTextField.text ?? ""
+        let surname = self.surnameTextField.text ?? ""
+        let nickname = self.nicknameTextField.text ?? ""
+        var profileImage = self.profileImageView.image
         
-        guard let profileImage = profileImage else {
-            let alert = self.createAlert(title: "Neuspesno kreiranje naloga", message: "Nepostojeca profilna slika")
-            self.present(alert, animated: false)
-            return
+        if profileImage == nil {
+            profileImage = UIImage(systemName: "person.circle.fill")
         }
         
-        guard let profileImageData = profileImage.jpegData(compressionQuality: 0.5) else {
+        guard let profileImageData = profileImage?.jpegData(compressionQuality: 0.5) else {
             let alert = self.createAlert(title: "Neuspesno kreiranje naloga", message: "Neuspesna kompresija profilne slike")
             self.present(alert, animated: false)
             return
@@ -165,7 +193,7 @@ class AccountViewController: UIViewController {
                 if let error = error {
                     print(error)
                     // Adding new user to 'users' Firestore collection without profile picture url string
-                    Datafeed.shared.userRepository.addUser(authResult?.user.uid ?? "", profilePictureUrl)
+                    Datafeed.shared.userRepository.addUser(authResult?.user.uid ?? "", profilePictureUrl, name, surname, nickname)
                     return
                 }
                 
@@ -184,7 +212,7 @@ class AccountViewController: UIViewController {
                     
                     self.userLoggedIn()
                     // Adding new user to 'users' Firestore collection
-                    Datafeed.shared.userRepository.addUser(authResult?.user.uid ?? "", profilePictureUrl)
+                    Datafeed.shared.userRepository.addUser(authResult?.user.uid ?? "", profilePictureUrl, name, surname, nickname)
                 })
             })
         }
@@ -247,5 +275,12 @@ extension AccountViewController : UINavigationControllerDelegate, UIImagePickerC
         self.profileImageView.backgroundColor = .clear
         self.profileImageView.isHidden = false
         self.dismiss(animated: true, completion: nil)
+    }
+}
+
+extension AccountViewController : UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.dismissKeyboard()
+        return true
     }
 }

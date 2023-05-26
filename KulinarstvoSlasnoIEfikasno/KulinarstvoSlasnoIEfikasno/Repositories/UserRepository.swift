@@ -15,10 +15,16 @@ struct LocalUser : Codable {
     @DocumentID var id: String?
     var favoriteRecipes: [String]?
     var uuid: String?
+    var name: String?
+    var surname: String?
+    var nickname: String?
     
-    init(favoriteRecipes: [String], uuid: String) {
+    init(favoriteRecipes: [String], uuid: String, name: String, surname: String, nickname: String) {
         self.favoriteRecipes = favoriteRecipes
         self.uuid = uuid
+        self.name = name
+        self.surname = surname
+        self.nickname = nickname
     }
 }
 
@@ -54,11 +60,14 @@ class UserRepository {
         }
     }
 
-    func addUser(_ userID: String, _ profilePictureUrl: String) {
+    func addUser(_ userID: String, _ profilePictureUrl: String, _ name: String, _ surname: String, _ nickname: String) {
         self.store.collection(self.path).document(userID).setData([
             "uuid": userID,
             "favoriteRecipes": [],
-            "profilePictureUrl": profilePictureUrl
+            "profilePictureUrl": profilePictureUrl,
+            "name": name,
+            "surname": surname,
+            "nickname": nickname
         ]) { error in
             if let error = error {
                 print("Error while creating user: \(error)")

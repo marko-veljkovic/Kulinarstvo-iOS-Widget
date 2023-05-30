@@ -9,15 +9,22 @@ import UIKit
 import FirebaseAuth
 import FirebaseStorage
 
+enum AccountViewUsage : String {
+    case Login, Signup, EditData, ChangePassword
+}
+
 protocol AccountViewControllerDelegate : AnyObject {
     func userLoggedInSuccesfully(_ controller: AccountViewController)
     func userPhotoUrlSuccesfullySaved(_ controller: AccountViewController)
+    func userDataChanged(_ controller: AccountViewController)
 }
 
 class AccountViewController: UIViewController {
 
     @IBOutlet weak var closeButton: UIButton!
     
+    @IBOutlet weak var oldPasswordLabel: UILabel!
+    @IBOutlet weak var oldPasswordTextField: UITextField!
     @IBOutlet weak var emailLabel: UILabel!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordLabel: UILabel!
@@ -38,11 +45,25 @@ class AccountViewController: UIViewController {
     
     weak var delegate: AccountViewControllerDelegate?
     
-    var isSingUp: Bool = false
+    var viewType: AccountViewUsage = .Login
     let storageRef = Storage.storage().reference(forURL: "gs://culinary-dande.appspot.com")
+    var isPictureChanged = false
     
-    init(isSignUp: Bool) {
-        self.isSingUp = isSignUp
+    init(isLogin: Bool, isSignUp: Bool, isEditData: Bool, isChangePassword: Bool) {
+        
+        if isLogin {
+            self.viewType = .Login
+        }
+        else if isSignUp {
+            self.viewType = .Signup
+        }
+        else if isEditData {
+            self.viewType = .EditData
+        }
+        else if isChangePassword {
+            self.viewType = .ChangePassword
+        }
+        
         super.init(nibName: "AccountViewController", bundle: nil)
     }
     
@@ -65,27 +86,36 @@ class AccountViewController: UIViewController {
         self.surnameTextField.placeholder = "Unesite prezime"
         self.nicknameLabel.text = "Korisničko ime"
         self.nicknameTextField.placeholder = "Unesite korisničko ime"
+        self.oldPasswordLabel.text = "Trenutna lozinka"
+        self.oldPasswordTextField.placeholder = "Unesite trenutnu lozinku"
         
-        self.loginButton.setTitle(self.isSingUp ? "Napravite nalog" : "Ulogujte se", for: .normal)
         self.profileImageButton.setTitle("Izaberite profilnu sliku", for: .normal)
         
-        self.profileImageView.isHidden = true
         self.profileImageView.layer.borderWidth = 1
         self.profileImageView.layer.masksToBounds = false
         self.profileImageView.layer.borderColor = UIColor.black.cgColor
         self.profileImageView.layer.cornerRadius = self.profileImageView.frame.height / 2
         self.profileImageView.clipsToBounds = true
         self.profileImageView.contentMode = .scaleAspectFill
+        self.profileImageView.tintColor = AppTheme.setTextColor()
+        self.profileImageView.backgroundColor = AppTheme.setBackgroundColor()
         
-        [self.repeatPasswordLabel, self.repeatPasswordTextField, self.profileImageButton, self.nameLabel, self.nameTextField, self.surnameLabel, self.surnameTextField, self.nicknameLabel, self.nicknameTextField].forEach {
-            $0?.isHidden = !self.isSingUp
+        switch self.viewType {
+        case .Login:
+            self.setUpLoginView()
+        case .Signup:
+            self.setUpSignUpView()
+        case .EditData:
+            self.setUpEditAccountView()
+        case .ChangePassword:
+            self.setUpChangePasswordView()
         }
         
         [self.passwordTextField, self.repeatPasswordTextField].forEach {
             $0?.isSecureTextEntry = true
         }
         
-        [self.emailTextField, self.nameTextField, self.surnameTextField, self.passwordTextField, self.repeatPasswordTextField, self.nicknameTextField].forEach {
+        [self.emailTextField, self.nameTextField, self.surnameTextField, self.passwordTextField, self.repeatPasswordTextField, self.nicknameTextField, self.oldPasswordTextField].forEach {
             $0?.delegate = self
         }
         
@@ -93,6 +123,91 @@ class AccountViewController: UIViewController {
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
         self.view.addGestureRecognizer(tap)
+    }
+    
+    private func setUpLoginView() {
+        self.loginButton.setTitle("Ulogujte se", for: .normal)
+        self.profileImageView.isHidden = true
+        
+        [self.repeatPasswordLabel, self.repeatPasswordTextField, self.profileImageButton, self.nameLabel, self.nameTextField, self.surnameLabel, self.surnameTextField, self.nicknameLabel, self.nicknameTextField, self.oldPasswordLabel, self.oldPasswordTextField].forEach {
+            $0?.isHidden = true
+        }
+    }
+    
+    private func setUpSignUpView() {
+        self.loginButton.setTitle("Napravite nalog", for: .normal)
+        
+        [self.oldPasswordLabel, self.oldPasswordTextField].forEach {
+            $0?.isHidden = true
+        }
+    }
+    
+    private func setUpEditAccountView() {
+        self.loginButton.setTitle("Sačuvaj", for: .normal)
+        
+        [self.passwordLabel, self.passwordTextField, self.repeatPasswordLabel, self.repeatPasswordTextField, self.oldPasswordLabel, self.oldPasswordTextField].forEach {
+            $0?.isHidden = true
+        }
+        
+        self.emailTextField.text = Auth.auth().currentUser?.email ?? ""
+        self.emailTextField.isEnabled = false
+        self.emailTextField.textColor = .gray
+        
+        if let currentName = Datafeed.shared.currentUser?.name {
+            self.nameTextField.text = currentName
+        }
+        
+        if let currentSurname = Datafeed.shared.currentUser?.surname {
+            self.surnameTextField.text = currentSurname
+        }
+
+        if let currentUsername = Datafeed.shared.currentUser?.nickname {
+            self.nicknameTextField.text = currentUsername
+        }
+        
+        self.getUserProfileImage()
+    }
+    
+    private func setUpChangePasswordView() {
+        self.loginButton.setTitle("Promeni lozinku", for: .normal)
+        self.profileImageView.isHidden = true
+        
+        self.passwordLabel.text = "Nova lozinka"
+        self.passwordTextField.placeholder = "Unesite novu lozinku"
+        self.repeatPasswordLabel.text = "Potvrda nove lozinke"
+        self.repeatPasswordTextField.placeholder = "Ponovo unesite novu lozinku"
+        
+        [self.emailLabel, self.emailTextField, self.profileImageButton, self.nameLabel, self.nameTextField, self.surnameLabel, self.surnameTextField, self.nicknameLabel, self.nicknameTextField].forEach {
+            $0?.isHidden = true
+        }
+    }
+    
+    private func getUserProfileImage() {
+        guard let imageUrl = Auth.auth().currentUser?.photoURL else {
+            self.profileImageView.image = UIImage(systemName: "person.circle.fill")
+            return
+        }
+        
+        if let imageFromCache = kImageCache.object(forKey: imageUrl as AnyObject) as? UIImage {
+            DispatchQueue.main.async {
+                self.profileImageView.image = imageFromCache
+            }
+            return
+        }
+        
+        let downloadTask = URLSession.shared.dataTask(with: imageUrl, completionHandler: { [weak self] (data, response, error) in
+            guard let imageData = data, let profileImage = UIImage(data: imageData) else {
+                return
+            }
+            
+            kImageCache.setObject(profileImage, forKey: imageUrl as AnyObject)
+            
+            DispatchQueue.main.async {
+                self?.profileImageView.image = profileImage
+            }
+        })
+        
+        downloadTask.resume()
     }
     
     @objc func dismissKeyboard() {
@@ -130,7 +245,81 @@ class AccountViewController: UIViewController {
     }
     
     @IBAction func loginButtonClicked(_ sender: Any) {
-        self.isSingUp ? self.singUp() : self.login()
+        switch self.viewType {
+        case .Login:
+            self.login()
+        case .Signup:
+            self.singUp()
+        case .EditData:
+            self.saveChanges()
+        case .ChangePassword:
+            self.changePassword()
+        }
+    }
+    
+    private func saveChanges() {
+        let name = self.nameTextField.text ?? ""
+        let surname = self.surnameTextField.text ?? ""
+        let nickname = self.nicknameTextField.text ?? ""
+        
+        Datafeed.shared.currentUser?.name = name
+        Datafeed.shared.currentUser?.surname = surname
+        Datafeed.shared.currentUser?.nickname = nickname
+        
+        if self.isPictureChanged {
+            let profileImage = self.profileImageView.image
+            
+            guard let profileImageData = profileImage?.jpegData(compressionQuality: 0.5) else {
+                let alert = self.createAlert(title: "Neuspesno kreiranje naloga", message: "Neuspesna kompresija profilne slike")
+                self.present(alert, animated: false)
+                return
+            }
+            
+            guard Datafeed.shared.currentUser != nil else {
+                return
+            }
+            
+            let storageProfileRef = self.storageRef.child("profile").child(Datafeed.shared.currentUser?.uuid ?? "")
+            let metadata = StorageMetadata()
+            metadata.contentType = "image/jpg"
+            var profilePictureUrl = ""
+
+            storageProfileRef.putData(profileImageData, metadata: metadata, completion: { (storageMetadata, error) in
+                if let error = error {
+                    print(error)
+                    Datafeed.shared.userRepository.updateUser(Datafeed.shared.currentUser ?? LocalUser(favoriteRecipes: [], uuid: "", name: "", surname: "", nickname: "", profilePictureUrl: ""))
+                    self.closeViewAndOpenMyAccount()
+                    return
+                }
+                
+                // Downloading profile picture url
+                storageProfileRef.downloadURL(completion: { (url, error) in
+                    if let metadataUrl = url?.absoluteString {
+                        profilePictureUrl = metadataUrl
+                        Datafeed.shared.currentUser?.profilePictureUrl = profilePictureUrl
+                        
+                        if let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest() {
+                            changeRequest.photoURL = URL(string: metadataUrl)
+                            changeRequest.commitChanges(completion: { error in
+                                self.delegate?.userPhotoUrlSuccesfullySaved(self)
+                            })
+                        }
+                    }
+                    Datafeed.shared.userRepository.updateUser(Datafeed.shared.currentUser ?? LocalUser(favoriteRecipes: [], uuid: "", name: "", surname: "", nickname: "", profilePictureUrl: ""))
+                    self.closeViewAndOpenMyAccount()
+                })
+            })
+        }
+        else {
+            Datafeed.shared.userRepository.updateUser(Datafeed.shared.currentUser ?? LocalUser(favoriteRecipes: [], uuid: "", name: "", surname: "", nickname: "", profilePictureUrl: ""))
+            self.closeViewAndOpenMyAccount()
+        }
+        
+    }
+    
+    private func closeViewAndOpenMyAccount() {
+        self.dismiss(animated: true)
+        self.delegate?.userDataChanged(self)
     }
     
     private func login() {
@@ -218,6 +407,20 @@ class AccountViewController: UIViewController {
         }
     }
     
+    private func changePassword() {
+        let oldPassword = self.oldPasswordTextField.text ?? ""
+        let password = self.passwordTextField.text ?? ""
+        let confirmPassword = self.repeatPasswordTextField.text ?? ""
+        
+        guard self.checkOldPassword(oldPassword: oldPassword) else {
+            return
+        }
+        
+        guard self.checkChangePasswordForm(newPassword: password, confirmPassword: confirmPassword) else {
+            return
+        }
+    }
+    
     private func userLoggedIn() {
         self.delegate?.userLoggedInSuccesfully(self)
         if let currentUser = Auth.auth().currentUser {
@@ -247,6 +450,28 @@ class AccountViewController: UIViewController {
         return true
     }
     
+    private func checkChangePasswordForm(newPassword: String, confirmPassword: String) -> Bool {
+        
+        guard self.isPasswordValid(newPassword) else {
+            let alert = self.createAlert(title: "Neuspesna promena loznike", message: "Neispravna duzina lozinke")
+            self.present(alert, animated: false)
+            return false
+        }
+        
+        guard newPassword == confirmPassword else {
+            let alert = self.createAlert(title: "Neuspesna promena loznike", message: "Loznike se ne poklapaju")
+            self.present(alert, animated: false)
+            return false
+        }
+        
+        return true
+    }
+    
+    private func checkOldPassword(oldPassword: String) -> Bool {
+        
+        return true
+    }
+    
     private func isValidEmail(_ email: String) -> Bool {
         let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
 
@@ -270,6 +495,8 @@ class AccountViewController: UIViewController {
 //MARK: - UIImagePickerControllerDelegate
 extension AccountViewController : UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        self.isPictureChanged = true
         
         self.profileImageView.image = info[.originalImage] as? UIImage
         self.profileImageView.backgroundColor = .clear

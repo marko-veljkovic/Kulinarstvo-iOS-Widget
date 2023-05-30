@@ -86,21 +86,22 @@ extension MoreViewController : UITableViewDelegate {
 //MARK: - AccountViewController calling
 extension MoreViewController {
     private func showLogin() {
-        self.createAndPresentConttroller(isSignUp: false)
+        self.createAndPresentConttroller(isLogin: true)
     }
     
     private func showSignUp() {
         self.createAndPresentConttroller(isSignUp: true)
     }
     
-    private func createAndPresentConttroller(isSignUp: Bool) {
-        let accountViewController = AccountViewController(isSignUp: isSignUp)
+    private func createAndPresentConttroller(isLogin: Bool = false, isSignUp: Bool = false, isEditAccount: Bool = false, isChangePassword: Bool = false) {
+        let accountViewController = AccountViewController(isLogin: isLogin, isSignUp: isSignUp, isEditData: isEditAccount, isChangePassword: isChangePassword)
         accountViewController.delegate = self
         accountViewController.modalPresentationStyle = .popover
         self.present(accountViewController, animated: true)
     }
     
     private func showMyAccount() {
+        self.myAccountViewController.delegate = self
         self.myAccountViewController.modalPresentationStyle = .popover
         self.present(self.myAccountViewController, animated: true)
     }
@@ -133,5 +134,20 @@ extension MoreViewController : AccountViewControllerDelegate {
     
     func userPhotoUrlSuccesfullySaved(_ controller: AccountViewController) {
         self.myAccountViewController.getUserProfileImage()
+    }
+    
+    func userDataChanged(_ controller: AccountViewController) {
+        self.showMyAccount()
+    }
+}
+
+//MARK: - MyAccountViewControllerDelegate
+extension MoreViewController : MyAccountViewControllerDelegate {
+    func myAccountViewControllerChangeDataButtonClicked(_ controller: MyAccountViewController) {
+        self.createAndPresentConttroller(isEditAccount: true)
+    }
+    
+    func myAccountViewControllerChangePasswordButtonClicked(_ controller: MyAccountViewController) {
+        self.createAndPresentConttroller(isChangePassword: true)
     }
 }

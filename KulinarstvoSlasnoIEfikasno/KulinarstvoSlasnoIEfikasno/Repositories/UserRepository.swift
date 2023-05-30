@@ -18,13 +18,15 @@ struct LocalUser : Codable {
     var name: String?
     var surname: String?
     var nickname: String?
+    var profilePictureUrl: String?
     
-    init(favoriteRecipes: [String], uuid: String, name: String, surname: String, nickname: String) {
+    init(favoriteRecipes: [String], uuid: String, name: String, surname: String, nickname: String , profilePictureUrl: String) {
         self.favoriteRecipes = favoriteRecipes
         self.uuid = uuid
         self.name = name
         self.surname = surname
         self.nickname = nickname
+        self.profilePictureUrl = profilePictureUrl
     }
 }
 

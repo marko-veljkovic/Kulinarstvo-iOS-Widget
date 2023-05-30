@@ -17,14 +17,14 @@ protocol AccountViewControllerDelegate : AnyObject {
     func userLoggedInSuccesfully(_ controller: AccountViewController)
     func userPhotoUrlSuccesfullySaved(_ controller: AccountViewController)
     func userDataChanged(_ controller: AccountViewController)
+    func userChangedPassword(_ controller: AccountViewController)
 }
 
 class AccountViewController: UIViewController {
 
     @IBOutlet weak var closeButton: UIButton!
+    @IBOutlet weak var forgotPasswordButton: UIButton!
     
-    @IBOutlet weak var oldPasswordLabel: UILabel!
-    @IBOutlet weak var oldPasswordTextField: UITextField!
     @IBOutlet weak var emailLabel: UILabel!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordLabel: UILabel!
@@ -86,10 +86,9 @@ class AccountViewController: UIViewController {
         self.surnameTextField.placeholder = "Unesite prezime"
         self.nicknameLabel.text = "Korisničko ime"
         self.nicknameTextField.placeholder = "Unesite korisničko ime"
-        self.oldPasswordLabel.text = "Trenutna lozinka"
-        self.oldPasswordTextField.placeholder = "Unesite trenutnu lozinku"
         
         self.profileImageButton.setTitle("Izaberite profilnu sliku", for: .normal)
+        self.forgotPasswordButton.setTitle("Zaboravljena lozinka", for: .normal)
         
         self.profileImageView.layer.borderWidth = 1
         self.profileImageView.layer.masksToBounds = false
@@ -115,7 +114,7 @@ class AccountViewController: UIViewController {
             $0?.isSecureTextEntry = true
         }
         
-        [self.emailTextField, self.nameTextField, self.surnameTextField, self.passwordTextField, self.repeatPasswordTextField, self.nicknameTextField, self.oldPasswordTextField].forEach {
+        [self.emailTextField, self.nameTextField, self.surnameTextField, self.passwordTextField, self.repeatPasswordTextField, self.nicknameTextField].forEach {
             $0?.delegate = self
         }
         
@@ -129,15 +128,14 @@ class AccountViewController: UIViewController {
         self.loginButton.setTitle("Ulogujte se", for: .normal)
         self.profileImageView.isHidden = true
         
-        [self.repeatPasswordLabel, self.repeatPasswordTextField, self.profileImageButton, self.nameLabel, self.nameTextField, self.surnameLabel, self.surnameTextField, self.nicknameLabel, self.nicknameTextField, self.oldPasswordLabel, self.oldPasswordTextField].forEach {
+        [self.repeatPasswordLabel, self.repeatPasswordTextField, self.profileImageButton, self.nameLabel, self.nameTextField, self.surnameLabel, self.surnameTextField, self.nicknameLabel, self.nicknameTextField].forEach {
             $0?.isHidden = true
         }
     }
     
     private func setUpSignUpView() {
         self.loginButton.setTitle("Napravite nalog", for: .normal)
-        
-        [self.oldPasswordLabel, self.oldPasswordTextField].forEach {
+        [self.forgotPasswordButton].forEach {
             $0?.isHidden = true
         }
     }
@@ -145,7 +143,7 @@ class AccountViewController: UIViewController {
     private func setUpEditAccountView() {
         self.loginButton.setTitle("Sačuvaj", for: .normal)
         
-        [self.passwordLabel, self.passwordTextField, self.repeatPasswordLabel, self.repeatPasswordTextField, self.oldPasswordLabel, self.oldPasswordTextField].forEach {
+        [self.passwordLabel, self.passwordTextField, self.repeatPasswordLabel, self.repeatPasswordTextField, self.forgotPasswordButton].forEach {
             $0?.isHidden = true
         }
         
@@ -177,7 +175,7 @@ class AccountViewController: UIViewController {
         self.repeatPasswordLabel.text = "Potvrda nove lozinke"
         self.repeatPasswordTextField.placeholder = "Ponovo unesite novu lozinku"
         
-        [self.emailLabel, self.emailTextField, self.profileImageButton, self.nameLabel, self.nameTextField, self.surnameLabel, self.surnameTextField, self.nicknameLabel, self.nicknameTextField].forEach {
+        [self.emailLabel, self.emailTextField, self.profileImageButton, self.nameLabel, self.nameTextField, self.surnameLabel, self.surnameTextField, self.nicknameLabel, self.nicknameTextField, self.forgotPasswordButton].forEach {
             $0?.isHidden = true
         }
     }
@@ -235,6 +233,33 @@ class AccountViewController: UIViewController {
     
     @IBAction func closeButtonDidClicked(_ sender: Any) {
         self.dismiss(animated: true)
+    }
+    
+    @IBAction func forgotPasswordButtonClicked(_ sender: Any) {
+        //TODO: Change language code to app language when localization is added
+//        Auth.auth().languageCode = "en"
+        
+        let alert = UIAlertController(title: "Unesite email adresu", message: "", preferredStyle: .alert)
+        alert.addTextField { textField in
+            textField.placeholder = "E-mail adresa"
+        }
+        // OK action, email is sent
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
+            let email = alert.textFields?[0].text ?? ""
+            
+            Auth.auth().sendPasswordReset(withEmail: email) { error in
+                if let error = error {
+                    print(error)
+                }
+                else {
+                    print("Link sent succesfully")
+                }
+            }
+            
+            self.dismiss(animated: true)
+        }))
+        alert.addAction(UIAlertAction(title: "Poništi", style: .cancel))
+        self.present(alert, animated: true)
     }
     
     @IBAction func profileImageButtonDidClicked(_ sender: Any) {
@@ -408,16 +433,54 @@ class AccountViewController: UIViewController {
     }
     
     private func changePassword() {
-        let oldPassword = self.oldPasswordTextField.text ?? ""
         let password = self.passwordTextField.text ?? ""
         let confirmPassword = self.repeatPasswordTextField.text ?? ""
         
-        guard self.checkOldPassword(oldPassword: oldPassword) else {
+        guard self.checkChangePasswordForm(newPassword: password, confirmPassword: confirmPassword) else {
             return
         }
         
-        guard self.checkChangePasswordForm(newPassword: password, confirmPassword: confirmPassword) else {
-            return
+        Auth.auth().currentUser?.updatePassword(to: password) { error in
+            if let error = error as? NSError {
+                switch AuthErrorCode.Code(rawValue: error.code) {
+                case .userDisabled:
+                    ()
+                //User need to reented password for security reasons
+                case .requiresRecentLogin:
+                    let alert = UIAlertController(title: "Unesite staru lozniku", message: "", preferredStyle: .alert)
+                    alert.addTextField { textField in
+                        textField.placeholder = "Stara loznika"
+                        textField.isSecureTextEntry = true
+                    }
+                    // OK action, reauthenticate is called
+                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
+                        let password = alert.textFields?[0].text ?? ""
+                        let credentials = EmailAuthProvider.credential(withEmail: Auth.auth().currentUser?.email ?? "", password: password)
+                        
+                        Auth.auth().currentUser?.reauthenticate(with: credentials) { [weak self] authRes, error in
+                            if let error = error {
+                                //TODO: process error
+                                print(error)
+                            }
+                            // Call change password function again, user is reauthenticated
+                            else {
+                                self?.changePassword()
+                            }
+                        }
+                    }))
+                    alert.addAction(UIAlertAction(title: "Poništi", style: .cancel))
+                    self.present(alert, animated: false)
+                    break
+                default:
+                    print("Error message:  \(error.localizedDescription)")
+                }
+            }
+            else {
+                //Change password succesfully
+                self.dismiss(animated: true)
+                self.delegate?.userChangedPassword(self)
+            }
+            
         }
     }
     
@@ -453,7 +516,7 @@ class AccountViewController: UIViewController {
     private func checkChangePasswordForm(newPassword: String, confirmPassword: String) -> Bool {
         
         guard self.isPasswordValid(newPassword) else {
-            let alert = self.createAlert(title: "Neuspesna promena loznike", message: "Neispravna duzina lozinke")
+            let alert = self.createAlert(title: "Neuspesna promena loznike", message: "Neispravna duzina nove lozinke")
             self.present(alert, animated: false)
             return false
         }
@@ -463,11 +526,6 @@ class AccountViewController: UIViewController {
             self.present(alert, animated: false)
             return false
         }
-        
-        return true
-    }
-    
-    private func checkOldPassword(oldPassword: String) -> Bool {
         
         return true
     }

@@ -50,7 +50,7 @@ extension MoreViewController : UITableViewDataSource {
         
         switch indexPath.row {
         case 0:
-            contentConfiguration.text = self.isUserLoggedIn ? "Moji nalog" : "Ulogujte se"
+            contentConfiguration.text = self.isUserLoggedIn ? "Moj nalog" : "Ulogujte se"
         case 1:
             contentConfiguration.text = self.isUserLoggedIn ? "Odjavi se" : "Napravite nalog"
         case 2:
@@ -137,6 +137,10 @@ extension MoreViewController : AccountViewControllerDelegate {
     }
     
     func userDataChanged(_ controller: AccountViewController) {
+        self.showMyAccount()
+    }
+    
+    func userChangedPassword(_ controller: AccountViewController){
         self.showMyAccount()
     }
 }

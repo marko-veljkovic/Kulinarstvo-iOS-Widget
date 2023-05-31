@@ -210,7 +210,7 @@ class GeneralViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "Poništi", style: .cancel, handler: {_ in
             self.filterByCategoryCanceled()
         }))
-        self.categoryPicked = .coldSideDish
+//        self.categoryPicked = .coldSideDish
         self.present(alert, animated: true, completion: nil)
     }
     
@@ -399,6 +399,7 @@ extension GeneralViewController : UICollectionViewDataSource {
         
         if let recipeImage = UIImage(named: record.imageName) {
             cell?.recipeImageView.image = recipeImage
+            cell?.recipeImageView.contentMode = .scaleAspectFill
         }
         else {
             cell?.recipeImageView.image = UIImage(systemName: "photo")

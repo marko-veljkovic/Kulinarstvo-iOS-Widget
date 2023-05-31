@@ -27,7 +27,7 @@ class AddNewRecipeViewController : UIViewController {
     @IBOutlet weak var recipeImageView: UIImageView!
     
     @IBOutlet weak var categoryLabel: UILabel!
-    @IBOutlet weak var categoryPickerView: UIPickerView!
+    @IBOutlet weak var categoryButton: UIButton!
     
     @IBOutlet weak var addIngrediantsButton: UIButton!
     @IBOutlet weak var addStepsButton: UIButton!
@@ -39,7 +39,7 @@ class AddNewRecipeViewController : UIViewController {
     var ingrediantsMap: [String : Ingredient]? // ["0":Ingredient(quantity: 0, measureUnit: "", ingredient: ""), "1":Ingredient(quantity: 0, measureUnit: "", ingredient: ""), "2":Ingredient(quantity: 0, measureUnit: "", ingredient: "")]
     var stepsMap: [String : String]? // ["0":"", "1":"", "2":""]
     
-    var recipeCategory = RecipeCategory.snack
+    var recipeCategory: RecipeCategory = .coldSideDish
     
     var existingRecipe: Recipe?
     
@@ -58,11 +58,10 @@ class AddNewRecipeViewController : UIViewController {
         // This controller is used for both editing existing recipe and creating new recipe
         self.addNewRecipeLabel.text = self.existingRecipe != nil ? "Izmeni recept" : "Dodaj novi recept"
         self.chooseImageButton.setTitle("Izaberi sliku jela", for: .normal)
+        self.setCategoryLabel()
+        self.categoryButton.setTitle("Izaberite drugu kategoriju", for: .normal)
         
-        self.categoryPickerView.delegate = self
-        self.categoryPickerView.dataSource = self
-        
-        [self.addNewRecipeButton, self.chooseImageButton, self.addIngrediantsButton, self.addStepsButton].forEach {
+        [self.addNewRecipeButton, self.chooseImageButton, self.addIngrediantsButton, self.addStepsButton, self.categoryButton].forEach {
             $0?.setTitleColor(.gray, for: .disabled)
             
             $0?.layer.cornerRadius = 10
@@ -103,16 +102,22 @@ class AddNewRecipeViewController : UIViewController {
         self.view.endEditing(true)
     }
     
+    private func setCategoryLabel() {
+        self.categoryLabel.text = "Izabrana kategorija: \n \(Datafeed.shared.recipeCategoryName(currentCategory: self.recipeCategory))"
+    }
+    
     private func setColors() {
         [self.recipeNameTextField, self.preparationTimeTextField, self.cookingTimeTextField, self.numOfPersonsTextField].forEach {
             $0?.textColor = AppTheme.setTextColor()
+            $0?.layer.borderWidth = 1
+            $0?.layer.borderColor = AppTheme.setBackgroundColor().cgColor
         }
         
         [self.addNewRecipeLabel, self.categoryLabel].forEach {
             $0?.textColor = AppTheme.setTextColor()
         }
         
-        [self.addNewRecipeButton, self.chooseImageButton, self.addIngrediantsButton, self.addStepsButton].forEach {
+        [self.addNewRecipeButton, self.chooseImageButton, self.addIngrediantsButton, self.addStepsButton, self.categoryButton].forEach {
             $0?.backgroundColor = AppTheme.setBackgroundColor()
             $0?.setTitleColor(AppTheme.setTextColor(), for: .normal)
         }
@@ -126,9 +131,7 @@ class AddNewRecipeViewController : UIViewController {
         self.cookingTimeTextField.text = String(self.existingRecipe!.cookTime)
         self.numOfPersonsTextField.text = String(self.existingRecipe!.numOfPersons)
         self.recipeImageView.image = UIImage(named: self.existingRecipe!.imageName)
-        
-        let selectedCategoryIndex = self.existingRecipe!.category?.rawValue ?? 0
-        self.categoryPickerView.selectRow(selectedCategoryIndex, inComponent: 0, animated: true)
+        self.recipeImageView.isHidden = false
         
         var localIngredientMap: [String:Ingredient] = [:]
         for (ingredientIndex, ingredient) in self.existingRecipe!.ingredients.enumerated() {
@@ -201,6 +204,31 @@ class AddNewRecipeViewController : UIViewController {
         self.present(self.imagePicker, animated: true, completion: nil)
     }
     
+    @IBAction func categoryButtonClicked(_ sender: Any) {
+        self.openCategoryPicker()
+    }
+    
+    private func openCategoryPicker() {
+        let vc = UIViewController()
+        vc.preferredContentSize = CGSize(width: 400, height: 200)
+        let categoryPickerView = UIPickerView(frame: CGRect(x: -60, y: 0, width: 400, height: 200))
+        categoryPickerView.delegate = self
+        categoryPickerView.dataSource = self
+        
+        let selectedCategoryIndex = self.existingRecipe?.category?.rawValue ?? 0
+        categoryPickerView.selectRow(selectedCategoryIndex, inComponent: 0, animated: true)
+        
+        vc.view.addSubview(categoryPickerView)
+        
+        let alert = UIAlertController(title: "Izaberi kategoriju recepata", message: "", preferredStyle: .alert)
+        alert.setValue(vc, forKey: "contentViewController")
+        alert.addAction(UIAlertAction(title: "Sačuvaj", style: .default, handler: {[weak self] _ in
+            self?.setCategoryLabel()
+        }))
+        alert.addAction(UIAlertAction(title: "Poništi", style: .cancel, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     @IBAction func addIngredientsButtonClicked(_ sender: Any) {
         self.addNewRecipeButton.isEnabled = true
         self.openItemsTableView(itemType: .ingredients)
@@ -243,6 +271,7 @@ extension AddNewRecipeViewController : UIImagePickerControllerDelegate, UINaviga
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         self.recipeImageView.image = info[.originalImage] as? UIImage
         self.recipeImageView.backgroundColor = .clear
+        self.recipeImageView.isHidden = false
         self.dismiss(animated: true, completion: nil)
     }
     
